@@ -13,7 +13,7 @@ public class HatMagician2 : PlaceholderCharacterModel
 {
     public const string CharacterId = "HatMagician2";
 
-    public static readonly Color Color = new("FAEEB5");
+    public static readonly Color Color = new("f4ebb2");
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
@@ -55,15 +55,20 @@ public class HatMagician2 : PlaceholderCharacterModel
             return icon;
         }
     }
+    
+    // 过渡音效。这个不能删。
+    public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_ironclad";
 
-    // 人物小头像路径。
+    // 人物小头像路径
     public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
-    // 人物选择半身像。
+    // 人物选择半身像
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
-    // 人物选择半身像-锁定状态。
+    // 人物选择半身像-锁定状态
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     // 地图上的角色标记图标、表情轮盘上的角色头像
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
-    // 人物选择背景。
+    // 人物选择背景
     public override string CustomCharacterSelectBg => "select_bg.tscn".ScenePath();
+    // 人物战斗模型
+    public override string CustomVisualPath => "battle_character.tscn".ScenePath();
 }
