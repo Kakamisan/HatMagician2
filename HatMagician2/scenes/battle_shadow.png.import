@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqoan2bvmmgol"
-path="res://.godot/imported/battle.png-ee43f1253e9ce9234ec9d156a6b8bf42.ctex"
+uid="uid://cfbt8uip1hbb"
+path="res://.godot/imported/battle_shadow.png-ee4fa7f625292927b20a334effa414b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HatMagician2/scenes/battle.png"
-dest_files=["res://.godot/imported/battle.png-ee43f1253e9ce9234ec9d156a6b8bf42.ctex"]
+source_file="res://HatMagician2/scenes/battle_shadow.png"
+dest_files=["res://.godot/imported/battle_shadow.png-ee4fa7f625292927b20a334effa414b5.ctex"]
 
 [params]
 

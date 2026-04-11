@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
+using HatMagician2.HatMagician2Code.Cards;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
@@ -21,16 +22,15 @@ public class HatMagician2 : PlaceholderCharacterModel
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>()
+        ModelDb.Card<Strike>(),
+        ModelDb.Card<Strike>(),
+        ModelDb.Card<Strike>(),
+        ModelDb.Card<Strike>(),
+        ModelDb.Card<Defend>(),
+        ModelDb.Card<Defend>(),
+        ModelDb.Card<Defend>(),
+        ModelDb.Card<Defend>(),
+        ModelDb.Card<BlankPainting>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
