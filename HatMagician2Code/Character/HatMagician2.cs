@@ -4,9 +4,8 @@ using HatMagician2.HatMagician2Code.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Relics;
 using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Relics;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
@@ -35,7 +34,7 @@ public class HatMagician2 : PlaceholderCharacterModel
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<BurningBlood>()
+        ModelDb.Relic<PaletteBottle>()
     ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<HatMagician2CardPool>();
