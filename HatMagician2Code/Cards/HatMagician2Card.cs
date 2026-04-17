@@ -1,9 +1,12 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
+using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
+using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
@@ -30,4 +33,26 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 设置成test的话使用通用的测试卡图
     protected bool IsTest = false;
+
+    // 绘色消耗
+    public readonly int BaseBrandColorCost = 0;
+    public int BrandColorCost => this.BaseBrandColorCost;
+
+    // 绘色消耗类型
+    public HatMagician2BrandColor BaseBrandColor = HatMagician2BrandColor.None;
+
+    protected override bool IsPlayable => this.CheckBrandColorResource();
+
+    // 检查绘色消耗
+    public bool CheckBrandColorResource()
+    {
+        if (this.BaseBrandColor == HatMagician2BrandColor.None)
+            return true;
+        if (this.BrandColorCost <= 0)
+            return true;
+        PaletteBottle? relic = this.Owner?.GetRelic<PaletteBottle>();
+        if (relic != null)
+            return relic.HasEnoughEnergy(this.BaseBrandColor, this.BrandColorCost);
+        return false;
+    }
 }

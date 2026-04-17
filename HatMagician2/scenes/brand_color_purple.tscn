@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccrejqvthwrex"]
+
+[ext_resource type="PackedScene" uid="uid://d4f2saxdvpm3o" path="res://HatMagician2/scenes/brand_color_yellow.tscn" id="1_ybtcu"]
+
+[node name="brand_color_purple" instance=ExtResource("1_ybtcu")]
+
+[node name="Sprite2D3" parent="Visuals" index="4"]
+visible = false
+
+[node name="Sprite2D4" parent="Visuals" index="5"]
+visible = true
+
+[node name="IntentPos" parent="." index="2"]
+position = Vector2(54, -156)
+
+[node name="CenterPos" parent="." index="3"]
+position = Vector2(55, -115)
+
+[node name="PassiveAmount" parent="." index="4"]
+offset_left = 51.0
+offset_top = -113.0
+offset_right = 91.0
+offset_bottom = -79.0

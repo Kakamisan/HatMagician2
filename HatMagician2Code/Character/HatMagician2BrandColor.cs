@@ -7,5 +7,6 @@ public enum HatMagician2BrandColor
     Yellow,
     Purple,
     Orange,
-    White
+    White,
+    None
 }

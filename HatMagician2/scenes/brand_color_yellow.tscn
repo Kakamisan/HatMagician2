@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4f2saxdvpm3o"]
+
+[ext_resource type="PackedScene" uid="uid://dpgdq1m6hf7i" path="res://HatMagician2/scenes/brand_color_blue.tscn" id="1_oi1ml"]
+[ext_resource type="Texture2D" uid="uid://056y7fchd6dc" path="res://HatMagician2/scenes/brandYellow.png" id="2_tluga"]
+[ext_resource type="Texture2D" uid="uid://dbrj8ddej74ob" path="res://HatMagician2/scenes/brandPurple.png" id="3_h1t51"]
+[ext_resource type="Texture2D" uid="uid://chvhhg6ufwslv" path="res://HatMagician2/scenes/brandOrange.png" id="4_nyg05"]
+[ext_resource type="Texture2D" uid="uid://caea0p2qvuqyk" path="res://HatMagician2/scenes/brandWhite.png" id="5_6x6v1"]
+
+[node name="brand_color_yellow" instance=ExtResource("1_oi1ml")]
+
+[node name="Sprite2D" parent="Visuals" index="2"]
+visible = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="Visuals" index="4"]
+position = Vector2(-187.84149, 136.6666)
+texture = ExtResource("2_tluga")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Visuals" index="5"]
+visible = false
+position = Vector2(186, 160.33337)
+texture = ExtResource("3_h1t51")
+
+[node name="Sprite2D5" type="Sprite2D" parent="Visuals" index="6"]
+visible = false
+position = Vector2(449.33325, 97.00003)
+texture = ExtResource("4_nyg05")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Visuals" index="7"]
+visible = false
+position = Vector2(396, -99.66666)
+texture = ExtResource("5_6x6v1")
+
+[node name="IntentPos" parent="." index="2"]
+position = Vector2(-59, -169)
+
+[node name="CenterPos" parent="." index="3"]
+position = Vector2(-57, -122)
+
+[node name="PassiveAmount" parent="." index="4"]
+offset_left = -60.0
+offset_top = -120.0
+offset_right = -20.0
+offset_bottom = -86.0
