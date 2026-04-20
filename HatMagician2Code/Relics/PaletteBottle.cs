@@ -1,9 +1,13 @@
 ﻿using BaseLib.Utils;
+using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Monsters;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -53,7 +57,7 @@ public class PaletteBottle : HatMagician2Relic
         await this.SummonPet<BrandColorPetPurple>(HatMagician2BrandColor.Purple);
         await this.SummonPet<BrandColorPetOrange>(HatMagician2BrandColor.Orange);
         await this.SummonPet<BrandColorPetWhite>(HatMagician2BrandColor.White);
-        
+
         this.UpdateAllPet();
     }
 
@@ -62,7 +66,7 @@ public class PaletteBottle : HatMagician2Relic
         Creature creature = await PlayerCmd.AddPet<T>(Owner);
         NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(creature);
         BattleBrandColorPet? pet = creatureNode?.Visuals as BattleBrandColorPet;
-        this.PetVisuals.Add(color, pet);
+        this.PetVisuals[color] = pet;
     }
 
     // 更新所有绘色显示
@@ -81,6 +85,7 @@ public class PaletteBottle : HatMagician2Relic
         {
             this.BrandColorEnergyMap[key] = 0;
         }
+
         this.PetVisuals.Clear();
         return Task.CompletedTask;
     }
@@ -89,5 +94,72 @@ public class PaletteBottle : HatMagician2Relic
     public bool HasEnoughEnergy(HatMagician2BrandColor color, int cost)
     {
         return this.BrandColorEnergyMap.GetValueOrDefault(color, 0) >= cost;
+    }
+
+    // 消耗绘色能量
+    public void SpendEnergy(HatMagician2BrandColor color, int cost)
+    {
+        if (color == HatMagician2BrandColor.None || cost <= 0)
+            return;
+
+        int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
+        this.BrandColorEnergyMap[color] = Math.Max(0, current - cost);
+
+        // 更新对应颜色的宠物显示
+        if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
+        {
+            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+        }
+    }
+
+    // 增加绘色能量
+    public void AddEnergy(HatMagician2BrandColor color, int amount)
+    {
+        if (color == HatMagician2BrandColor.None || amount <= 0)
+            return;
+
+        int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
+        this.BrandColorEnergyMap[color] = current + amount;
+
+        // 更新对应颜色的宠物显示
+        if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
+        {
+            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+        }
+    }
+
+    // 卡牌打出后消耗绘色
+    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        // 只处理HatMagician2Card
+        if (cardPlay.Card is HatMagician2Card hatCard)
+        {
+            if (!cardPlay.IsAutoPlay)
+            {
+                // 消耗绘色能量
+                SpendEnergy(hatCard.BaseBrandColor, hatCard.BrandColorCost);
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public static Decimal ModifyBrandColorCost(
+        CombatState combatState,
+        HatMagician2Card card,
+        Decimal originalCost)
+    {
+        if (originalCost < 0M)
+            return originalCost;
+        Decimal modifiedCost = originalCost;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyBrandColorCost(card, modifiedCost, out modifiedCost);
+            }
+        }
+
+        return modifiedCost;
     }
 }

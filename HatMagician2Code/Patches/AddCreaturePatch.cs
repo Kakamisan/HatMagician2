@@ -86,10 +86,10 @@ public static class AddCreaturePatch
         }
 
         // 处理暗色调（当玩家位置Y < 199时）
-        NCreature? newCreatureNode = __instance.GetCreatureNode(creature);
-        if (ownerNode.Position.Y < 199.0f && newCreatureNode != null)
-        {
-            newCreatureNode.Visuals.Modulate = new Color(0.5f, 0.5f, 0.5f);
-        }
+        // NCreature? newCreatureNode = __instance.GetCreatureNode(creature);
+        // if (ownerNode.Position.Y < 199.0f && newCreatureNode != null)
+        // {
+        //     newCreatureNode.Visuals.Modulate = new Color(0.5f, 0.5f, 0.5f);
+        // }
     }
 }

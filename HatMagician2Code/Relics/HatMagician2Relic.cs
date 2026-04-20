@@ -8,7 +8,7 @@ using Godot;
 namespace HatMagician2.HatMagician2Code.Relics;
 
 [Pool(typeof(HatMagician2RelicPool))]
-public abstract class HatMagician2Relic : CustomRelicModel
+public abstract class HatMagician2Relic : CustomRelicModel, IHatMagician2AbstractModel
 {
     public override string PackedIconPath
     {
