@@ -1,0 +1,140 @@
+[gd_scene load_steps=10 format=3 uid="uid://cyojcd5kvi32i"]
+
+[ext_resource type="Texture2D" uid="uid://blc2sd3fp8xke" path="res://HatMagician2/scenes/energy_brand_red.png" id="1_ha8dk"]
+[ext_resource type="FontVariation" uid="uid://bg85h22rkxs6g" path="res://HatMagician2/themes/kreon_bold_shared.tres" id="2_647du"]
+[ext_resource type="Texture2D" uid="uid://drxa6ixv4wrhn" path="res://HatMagician2/scenes/energy_brand_blue.png" id="2_jioxl"]
+[ext_resource type="Texture2D" uid="uid://bg13e1dv81rau" path="res://HatMagician2/scenes/energy_brand_yellow.png" id="3_7gnwv"]
+[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/BattleLabel.cs" id="3_of80k"]
+[ext_resource type="Texture2D" uid="uid://ck5fw2h1ftxdb" path="res://HatMagician2/scenes/unplayable.png" id="4_647du"]
+[ext_resource type="Texture2D" uid="uid://dcsbnp56mrxu0" path="res://HatMagician2/scenes/energy_brand_purple.png" id="4_s1ipk"]
+[ext_resource type="Texture2D" uid="uid://dcss18w6sm51d" path="res://HatMagician2/scenes/energy_brand_orange.png" id="5_cysnk"]
+[ext_resource type="Texture2D" uid="uid://cmk140j2cmikg" path="res://HatMagician2/scenes/energy_brand_white.png" id="6_86pjp"]
+
+[node name="BrandColorCardIcon" type="Node2D"]
+
+[node name="BrandColorIcon" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 58.0
+offset_bottom = 58.0
+pivot_offset = Vector2(29, 29)
+
+[node name="BrandColorRed" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ha8dk")
+expand_mode = 1
+
+[node name="BrandColorBlue" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_jioxl")
+expand_mode = 1
+
+[node name="BrandColorYellow" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7gnwv")
+expand_mode = 1
+
+[node name="BrandColorPurple" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_s1ipk")
+expand_mode = 1
+
+[node name="BrandColorOrange" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_cysnk")
+expand_mode = 1
+
+[node name="BrandColorWhite" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_86pjp")
+expand_mode = 1
+
+[node name="BrandColorLabel" type="Label" parent="BrandColorIcon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -20.0
+offset_right = 14.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1882353)
+theme_override_colors/font_outline_color = Color(0.47419083, 0.3888151, 0.20489597, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("2_647du")
+theme_override_font_sizes/font_size = 22
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_of80k")
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1882353)
+theme_override_colors/font_outline_color = Color(0.47419083, 0.3888151, 0.20489597, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("2_647du")
+theme_override_font_sizes/font_size = 22
+
+[node name="UnplayableBrandColorIcon" type="TextureRect" parent="BrandColorIcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 53.0
+offset_bottom = 53.0
+texture = ExtResource("4_647du")
+expand_mode = 1

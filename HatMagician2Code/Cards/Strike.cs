@@ -15,6 +15,8 @@ public class Strike : HatMagician2Card
     public Strike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
         IsTest = true;
+        // BaseBrandColorCost = 1;
+        // BaseBrandColor = HatMagician2BrandColor.Red;
     }
 
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];

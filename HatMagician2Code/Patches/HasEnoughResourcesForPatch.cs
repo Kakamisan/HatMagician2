@@ -17,12 +17,12 @@ public static class HasEnoughResourcesForPatch
     {
         if (card is HatMagician2Card card2)
         {
-            Log.Info("[   Hat2   ] HasEnoughResourcesForPatch");
+            //Log.Info("[   Hat2   ] HasEnoughResourcesForPatch");
             int num1 = Math.Max(0, card2.GetBrandColorCostWithModifiers());
             Player player = card2.Owner;
             PaletteBottle? relic = player.GetRelic<PaletteBottle>();
             if (relic != null && num1 > relic.BrandColorEnergyMap.GetValueOrDefault(card2.BaseBrandColor))
-                reason |= UnplayableReason.EnergyCostTooHigh;
+                reason |= UnplayableReason.StarCostTooHigh;
             __result = reason == UnplayableReason.None;
         }
     }

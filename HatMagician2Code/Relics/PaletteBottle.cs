@@ -4,10 +4,8 @@ using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Monsters;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -29,14 +27,6 @@ public class PaletteBottle : HatMagician2Relic
         { HatMagician2BrandColor.Red, 0 }, { HatMagician2BrandColor.Blue, 0 }, { HatMagician2BrandColor.Yellow, 0 },
         { HatMagician2BrandColor.Purple, 0 }, { HatMagician2BrandColor.Orange, 0 }, { HatMagician2BrandColor.White, 0 }
     };
-
-    // 战斗中绘色数量
-    // public int RedEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.Red];
-    // public int BlueEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.Blue];
-    // public int YellowEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.Yellow];
-    // public int PurpleEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.Purple];
-    // public int OrangeEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.Orange];
-    // public int WhiteEnergy => this.BrandColorEnergyMap[HatMagician2BrandColor.White];
 
     // 绘色场景的实例
     public Dictionary<HatMagician2BrandColor, BattleBrandColorPet?> PetVisuals = new();
@@ -90,12 +80,6 @@ public class PaletteBottle : HatMagician2Relic
         return Task.CompletedTask;
     }
 
-    // 卡牌检查绘色够不够
-    public bool HasEnoughEnergy(HatMagician2BrandColor color, int cost)
-    {
-        return this.BrandColorEnergyMap.GetValueOrDefault(color, 0) >= cost;
-    }
-
     // 消耗绘色能量
     public void SpendEnergy(HatMagician2BrandColor color, int cost)
     {
@@ -126,22 +110,6 @@ public class PaletteBottle : HatMagician2Relic
         {
             pet.SetEnergy(this.BrandColorEnergyMap[color]);
         }
-    }
-
-    // 卡牌打出后消耗绘色
-    public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        // 只处理HatMagician2Card
-        if (cardPlay.Card is HatMagician2Card hatCard)
-        {
-            if (!cardPlay.IsAutoPlay)
-            {
-                // 消耗绘色能量
-                SpendEnergy(hatCard.BaseBrandColor, hatCard.BrandColorCost);
-            }
-        }
-
-        return Task.CompletedTask;
     }
 
     public static Decimal ModifyBrandColorCost(

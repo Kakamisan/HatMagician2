@@ -33,7 +33,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected bool IsTest = false;
 
     // 绘色消耗
-    public int BaseBrandColorCost = 0;
+    public int BaseBrandColorCost = -1;
     public int BrandColorCost => this.BaseBrandColorCost;
 
     // 绘色消耗类型

@@ -15,6 +15,8 @@ public class Defend : HatMagician2Card
     public Defend() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
         IsTest = true;
+        // BaseBrandColorCost = 1;
+        // BaseBrandColor = HatMagician2BrandColor.Blue;
     }
 
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
