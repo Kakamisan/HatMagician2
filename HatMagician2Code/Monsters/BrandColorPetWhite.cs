@@ -5,7 +5,7 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class BrandColorPetWhite: BrandColorPet
 {
-    public override HatMagician2BrandColor Color => HatMagician2BrandColor.White;
+    public override BrandColor Color => BrandColor.White;
 
     // 怪物场景，如果你的场景没有挂载脚本，参考这个
     //public override NCreatureVisuals? CreateCustomVisuals() => NodeFactory<NCreatureVisuals>.CreateFromScene("brand_color_red.tscn".ScenePath());

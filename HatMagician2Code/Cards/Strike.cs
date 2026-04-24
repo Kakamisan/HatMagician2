@@ -1,6 +1,7 @@
 ﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -16,7 +17,7 @@ public class Strike : HatMagician2Card
     {
         IsTest = true;
         // BaseBrandColorCost = 1;
-        // BaseBrandColor = HatMagician2BrandColor.Red;
+        // BaseBrandColor = BrandColor.Red;
     }
 
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
@@ -27,9 +28,13 @@ public class Strike : HatMagician2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        // await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
+            // .WithHitCount(2)
             .FromCard(this) // 伤害来源于这张卡牌
             .Targeting(play.Target!) // 伤害目标是玩家选择的目标
+            // .WithHitFx("vfx/vfx_starry_impact", "blunt_attack.mp3")
+            .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }
 

@@ -22,36 +22,36 @@ public class PaletteBottle : HatMagician2Relic
     public override bool AddsPet => true;
 
     // 绘色能量
-    public Dictionary<HatMagician2BrandColor, int> BrandColorEnergyMap = new()
+    public Dictionary<BrandColor, int> BrandColorEnergyMap = new()
     {
-        { HatMagician2BrandColor.Red, 0 }, { HatMagician2BrandColor.Blue, 0 }, { HatMagician2BrandColor.Yellow, 0 },
-        { HatMagician2BrandColor.Purple, 0 }, { HatMagician2BrandColor.Orange, 0 }, { HatMagician2BrandColor.White, 0 }
+        { BrandColor.Red, 0 }, { BrandColor.Blue, 0 }, { BrandColor.Yellow, 0 },
+        { BrandColor.Purple, 0 }, { BrandColor.Orange, 0 }, { BrandColor.White, 0 }
     };
 
     // 绘色场景的实例
-    public Dictionary<HatMagician2BrandColor, BattleBrandColorPet?> PetVisuals = new();
+    public Dictionary<BrandColor, BattleBrandColorPet?> PetVisuals = new();
 
     public override async Task BeforeCombatStart()
     {
-        this.BrandColorEnergyMap[HatMagician2BrandColor.Red] = 3;
-        this.BrandColorEnergyMap[HatMagician2BrandColor.Blue] = 3;
-        this.BrandColorEnergyMap[HatMagician2BrandColor.Yellow] = 3;
+        this.BrandColorEnergyMap[BrandColor.Red] = 3;
+        this.BrandColorEnergyMap[BrandColor.Blue] = 3;
+        this.BrandColorEnergyMap[BrandColor.Yellow] = 3;
         await SummonPet();
     }
 
     private async Task SummonPet()
     {
-        await this.SummonPet<BrandColorPetRed>(HatMagician2BrandColor.Red);
-        await this.SummonPet<BrandColorPetBlue>(HatMagician2BrandColor.Blue);
-        await this.SummonPet<BrandColorPetYellow>(HatMagician2BrandColor.Yellow);
-        await this.SummonPet<BrandColorPetPurple>(HatMagician2BrandColor.Purple);
-        await this.SummonPet<BrandColorPetOrange>(HatMagician2BrandColor.Orange);
-        await this.SummonPet<BrandColorPetWhite>(HatMagician2BrandColor.White);
+        await this.SummonPet<BrandColorPetRed>(BrandColor.Red);
+        await this.SummonPet<BrandColorPetBlue>(BrandColor.Blue);
+        await this.SummonPet<BrandColorPetYellow>(BrandColor.Yellow);
+        await this.SummonPet<BrandColorPetPurple>(BrandColor.Purple);
+        await this.SummonPet<BrandColorPetOrange>(BrandColor.Orange);
+        await this.SummonPet<BrandColorPetWhite>(BrandColor.White);
 
         this.UpdateAllPet();
     }
 
-    private async Task SummonPet<T>(HatMagician2BrandColor color) where T : MonsterModel
+    private async Task SummonPet<T>(BrandColor color) where T : MonsterModel
     {
         Creature creature = await PlayerCmd.AddPet<T>(Owner);
         NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(creature);
@@ -81,9 +81,9 @@ public class PaletteBottle : HatMagician2Relic
     }
 
     // 消耗绘色能量
-    public void SpendEnergy(HatMagician2BrandColor color, int cost)
+    public void SpendEnergy(BrandColor color, int cost)
     {
-        if (color == HatMagician2BrandColor.None || cost <= 0)
+        if (color == BrandColor.None || cost <= 0)
             return;
 
         int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
@@ -97,9 +97,9 @@ public class PaletteBottle : HatMagician2Relic
     }
 
     // 增加绘色能量
-    public void AddEnergy(HatMagician2BrandColor color, int amount)
+    public void AddEnergy(BrandColor color, int amount)
     {
-        if (color == HatMagician2BrandColor.None || amount <= 0)
+        if (color == BrandColor.None || amount <= 0)
             return;
 
         int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);

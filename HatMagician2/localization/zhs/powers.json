@@ -3,11 +3,15 @@
   "HATMAGICIAN2-BRAND_POWER.smartDescription": "",
   "HATMAGICIAN2-BRAND_POWER.title": "印记",
 
-  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动：每回合受到6点伤害。\n刻印：下一次受到的攻击伤害变为2倍。",
-  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动：每回合受到6点伤害。\n刻印：下一次受到的攻击伤害变为2倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动：每回合受到[blue]6[/blue]点伤害。\n刻印：下一次受到的攻击伤害变为[blue]2[/blue]倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动：每回合受到[blue]{Passive}[/blue]点伤害。\n刻印：下一次受到的攻击伤害变为[blue]{Evoke}[/blue]倍。",
   "HATMAGICIAN2-BRAND_RED_POWER.title": "火焰印记",
 
   "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动：每回合产生[blue]3[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]5[/blue]点连锁伤害。",
   "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动：每回合产生[blue]{Passive}[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]{Evoke}[/blue]点连锁伤害。",
-  "HATMAGICIAN2-BRAND_YELLOW_POWER.title": "闪电印记"
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.title": "闪电印记",
+
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下一次受到的攻击伤害变为[blue]2[/blue]倍。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下一次受到的攻击伤害变为[blue]{Amount}[/blue]倍。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.title": "灼痕"
 }

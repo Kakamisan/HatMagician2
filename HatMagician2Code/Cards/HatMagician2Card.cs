@@ -3,8 +3,13 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
+using HatMagician2.HatMagician2Code.Powers;
 using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
@@ -37,11 +42,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public int BrandColorCost => this.BaseBrandColorCost;
 
     // 绘色消耗类型
-    public HatMagician2BrandColor BaseBrandColor = HatMagician2BrandColor.None;
+    public BrandColor BaseBrandColor = BrandColor.None;
 
     // 绘色X费
     public bool HasBrandColorCostX = false;
-    
+
     /*已改成patch原版能量检查
     protected override bool IsPlayable => this.CheckBrandColorResource();
 
@@ -66,9 +71,34 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             PaletteBottle? relic = this.Owner.GetRelic<PaletteBottle>();
             return relic == null ? 0 : relic.BrandColorEnergyMap[this.BaseBrandColor];
         }
+
         CardPile? pile = this.Pile;
         return pile != null && pile.IsCombatPile && this.CombatState != null
             ? (int)PaletteBottle.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
             : this.BrandColorCost;
+    }
+
+    // 下次攻击伤害变为N倍 只在火焰印记被刻印 且刻印时打出的是攻击牌时设置此值
+    // 打出后复原此值
+    public decimal NextPlayMulti = 1;
+    public void SetNextPlayMulti(decimal value) => this.NextPlayMulti = value;
+    public bool IsBrandApplied; // 是否已应用印记效果
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
+    {
+        return cardSource == this && MultiDamagePower.IsTriggerMulti(cardSource)
+            ? this.NextPlayMulti
+            : base.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource);
+    }
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card == this)
+        {
+            this.IsBrandApplied = false;
+            this.NextPlayMulti = 1;
+        }
+        return base.AfterCardPlayed(choiceContext, cardPlay);
     }
 }

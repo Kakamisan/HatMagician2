@@ -9,5 +9,8 @@
   "HATMAGICIAN2-BLANK_PAINTING.title": "空白画作",
 
   "HATMAGICIAN2-LIGHTNING_STRIKE.description": "给予[gold]闪电[/gold]印记。\n造成{Damage:diff()}点伤害。",
-  "HATMAGICIAN2-LIGHTNING_STRIKE.title": "雷击"
+  "HATMAGICIAN2-LIGHTNING_STRIKE.title": "雷击",
+
+  "HATMAGICIAN2-FIRE.description": "给予[gold]火焰[/gold]印记。",
+  "HATMAGICIAN2-FIRE.title": "热烈"
 }

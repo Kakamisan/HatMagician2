@@ -20,16 +20,13 @@ public class NCardUpdateVisualsPatch
     [HarmonyPostfix]
     public static void Postfix(NCard __instance, PileType pileType, CardPreviewMode previewMode)
     {
+        var nodeName = "BrandColorCardIcon";
+        Node2D? node = null;
+        if (__instance.Body.HasNode(nodeName))
+            node = __instance.Body.GetNode<Node2D>(nodeName);
         if (__instance.Model is HatMagician2Card card)
         {
             // 初始化
-            var nodeName = "BrandColorCardIcon";
-            Node2D? node = null;
-            if (__instance.Body.HasNode(nodeName))
-            {
-                node = __instance.Body.GetNode<Node2D>(nodeName);
-            }
-
             if (node == null)
             {
                 PackedScene scene = GD.Load<PackedScene>("res://HatMagician2/scenes/brand_color_card_icon.tscn");
@@ -73,9 +70,20 @@ public class NCardUpdateVisualsPatch
                 }
             }
         }
+        else
+        {
+            // 疑似节点被复用了，所以这里隐藏一下
+            if (node != null)
+            {
+                Control icon = node.GetNode<Control>((NodePath)"%BrandColorIcon");
+                if (icon != null)
+                    icon.Visible = false;
+            }
+        }
     }
 
-    public static void UpdateBrandColorCostVisuals(NCard instance, PileType pileType, Node2D node, MegaLabel label, Control icon,
+    public static void UpdateBrandColorCostVisuals(NCard instance, PileType pileType, Node2D node, MegaLabel label,
+        Control icon,
         TextureRect unplayable, HatMagician2Card card)
     {
         if (instance.Visibility != ModelVisibility.Visible)
@@ -89,18 +97,18 @@ public class NCardUpdateVisualsPatch
         {
             // 打开对应的绘色节点
             node.GetNode<TextureRect>((NodePath)"%BrandColorRed").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.Red;
+                card.BaseBrandColor == BrandColor.Red;
             node.GetNode<TextureRect>((NodePath)"%BrandColorBlue").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.Blue;
+                card.BaseBrandColor == BrandColor.Blue;
             node.GetNode<TextureRect>((NodePath)"%BrandColorYellow").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.Yellow;
+                card.BaseBrandColor == BrandColor.Yellow;
             node.GetNode<TextureRect>((NodePath)"%BrandColorOrange").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.Orange;
+                card.BaseBrandColor == BrandColor.Orange;
             node.GetNode<TextureRect>((NodePath)"%BrandColorPurple").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.Purple;
+                card.BaseBrandColor == BrandColor.Purple;
             node.GetNode<TextureRect>((NodePath)"%BrandColorWhite").Visible =
-                card.BaseBrandColor == HatMagician2BrandColor.White;
-            
+                card.BaseBrandColor == BrandColor.White;
+
             if (card.HasBrandColorCostX)
             {
                 label.SetTextAutoSize("X");
@@ -124,8 +132,8 @@ public class NCardUpdateVisualsPatch
 
     public static bool HasResourceCostReason(UnplayableReason reason)
     {
-        return reason.HasFlag((Enum)UnplayableReason.EnergyCostTooHigh) ||
-               reason.HasFlag((Enum)UnplayableReason.StarCostTooHigh);
+        return reason.HasFlag(UnplayableReason.EnergyCostTooHigh) ||
+               reason.HasFlag(UnplayableReason.StarCostTooHigh);
     }
 
     public static void UpdateBrandColorCostColor(NCard instance, PileType pileType, MegaLabel label,
@@ -157,7 +165,7 @@ public class NCardUpdateVisualsPatch
         if (state == null)
             return CardCostColor.Unmodified;
         UnplayableReason reason;
-        if (!card.CanPlay(out reason, out _) && reason.HasFlag((Enum)UnplayableReason.StarCostTooHigh))
+        if (!card.CanPlay(out reason, out _) && reason.HasFlag(UnplayableReason.StarCostTooHigh))
             return CardCostColor.InsufficientResources;
         if (card.HasBrandColorCostX)
             return CardCostColor.Unmodified;
@@ -171,9 +179,9 @@ public class NCardUpdateVisualsPatch
 
     public static CardCostColor GetColorForHookModifiedCost(Decimal hookModifiedCost, int baseCost)
     {
-        if (hookModifiedCost > (Decimal)baseCost)
+        if (hookModifiedCost > baseCost)
             return CardCostColor.Increased;
-        return hookModifiedCost < (Decimal)baseCost ? CardCostColor.Decreased : CardCostColor.Unmodified;
+        return hookModifiedCost < baseCost ? CardCostColor.Decreased : CardCostColor.Unmodified;
     }
 
     // private static CardCostColor GetColorForLocalCost(int localCost, int baseCost)
@@ -188,7 +196,7 @@ public class NCardUpdateVisualsPatch
         ICombatState state,
         out Decimal hookModifiedCost)
     {
-        hookModifiedCost = (Decimal)card.BaseBrandColorCost;
+        hookModifiedCost = card.BaseBrandColorCost;
         bool flag = false;
         foreach (AbstractModel iterateHookListener in state.IterateHookListeners())
             if (iterateHookListener is IHatMagician2AbstractModel it)
@@ -204,10 +212,7 @@ public class NCardUpdateVisualsPatch
         bool pretendCardCanBePlayed,
         Color defaultColor)
     {
-        // object? result =
-        //     typeof(NCard).GetMethod("GetCostTextColorInHand", BindingFlags.Static)!.Invoke(null,
-        //         [costColor, pretendCardCanBePlayed, defaultColor]);
-        // return (Color)result!;
+        // NCard.GetCostTextColorInHand(costColor, pretendCardCanBePlayed, defaultColor);
         switch (costColor)
         {
             case CardCostColor.Unmodified:
@@ -219,7 +224,7 @@ public class NCardUpdateVisualsPatch
             case CardCostColor.InsufficientResources:
                 return pretendCardCanBePlayed ? defaultColor : StsColors.red;
             default:
-                throw new ArgumentOutOfRangeException(nameof(costColor), (object)costColor, null);
+                throw new ArgumentOutOfRangeException(nameof(costColor), costColor, null);
         }
     }
 
@@ -228,10 +233,7 @@ public class NCardUpdateVisualsPatch
         bool pretendCardCanBePlayed,
         Color defaultColor)
     {
-        // object? result =
-        //     typeof(NCard).GetMethod("GetCostOutlineColorInHand", BindingFlags.Static)!.Invoke(null,
-        //         [costColor, pretendCardCanBePlayed, defaultColor]);
-        // return (Color)result!;
+        // NCard.GetCostOutlineColorInHand(costColor, pretendCardCanBePlayed, defaultColor);
         switch (costColor)
         {
             case CardCostColor.Unmodified:
@@ -243,7 +245,7 @@ public class NCardUpdateVisualsPatch
             case CardCostColor.InsufficientResources:
                 return pretendCardCanBePlayed ? defaultColor : StsColors.unplayableEnergyCostOutline;
             default:
-                throw new ArgumentOutOfRangeException(nameof(costColor), (object)costColor, null);
+                throw new ArgumentOutOfRangeException(nameof(costColor), costColor, null);
         }
     }
 }

@@ -16,7 +16,7 @@ public class LightningStrike : HatMagician2Card
     {
         IsTest = true;
         BaseBrandColorCost = 1;
-        BaseBrandColor = HatMagician2BrandColor.Yellow;
+        BaseBrandColor = BrandColor.Yellow;
     }
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7M, ValueProp.Move)];
@@ -25,7 +25,8 @@ public class LightningStrike : HatMagician2Card
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await BrandPower.ApplyBrandPower<BrandYellowPower>(this, choiceContext, play);
+        // 应用印记效果
+        await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
             .FromCard(this) // 伤害来源于这张卡牌
             .Targeting(play.Target!) // 伤害目标是玩家选择的目标

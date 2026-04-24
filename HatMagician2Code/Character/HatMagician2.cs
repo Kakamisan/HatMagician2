@@ -28,7 +28,8 @@ public class HatMagician2 : PlaceholderCharacterModel
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
-        ModelDb.Card<LightningStrike>()
+        ModelDb.Card<LightningStrike>(),
+        ModelDb.Card<Fire>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
@@ -69,4 +70,6 @@ public class HatMagician2 : PlaceholderCharacterModel
     public override string CustomCharacterSelectBg => "select_bg.tscn".ScenePath();
     // 人物战斗模型
     public override string CustomVisualPath => "battle_character.tscn".ScenePath();
+    // 攻击音效
+    // public override string CustomAttackSfx => null;
 }

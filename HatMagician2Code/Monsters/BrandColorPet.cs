@@ -7,7 +7,7 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 public class BrandColorPet : HatMagician2Pet
 {
     // 绘色的类型
-    public virtual HatMagician2BrandColor Color => HatMagician2BrandColor.Red;
+    public virtual BrandColor Color => BrandColor.Red;
 
     // public override CreatureAnimator GenerateAnimator(MegaSprite controller)
     // {
