@@ -113,7 +113,7 @@ public class PaletteBottle : HatMagician2Relic
     }
 
     public static Decimal ModifyBrandColorCost(
-        CombatState combatState,
+        ICombatState combatState,
         HatMagician2Card card,
         Decimal originalCost)
     {

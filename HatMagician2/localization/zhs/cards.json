@@ -6,5 +6,8 @@
   "HATMAGICIAN2-DEFEND.title": "防御",
   
   "HATMAGICIAN2-BLANK_PAINTING.description": "[gold]不能被打出。[/gold]\n使用印记将使画作完成。",
-  "HATMAGICIAN2-BLANK_PAINTING.title": "空白画作"
+  "HATMAGICIAN2-BLANK_PAINTING.title": "空白画作",
+
+  "HATMAGICIAN2-LIGHTNING_STRIKE.description": "给予[gold]闪电[/gold]印记。\n造成{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-LIGHTNING_STRIKE.title": "雷击"
 }

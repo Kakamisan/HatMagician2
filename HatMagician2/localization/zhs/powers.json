@@ -1,3 +1,13 @@
 {
-  
+  "HATMAGICIAN2-BRAND_POWER.description": "",
+  "HATMAGICIAN2-BRAND_POWER.smartDescription": "",
+  "HATMAGICIAN2-BRAND_POWER.title": "印记",
+
+  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动：每回合受到6点伤害。\n刻印：下一次受到的攻击伤害变为2倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动：每回合受到6点伤害。\n刻印：下一次受到的攻击伤害变为2倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.title": "火焰印记",
+
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动：每回合产生[blue]3[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]5[/blue]点连锁伤害。",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动：每回合产生[blue]{Passive}[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]{Evoke}[/blue]点连锁伤害。",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.title": "闪电印记"
 }

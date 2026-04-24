@@ -24,12 +24,11 @@ public class HatMagician2 : PlaceholderCharacterModel
         ModelDb.Card<Strike>(),
         ModelDb.Card<Strike>(),
         ModelDb.Card<Strike>(),
-        ModelDb.Card<Strike>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
-        ModelDb.Card<BlankPainting>()
+        ModelDb.Card<LightningStrike>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

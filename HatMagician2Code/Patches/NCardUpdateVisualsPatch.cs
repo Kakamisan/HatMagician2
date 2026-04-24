@@ -152,7 +152,7 @@ public class NCardUpdateVisualsPatch
         label.AddThemeColorOverride(ThemeConstants.Label.FontOutlineColor, color2);
     }
 
-    public static CardCostColor GetStarCostColor(HatMagician2Card card, CombatState? state)
+    public static CardCostColor GetStarCostColor(HatMagician2Card card, ICombatState? state)
     {
         if (state == null)
             return CardCostColor.Unmodified;
@@ -185,7 +185,7 @@ public class NCardUpdateVisualsPatch
 
     public static bool TryModifyBrandColorCostWithHooks(
         HatMagician2Card card,
-        CombatState state,
+        ICombatState state,
         out Decimal hookModifiedCost)
     {
         hookModifiedCost = (Decimal)card.BaseBrandColorCost;
