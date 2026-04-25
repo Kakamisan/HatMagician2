@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using HatMagician2.HatMagician2Code.Cards;
+﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -20,13 +19,13 @@ public class BrandPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
-    protected int BasePassiveVal; // 基础被动值
-    protected int BaseEvokeVal; // 基础刻印值
-    protected int BaseFusionVal; // 基础叠色值
+    protected decimal BasePassiveVal; // 基础被动值
+    protected decimal BaseEvokeVal; // 基础刻印值
+    protected decimal BaseFusionVal; // 基础叠色值
     protected BrandColor BaseBrandColor;
-    protected int PassiveVal => BasePassiveVal;
-    protected int EvokeVal => BaseEvokeVal;
-    protected int FusionVal => BaseFusionVal;
+    protected decimal PassiveVal => BasePassiveVal;
+    protected decimal EvokeVal => BaseEvokeVal;
+    protected decimal FusionVal => BaseFusionVal;
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
     protected virtual string ChannelSfx => "";
@@ -43,7 +42,7 @@ public class BrandPower : HatMagician2Power
         this.Evoked = true;
         await Task.CompletedTask;
     }
-    
+
     // 被动效果
     protected virtual async Task OnPassive()
     {
@@ -56,6 +55,14 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnFusion(HatMagician2Card? cardSource)
     {
         Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
+        this.OnSfx(this.ChannelSfx);
+        await Task.CompletedTask;
+    }
+
+    // 赋予效果 
+    protected virtual async Task OnApply(HatMagician2Card? cardSource)
+    {
+        Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
         this.OnSfx(this.ChannelSfx);
         await Task.CompletedTask;
     }
@@ -77,13 +84,12 @@ public class BrandPower : HatMagician2Power
     }
 
     // 应用印记的逻辑
-    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play,
-        BrandColor color)
+    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color)
     {
         // 检查
         if (color is BrandColor.None or > BrandColor.Rainbow)
             return;
-        
+
         var oldPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
 
         // 实际应用的印记颜色
@@ -112,9 +118,17 @@ public class BrandPower : HatMagician2Power
                 await PowerCmd.Apply<BrandYellowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Blue:
+                await PowerCmd.Apply<BrandBluePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                break;
             case BrandColor.Purple:
+                await PowerCmd.Apply<BrandPurplePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                break;
             case BrandColor.Orange:
+                await PowerCmd.Apply<BrandOrangePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                break;
             case BrandColor.White:
+                await PowerCmd.Apply<BrandWhitePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                break;
             case BrandColor.Rainbow:
                 break;
             default:
@@ -127,9 +141,12 @@ public class BrandPower : HatMagician2Power
         // {
         // }
         var newPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
-        if (newPower != null)
+        if (newPower != null && color != applyColor)
         {
             await newPower.OnFusion(card);
+        } else if (newPower != null)
+        {
+            await newPower.OnApply(card);
         }
 
         // 其他杂项

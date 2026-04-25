@@ -18,12 +18,13 @@ public class BrandRedPower : BrandPower
         BasePassiveVal = 6;
         BaseEvokeVal = 2;
     }
-    
+
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_dark_channel";
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
+        await base.OnEvoke(card);
         // 如果是攻击牌则直接触发N倍伤害效果 否则添加灼痕
         if (WillTriggerMultiDamage(card))
         {
@@ -32,11 +33,8 @@ public class BrandRedPower : BrandPower
         else
         {
             var stack = this.Owner.HasPower<MultiDamagePower>() ? this.EvokeVal - 1 : this.EvokeVal;
-            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, stack,
-                card?.Owner.Creature, card);
+            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, stack, card?.Owner.Creature, null);
         }
-
-        await base.OnEvoke(card);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
@@ -52,8 +50,7 @@ public class BrandRedPower : BrandPower
     }
 
     // 只用于预览计算伤害 实际倍率在card.NextPlayMulti
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         return WillTriggerMultiDamage(cardSource) && target == this.Owner
             ? WillTriggerMulti(this)

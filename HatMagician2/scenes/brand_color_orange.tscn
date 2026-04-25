@@ -10,6 +10,12 @@ visible = false
 [node name="Sprite2D5" parent="Visuals" index="6"]
 visible = true
 
+[node name="Bounds" parent="." index="1"]
+offset_left = 120.0
+offset_top = -164.0
+offset_right = 151.0
+offset_bottom = -106.0
+
 [node name="IntentPos" parent="." index="2"]
 position = Vector2(133, -173)
 
@@ -17,7 +23,7 @@ position = Vector2(133, -173)
 position = Vector2(134, -134)
 
 [node name="PassiveAmount" parent="." index="4"]
-offset_left = 129.0
-offset_top = -131.0
-offset_right = 169.0
-offset_bottom = -97.0
+offset_left = 126.0
+offset_top = -134.0
+offset_right = 166.0
+offset_bottom = -100.0

@@ -1,0 +1,17 @@
+﻿using BaseLib.Patches.Content;
+using MegaCrit.Sts2.Core.Entities.Cards;
+
+namespace HatMagician2.HatMagician2Code.Character;
+
+public class HatMagician2Keywords
+{
+    [CustomEnum("CHAIN")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Chain;    // 连锁
+    [CustomEnum("EVOKE")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Evoke;    // 刻印
+    [CustomEnum("FUSION")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Fusion;   // 叠色
+}

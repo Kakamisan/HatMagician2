@@ -25,10 +25,10 @@ offset_bottom = -118.0
 position = Vector2(-123, -180)
 
 [node name="CenterPos" parent="." index="3"]
-position = Vector2(-120, -146)
+position = Vector2(-121, -146)
 
 [node name="PassiveAmount" parent="." index="4"]
-offset_left = -122.0
-offset_top = -148.0
-offset_right = -82.0
-offset_bottom = -114.0
+offset_left = -128.0
+offset_top = -147.0
+offset_right = -88.0
+offset_bottom = -113.0

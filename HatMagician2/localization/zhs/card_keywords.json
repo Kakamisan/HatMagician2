@@ -1,3 +1,8 @@
 {
-  
+  "HATMAGICIAN2-CHAIN.description": "对所有拥有印记的目标生效",
+  "HATMAGICIAN2-CHAIN.title": "连锁",
+  "HATMAGICIAN2-EVOKE.description": "移除并使用印记刻印效果",
+  "HATMAGICIAN2-EVOKE.title": "刻印",
+  "HATMAGICIAN2-FUSION.description": "两个印记合成新印记并使用其叠色效果，叠色规则:\n紫=红+蓝\n橙=红+黄\n白=黄+蓝\n虹=红+黄+蓝",
+  "HATMAGICIAN2-FUSION.title": "叠色"
 }

@@ -43,7 +43,7 @@ position = Vector2(-109, -233)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-109, -190)
+position = Vector2(-107, -190)
 
 [node name="PassiveAmount" type="Label" parent="."]
 unique_name_in_owner = true

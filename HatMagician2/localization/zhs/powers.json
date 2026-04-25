@@ -1,17 +1,33 @@
 {
-  "HATMAGICIAN2-BRAND_POWER.description": "",
+  "HATMAGICIAN2-BRAND_POWER.description": "·每个目标至多拥有一个印记\n·给予印记会使原有印记[gold]刻印[/gold]\n·满足条件时，给予的印记会与原有印记[gold]叠色[/gold]成新印记并使用其叠色效果，叠色规则:\n·紫=红+蓝 ·橙=红+黄\n·白=黄+蓝 ·虹=红+黄+蓝",
   "HATMAGICIAN2-BRAND_POWER.smartDescription": "",
   "HATMAGICIAN2-BRAND_POWER.title": "印记",
 
-  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动：每回合受到[blue]6[/blue]点伤害。\n刻印：下一次受到的攻击伤害变为[blue]2[/blue]倍。",
-  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动：每回合受到[blue]{Passive}[/blue]点伤害。\n刻印：下一次受到的攻击伤害变为[blue]{Evoke}[/blue]倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动:每回合受到[blue]6[/blue]点伤害\n刻印:下一次受到的攻击伤害变为[blue]2[/blue]倍",
+  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动:每回合受到[blue]{Passive}[/blue]点伤害\n刻印:下一次受到的攻击伤害变为[blue]{Evoke}[/blue]倍",
   "HATMAGICIAN2-BRAND_RED_POWER.title": "火焰印记",
 
-  "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动：每回合产生[blue]3[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]5[/blue]点连锁伤害。",
-  "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动：每回合产生[blue]{Passive}[/blue]点连锁伤害。\n刻印：给予[blue]1[/blue]层易伤，产生[blue]{Evoke}[/blue]点连锁伤害。",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动:每回合产生[blue]3[/blue]点[gold]连锁[/gold]伤害\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]5[/blue]点[gold]连锁[/gold]伤害",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动:每回合产生[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]{Evoke}[/blue]点[gold]连锁[/gold]伤害",
   "HATMAGICIAN2-BRAND_YELLOW_POWER.title": "闪电印记",
+  
+  "HATMAGICIAN2-BRAND_BLUE_POWER.description": "被动:失去[blue]2[/blue]点[gold]力量[/gold]\n刻印:给予[blue]2[/blue]层[gold]虚弱[/gold]",
+  "HATMAGICIAN2-BRAND_BLUE_POWER.smartDescription": "被动:失去[blue]{Passive}[/blue]点[gold]力量[/gold]\n刻印:给予[blue]{Evoke}[/blue]层[gold]虚弱[/gold]",
+  "HATMAGICIAN2-BRAND_BLUE_POWER.title": "冰霜印记",
+  
+  "HATMAGICIAN2-BRAND_ORANGE_POWER.description": "被动:每回合产生[blue]6[/blue]点[gold]连锁[/gold]伤害\n刻印:下一次受到的攻击伤害会对其他目标造成等量伤害\n叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]",
+  "HATMAGICIAN2-BRAND_ORANGE_POWER.smartDescription": "被动:每回合产生[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害\n刻印:下一次受到的攻击伤害会对其他目标造成等量伤害\n叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]",
+  "HATMAGICIAN2-BRAND_ORANGE_POWER.title": "黄昏印记",
+  
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.description": "被动:伤害降低[blue]25[/blue]%\n刻印:本回合失去[blue]4[/blue]点[gold]力量[/gold]，给予[blue]6[/blue]层[gold]消亡[/gold]\n叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.smartDescription": "被动:伤害降低[blue]{Passive}[/blue]%\n刻印:本回合失去[blue]{StrengthPower}[/blue]点[gold]力量[/gold]，给予[blue]{Evoke}[/blue]层[gold]消亡[/gold]\n叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.title": "紫幽印记",
+  
+  "HATMAGICIAN2-BRAND_WHITE_POWER.description": "被动:每回合收集[blue]1[/blue]点随机[gold]绘色[/gold]\n刻印:抽[blue]2[/blue]张牌，获得[blue]5[/blue]点格挡\n叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]",
+  "HATMAGICIAN2-BRAND_WHITE_POWER.smartDescription": "被动:每回合收集[blue]{Passive}[/blue]点随机[gold]绘色[/gold]\n刻印:抽[blue]{Evoke}[/blue]张牌，获得[blue]{Block}[/blue]点格挡\n叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]",
+  "HATMAGICIAN2-BRAND_WHITE_POWER.title": "光辉印记",
 
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下一次受到的攻击伤害变为[blue]2[/blue]倍。",
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下一次受到的攻击伤害变为[blue]{Amount}[/blue]倍。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下一次受到的攻击伤害变为[blue]2[/blue]倍",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下一次受到的攻击伤害变为[blue]{Amount}[/blue]倍",
   "HATMAGICIAN2-MULTI_DAMAGE_POWER.title": "灼痕"
 }

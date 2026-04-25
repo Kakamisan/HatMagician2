@@ -20,8 +20,7 @@ public class MultiDamagePower : HatMagician2Power
 
     // 被攻击牌攻击时 伤害x倍数
     // 如果已经设置了card.NextPlayMulti则不应用加成
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         // var val = base.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource);
         if (IsTriggerMulti(cardSource) && this.Owner == target &&
@@ -32,9 +31,7 @@ public class MultiDamagePower : HatMagician2Power
     }
 
     // 受到攻击后删除能力
-    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result,
-        ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (IsTriggerMulti(cardSource) && this.Owner == target)
         {
@@ -46,8 +43,7 @@ public class MultiDamagePower : HatMagician2Power
     }
 
     // 是否触发倍伤 攻击牌即触发 （后续优化 伤害大于0才触发？暂时没思路）
-    public static bool IsTriggerMulti(CardModel? cardSource, decimal amount = 1) =>
-        cardSource is { Type: CardType.Attack } && amount > 0;
+    public static bool IsTriggerMulti(CardModel? cardSource, decimal amount = 1) => cardSource is { Type: CardType.Attack } && amount > 0;
 
     // 外部获取已有的灼痕倍数
     public static decimal GetNowMulti(Creature target)

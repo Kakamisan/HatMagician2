@@ -1,6 +1,7 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
+using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
 using HatMagician2.HatMagician2Code.Powers;
@@ -8,6 +9,7 @@ using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -46,6 +48,38 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 绘色X费
     public bool HasBrandColorCostX = false;
+
+    // 印记提示
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            var hasExtra = false;
+            IEnumerable<IHoverTip> baseTips =
+            [
+                HoverTipFactory.FromPower<BrandPower>()
+            ];
+            if (this.BaseBrandColor is > BrandColor.None and <= BrandColor.Rainbow)
+                hasExtra = true;
+            switch (this.BaseBrandColor)
+            {
+                case BrandColor.Red:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>());
+                    break;
+                case BrandColor.Blue:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>());
+                    break;
+                case BrandColor.Yellow:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>());
+                    break;
+                case BrandColor.Orange:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>());
+                    break;
+            }
+
+            return hasExtra ? baseTips : [];
+        }
+    }
 
     /*已改成patch原版能量检查
     protected override bool IsPlayable => this.CheckBrandColorResource();
@@ -99,6 +133,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             this.IsBrandApplied = false;
             this.NextPlayMulti = 1;
         }
+
         return base.AfterCardPlayed(choiceContext, cardPlay);
     }
 }

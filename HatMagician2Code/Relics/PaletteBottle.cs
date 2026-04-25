@@ -5,6 +5,7 @@ using HatMagician2.HatMagician2Code.Monsters;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -36,6 +37,9 @@ public class PaletteBottle : HatMagician2Relic
         this.BrandColorEnergyMap[BrandColor.Red] = 3;
         this.BrandColorEnergyMap[BrandColor.Blue] = 3;
         this.BrandColorEnergyMap[BrandColor.Yellow] = 3;
+        this.BrandColorEnergyMap[BrandColor.Purple] = 0;
+        this.BrandColorEnergyMap[BrandColor.Orange] = 0;
+        this.BrandColorEnergyMap[BrandColor.White] = 0;
         await SummonPet();
     }
 
@@ -110,6 +114,33 @@ public class PaletteBottle : HatMagician2Relic
         {
             pet.SetEnergy(this.BrandColorEnergyMap[color]);
         }
+    }
+
+    public static async Task AddEnergy(Player player, int amount, BrandColor color = BrandColor.Any)
+    {
+        var relic = player.GetRelic<PaletteBottle>();
+        if (relic == null)
+            return;
+        var applyColor = color;
+        if (applyColor == BrandColor.Any)
+        {
+            applyColor = (BrandColor)(new Random().Next((int)BrandColor.Red, (int)BrandColor.White));
+            relic.AddEnergy(applyColor, amount);
+            return;
+        }
+
+        if (applyColor == BrandColor.All)
+        {
+            var c = BrandColor.Red;
+            while (c < BrandColor.Rainbow)
+            {
+                relic.AddEnergy(c, amount);
+                c++;
+            }
+            return;
+        }
+        
+        relic.AddEnergy(applyColor, amount);
     }
 
     public static Decimal ModifyBrandColorCost(

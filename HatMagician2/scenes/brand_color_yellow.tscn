@@ -30,6 +30,12 @@ visible = false
 position = Vector2(396, -99.66666)
 texture = ExtResource("5_6x6v1")
 
+[node name="Bounds" parent="." index="1"]
+offset_left = -73.0
+offset_top = -151.0
+offset_right = -42.0
+offset_bottom = -93.0
+
 [node name="IntentPos" parent="." index="2"]
 position = Vector2(-59, -169)
 
@@ -37,7 +43,7 @@ position = Vector2(-59, -169)
 position = Vector2(-57, -122)
 
 [node name="PassiveAmount" parent="." index="4"]
-offset_left = -60.0
-offset_top = -120.0
-offset_right = -20.0
-offset_bottom = -86.0
+offset_left = -64.0
+offset_top = -122.0
+offset_right = -24.0
+offset_bottom = -88.0
