@@ -129,7 +129,7 @@ public class PaletteBottle : HatMagician2Relic
             return;
         }
 
-        if (applyColor == BrandColor.All)
+        if (applyColor is BrandColor.All or BrandColor.Rainbow)
         {
             var c = BrandColor.Red;
             while (c < BrandColor.Rainbow)

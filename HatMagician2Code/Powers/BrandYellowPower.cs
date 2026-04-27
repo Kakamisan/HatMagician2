@@ -2,11 +2,9 @@
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
@@ -28,29 +26,22 @@ public class BrandYellowPower : BrandPower
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
+        await base.OnEvoke(card);
         if (!this.Owner.IsAlive)
             return;
         if (this.Owner.CombatState == null)
             return;
-        var enemies = this.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower)).ToList();
-        foreach (var target1 in (IEnumerable<Creature>)enemies)
-            VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
-        await base.OnEvoke(card);
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, this.EvokeVal, ValueProp.Unpowered, this.Applier, null);
+        await BrandPower.ChainDamageCmd(this, this.EvokeVal);
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, 1, this.Applier, null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
+        await base.OnPassive();
         if (side != this.Owner.Side)
             return;
         if (this.Owner.CombatState == null)
             return;
-        var enemies = this.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower)).ToList();
-        foreach (var target1 in (IEnumerable<Creature>)enemies)
-            VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
-        await base.OnPassive();
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, this.PassiveVal, ValueProp.Unpowered, this.Applier, null);
-        // await Cmd.CustomScaledWait(0.1f, 0.25f);
+        await BrandPower.ChainDamageCmd(this, this.PassiveVal);
     }
 }

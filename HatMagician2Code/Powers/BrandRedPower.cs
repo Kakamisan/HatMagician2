@@ -23,8 +23,8 @@ public class BrandRedPower : BrandPower
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
-        VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
         await base.OnEvoke(card);
+        VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
         // 如果是攻击牌则直接触发N倍伤害效果 否则添加灼痕
         if (WillTriggerMultiDamage(card))
         {
@@ -39,14 +39,13 @@ public class BrandRedPower : BrandPower
 
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
+        await base.OnPassive();
         if (side != this.Owner.Side)
             return;
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
-        await base.OnPassive();
         IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(),
             this.Owner,
             this.PassiveVal, ValueProp.Unpowered, null, null);
-        // await Cmd.CustomScaledWait(0.1f, 0.25f);
     }
 
     // 只用于预览计算伤害 实际倍率在card.NextPlayMulti

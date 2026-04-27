@@ -15,23 +15,21 @@ public class BrandWhitePower : BrandPower
     {
         BaseBrandColor = BrandColor.White;
         BasePassiveVal = 1;
-        BaseEvokeVal = 2; // 抽牌数
-        BaseFusionVal = 1;
+        BaseEvokeVal = 2;
+        BaseFusionVal = 6;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new BlockVar(5, ValueProp.Unpowered)); // 格挡数
+    // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new BlockVar(5, ValueProp.Unpowered)); // 格挡数
     
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
+        await base.OnEvoke(card);
         if (!this.Owner.IsAlive)
             return;
         if (this.Owner.CombatState == null)
             return;
         if (this.Applier?.Player == null)
             return;
-        // VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_attack_lightning");
-        await base.OnEvoke(card);
-        await CreatureCmd.GainBlock(this.Applier, this.DynamicVars.Block, null);
         await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, this.Applier.Player);
     }
 
@@ -40,18 +38,19 @@ public class BrandWhitePower : BrandPower
         await base.OnFusion(cardSource);
         if (this.Applier?.Player == null)
             return;
-        await PaletteBottle.AddEnergy(this.Applier.Player, (int)this.FusionVal, this.BaseBrandColor);
+        await PaletteBottle.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
+        await CreatureCmd.GainBlock(this.Applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
     }
     
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
+        await base.OnPassive();
         if (side != this.Owner.Side)
             return;
         if (this.Owner.CombatState == null)
             return;
         if (this.Applier?.Player == null)
             return;
-        await base.OnPassive();
-        await PaletteBottle.AddEnergy(this.Applier.Player, 1);
+        await PaletteBottle.AddEnergy(this.Applier.Player, (int)this.PassiveVal);
     }
 }

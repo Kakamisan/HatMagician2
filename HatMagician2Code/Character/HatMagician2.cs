@@ -28,7 +28,8 @@ public class HatMagician2 : PlaceholderCharacterModel
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
-        ModelDb.Card<LightningStrike>(),
+        ModelDb.Card<ColorfulPen>(),
+        ModelDb.Card<Lightning>(),
         ModelDb.Card<Fire>()
     ];
 

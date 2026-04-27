@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
@@ -38,7 +39,6 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnEvoke(HatMagician2Card? cardSource)
     {
         Log.Info("[   Hat2   ]OnEvoke:" + this.BaseBrandColor);
-        this.OnSfx(this.EvokeSfx);
         this.Evoked = true;
         await Task.CompletedTask;
     }
@@ -47,7 +47,6 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnPassive()
     {
         Log.Info("[   Hat2   ]OnPassive:" + this.BaseBrandColor);
-        this.OnSfx(this.PassiveSfx);
         await Task.CompletedTask;
     }
 
@@ -55,15 +54,16 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnFusion(HatMagician2Card? cardSource)
     {
         Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
-        this.OnSfx(this.ChannelSfx);
         await Task.CompletedTask;
     }
 
     // 赋予效果 
-    protected virtual async Task OnApply(HatMagician2Card? cardSource)
+    protected virtual async Task OnApply(HatMagician2Card? cardSource, bool isFusion = false)
     {
         Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
         this.OnSfx(this.ChannelSfx);
+        if (isFusion)
+            await this.OnFusion(cardSource);
         await Task.CompletedTask;
     }
 
@@ -130,26 +130,42 @@ public class BrandPower : HatMagician2Power
                 await PowerCmd.Apply<BrandWhitePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Rainbow:
-                break;
-            default:
-                await PowerCmd.Apply<BrandYellowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandRainbowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
                 break;
         }
 
-        // 叠色效果
-        // if (color != applyColor)
-        // {
-        // }
+        // 是否触发叠色效果
         var newPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
+        var isFusion = false;
         if (newPower != null && color != applyColor)
         {
-            await newPower.OnFusion(card);
-        } else if (newPower != null)
+            isFusion = true;
+        }
+
+        if (newPower != null)
         {
-            await newPower.OnApply(card);
+            await newPower.OnApply(card, isFusion);
         }
 
         // 其他杂项
         card.IsBrandApplied = true;
+    }
+
+    // 连锁伤害
+    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true)
+    {
+        if (!power.Owner.IsAlive)
+            return;
+        if (power.Owner.CombatState == null)
+            return;
+        var enemies = power.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower)).ToList();
+        if (withDefaultVfx)
+        {
+            foreach (var target1 in (IEnumerable<Creature>)enemies)
+                VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
+            SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
+        }
+
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, damage, ValueProp.Unpowered, power.Applier, null);
     }
 }
