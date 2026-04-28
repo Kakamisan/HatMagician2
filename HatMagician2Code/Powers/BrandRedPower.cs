@@ -62,8 +62,11 @@ public class BrandRedPower : BrandPower
     {
         return cardSource is HatMagician2Card
         {
-            Type: CardType.Attack, BaseBrandColor: not BrandColor.None, NextPlayMulti: 1, IsBrandApplied: false
-        };
+            Type: CardType.Attack, BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, NextPlayMulti: 1, IsBrandApplied: false
+        } || (cardSource?.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke) == true && cardSource is HatMagician2Card
+        {
+            Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false
+        });
     }
 
     public static bool WillTriggerMultiDamage(CardModel? cardSource, Creature? target)

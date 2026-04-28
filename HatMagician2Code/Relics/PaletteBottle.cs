@@ -1,4 +1,5 @@
 ﻿using BaseLib.Utils;
+using Godot;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Monsters;
@@ -69,7 +70,7 @@ public class PaletteBottle : HatMagician2Relic
         foreach (var key in this.PetVisuals.Keys)
         {
             int energy = this.BrandColorEnergyMap.GetValueOrDefault(key, 0);
-            this.PetVisuals[key]?.SetEnergy(energy);
+            this.PetVisuals[key]?.SetEnergy(energy, null);
         }
     }
 
@@ -96,7 +97,7 @@ public class PaletteBottle : HatMagician2Relic
         // 更新对应颜色的宠物显示
         if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+            pet.SetEnergy(this.BrandColorEnergyMap[color], new Color("#ec3154"));
         }
     }
 
@@ -112,7 +113,7 @@ public class PaletteBottle : HatMagician2Relic
         // 更新对应颜色的宠物显示
         if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+            pet.SetEnergy(this.BrandColorEnergyMap[color], new Color("#f3fef9"));
         }
     }
 
@@ -124,7 +125,7 @@ public class PaletteBottle : HatMagician2Relic
         var applyColor = color;
         if (applyColor == BrandColor.Any)
         {
-            applyColor = (BrandColor)(new Random().Next((int)BrandColor.Red, (int)BrandColor.White));
+            applyColor = (BrandColor)player.RunState.Rng.CombatEnergyCosts.NextInt((int)BrandColor.Red, (int)BrandColor.White);
             relic.AddEnergy(applyColor, amount);
             return;
         }

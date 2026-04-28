@@ -29,8 +29,8 @@ public class HatMagician2 : PlaceholderCharacterModel
         ModelDb.Card<Defend>(),
         ModelDb.Card<Defend>(),
         ModelDb.Card<ColorfulPen>(),
-        ModelDb.Card<Lightning>(),
-        ModelDb.Card<Fire>()
+        ModelDb.Card<Grind>(),
+        ModelDb.Card<BrandSetOff>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

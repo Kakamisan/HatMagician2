@@ -1,11 +1,14 @@
-﻿using HatMagician2.HatMagician2Code.Character;
+﻿using BaseLib.Utils;
+using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
+[Pool(typeof(ColorlessCardPool))]
 public class Lightning : HatMagician2Card
 {
     public Lightning() : base(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)

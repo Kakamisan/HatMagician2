@@ -18,20 +18,18 @@ public class LightningStrike : HatMagician2Card
         BaseBrandColorCost = 1;
         BaseBrandColor = BrandColor.Yellow;
     }
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7M, ValueProp.Move)];
 
-    protected override async Task OnPlay(
-        PlayerChoiceContext choiceContext,
-        CardPlay play)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // 应用印记效果
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
             .FromCard(this) // 伤害来源于这张卡牌
             .Targeting(play.Target!) // 伤害目标是玩家选择的目标
+            .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3M);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(3M);
 }

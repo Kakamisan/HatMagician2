@@ -1,14 +1,18 @@
-﻿using HatMagician2.HatMagician2Code.Cards;
+﻿using BaseLib.Utils;
+using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
+[Pool(typeof(HatMagician2CardPool))]
 public class ColorfulPen : HatMagician2Card
 {
     private CardModel? _mockSelectedCard;
@@ -22,6 +26,8 @@ public class ColorfulPen : HatMagician2Card
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Fire>(), HoverTipFactory.FromCard<Lightning>(), HoverTipFactory.FromCard<Ice>()];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         CardModel? card;
@@ -29,7 +35,8 @@ public class ColorfulPen : HatMagician2Card
         if (player.Creature.CombatState is null)
             return;
         if (this._mockSelectedCard is null)
-            card = await CardSelectCmd.FromChooseACardScreen(choiceContext, GenCards([ModelDb.Card<Fire>(), ModelDb.Card<Lightning>(), ModelDb.Card<Ice>()], player), this.Owner, true);
+            card = await CardSelectCmd.FromChooseACardScreen(choiceContext, GenCards([ModelDb.Card<Fire>(), ModelDb.Card<Lightning>(), ModelDb.Card<Ice>()], player), this.Owner,
+                true);
         else
             card = this._mockSelectedCard;
 

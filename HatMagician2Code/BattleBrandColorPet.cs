@@ -44,9 +44,16 @@ public partial class BattleBrandColorPet : NCreatureVisuals
         }
     }
 
-    public void SetEnergy(int energy)
+    public void Flash(Color? flash)
+    {
+        
+    }
+
+    public void SetEnergy(int energy, Color? flash)
     {
         this._energy = energy;
         this.UpdateVisuals();
+        if (flash != null)
+            this.Flash(flash);
     }
 }

@@ -14,4 +14,7 @@ public class HatMagician2Keywords
     [CustomEnum("FUSION")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Fusion;   // 叠色
+    [CustomEnum("COLOR")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Color;    // 绘色
 }

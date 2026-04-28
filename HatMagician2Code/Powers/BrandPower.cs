@@ -11,11 +11,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
-// public interface IBrandPower
-// {
-//     static HatMagician2BrandColor BaseBrandColor;
-// }
-
 public class BrandPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;
@@ -63,7 +58,10 @@ public class BrandPower : HatMagician2Power
         Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
         this.OnSfx(this.ChannelSfx);
         if (isFusion)
+        {
             await this.OnFusion(cardSource);
+        }
+
         await Task.CompletedTask;
     }
 
@@ -149,6 +147,19 @@ public class BrandPower : HatMagician2Power
 
         // 其他杂项
         card.IsBrandApplied = true;
+    }
+
+    // 应用刻印效果
+    public static async Task ApplyBrandEvoke(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        var oldPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
+
+        // 触发刻印效果
+        if (oldPower != null)
+        {
+            await oldPower.OnEvoke(card);
+            await PowerCmd.Remove(oldPower);
+        }
     }
 
     // 连锁伤害

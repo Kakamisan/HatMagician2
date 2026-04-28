@@ -15,7 +15,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
-[Pool(typeof(HatMagician2CardPool))]
 public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarity, TargetType target) : CustomCardModel(cost, type, rarity, target), IHatMagician2AbstractModel
 {
     //Image size:
@@ -46,7 +45,6 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 绘色X费
     public bool HasBrandColorCostX = false;
-
 
     // 印记提示
     protected override IEnumerable<IHoverTip> ExtraHoverTips
@@ -96,7 +94,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return false;
     }
     */
-    
+
     // 获取经过能力等修改后的绘色消耗
     public int GetBrandColorCostWithModifiers()
     {
