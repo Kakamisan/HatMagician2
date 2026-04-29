@@ -1,29 +1,208 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlh26orowgwni"]
+[gd_scene load_steps=19 format=3 uid="uid://dlh26orowgwni"]
 
-[ext_resource type="PackedScene" uid="uid://blev61loxqhxv" path="res://HatMagician2/scenes/brand_color_orange.tscn" id="1_ijrdj"]
+[ext_resource type="Script" uid="uid://dx36kygcu7k7j" path="res://HatMagician2Code/BattleBrandColorPet.cs" id="1_y7cih"]
+[ext_resource type="Texture2D" uid="uid://cfbt8uip1hbb" path="res://HatMagician2/scenes/battle_shadow.png" id="2_rfaul"]
+[ext_resource type="Texture2D" uid="uid://l3cggrjprwbo" path="res://HatMagician2/scenes/battle2.png" id="3_ckcnu"]
+[ext_resource type="Shader" uid="uid://3sv6vmx5y6fb" path="res://HatMagician2/scenes/ghost_glow.gdshader" id="4_7xhvs"]
+[ext_resource type="Texture2D" uid="uid://bm7qimupsxd16" path="res://HatMagician2/scenes/brandRed.png" id="5_fb8n1"]
+[ext_resource type="Texture2D" uid="uid://056y7fchd6dc" path="res://HatMagician2/scenes/brandYellow.png" id="6_6m5uy"]
+[ext_resource type="Texture2D" uid="uid://dbecn2n0xtfcs" path="res://HatMagician2/scenes/brandBlue.png" id="7_gobg4"]
+[ext_resource type="Texture2D" uid="uid://dbrj8ddej74ob" path="res://HatMagician2/scenes/brandPurple.png" id="8_wdqul"]
+[ext_resource type="Texture2D" uid="uid://caea0p2qvuqyk" path="res://HatMagician2/scenes/brandWhite.png" id="9_lp6ed"]
+[ext_resource type="Texture2D" uid="uid://chvhhg6ufwslv" path="res://HatMagician2/scenes/brandOrange.png" id="10_vl6qf"]
+[ext_resource type="FontVariation" uid="uid://ux4d708e7mk6" path="res://HatMagician2/themes/kreon_bold_glyph_space_one.tres" id="11_b0a7o"]
+[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/BattleLabel.cs" id="12_7dfo0"]
 
-[node name="brand_color_white" instance=ExtResource("1_ijrdj")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uubbk"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
 
-[node name="Sprite2D5" parent="Visuals" index="6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kj4pd"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3o3y"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vdpf4"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_78s88"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7grc1"]
+shader = ExtResource("4_7xhvs")
+shader_parameter/ghost_spacing = 0.6
+shader_parameter/progress = 0.0
+
+[node name="brand_color_red" type="Node2D"]
+script = ExtResource("1_y7cih")
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-0.79999924, -165.1)
+scale = Vector2(0.3, 0.3)
+
+[node name="shadow" type="Sprite2D" parent="Visuals"]
 visible = false
+texture = ExtResource("2_rfaul")
 
-[node name="Sprite2D6" parent="Visuals" index="7"]
-visible = true
+[node name="body" type="Sprite2D" parent="Visuals"]
+visible = false
+texture = ExtResource("3_ckcnu")
 
-[node name="Bounds" parent="." index="1"]
-offset_left = 104.0
-offset_top = -224.0
-offset_right = 135.0
-offset_bottom = -166.0
+[node name="brand_red" type="TextureRect" parent="Visuals"]
+visible = false
+material = SubResource("ShaderMaterial_uubbk")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -453.99997
+offset_top = -269.66663
+offset_right = -253.99997
+offset_bottom = 90.333374
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_fb8n1")
+stretch_mode = 3
 
-[node name="IntentPos" parent="." index="2"]
-position = Vector2(117, -235)
+[node name="brand_yellow" type="TextureRect" parent="Visuals"]
+visible = false
+material = SubResource("ShaderMaterial_kj4pd")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -447.333
+offset_top = -22.999985
+offset_right = -347.333
+offset_bottom = 157.00002
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_6m5uy")
+stretch_mode = 3
 
-[node name="CenterPos" parent="." index="3"]
-position = Vector2(118, -193)
+[node name="brand_blue" type="TextureRect" parent="Visuals"]
+visible = false
+material = SubResource("ShaderMaterial_e3o3y")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = 53.666687
+offset_right = -84.0
+offset_bottom = 233.66669
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_gobg4")
+stretch_mode = 3
 
-[node name="PassiveAmount" parent="." index="4"]
+[node name="brand_purple" type="TextureRect" parent="Visuals"]
+visible = false
+material = SubResource("ShaderMaterial_vdpf4")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 172.66669
+offset_top = 50.333344
+offset_right = 272.66672
+offset_bottom = 230.33334
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_wdqul")
+stretch_mode = 3
+
+[node name="brand_white" type="TextureRect" parent="Visuals"]
+material = SubResource("ShaderMaterial_78s88")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 342.66675
+offset_top = -179.66669
+offset_right = 442.66675
+offset_bottom = 0.333313
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_lp6ed")
+stretch_mode = 3
+
+[node name="brand_orange" type="TextureRect" parent="Visuals"]
+visible = false
+material = SubResource("ShaderMaterial_7grc1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 405.99976
+offset_top = -26.333282
+offset_right = 505.99976
+offset_bottom = 153.66672
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_vl6qf")
+stretch_mode = 3
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 102.0
+offset_top = -220.0
+offset_right = 132.0
+offset_bottom = -163.0
+mouse_filter = 2
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(116, -227)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(117, -190)
+
+[node name="PassiveAmount" type="Label" parent="."]
+unique_name_in_owner = true
 offset_left = 110.0
-offset_top = -193.0
+offset_top = -190.0
 offset_right = 150.0
-offset_bottom = -159.0
+offset_bottom = -156.0
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("11_b0a7o")
+theme_override_font_sizes/font_size = 24
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 2
+script = ExtResource("12_7dfo0")
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 24
+theme_override_fonts/font = ExtResource("11_b0a7o")

@@ -70,8 +70,9 @@ public class PaletteBottle : HatMagician2Relic
         foreach (var key in this.PetVisuals.Keys)
         {
             int energy = this.BrandColorEnergyMap.GetValueOrDefault(key, 0);
-            this.PetVisuals[key]?.SetEnergy(energy, null);
+            this.PetVisuals[key]?.SetEnergy(energy);
         }
+        SfxCmd.Play("event:/sfx/ui/gain_energy");
     }
 
     public override Task AfterCombatEnd(CombatRoom _)
@@ -97,7 +98,7 @@ public class PaletteBottle : HatMagician2Relic
         // 更新对应颜色的宠物显示
         if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color], new Color("#ec3154"));
+            pet.SetEnergy(this.BrandColorEnergyMap[color]);
         }
     }
 
@@ -113,7 +114,8 @@ public class PaletteBottle : HatMagician2Relic
         // 更新对应颜色的宠物显示
         if (this.PetVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color], new Color("#f3fef9"));
+            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+            SfxCmd.Play("event:/sfx/ui/gain_energy");
         }
     }
 
