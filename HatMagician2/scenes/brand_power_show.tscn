@@ -1,6 +1,302 @@
-[gd_scene load_steps=2 format=3 uid="uid://boftj8nqaqv4y"]
+[gd_scene load_steps=10 format=3 uid="uid://boftj8nqaqv4y"]
 
 [ext_resource type="Script" uid="uid://dnpow0d4lf0qs" path="res://HatMagician2Code/BrandPowerShow.cs" id="1_oojh6"]
+[ext_resource type="Texture2D" uid="uid://bm7qimupsxd16" path="res://HatMagician2/scenes/brandRed.png" id="2_igeiv"]
+[ext_resource type="Texture2D" uid="uid://056y7fchd6dc" path="res://HatMagician2/scenes/brandYellow.png" id="3_slqya"]
+[ext_resource type="Texture2D" uid="uid://dbecn2n0xtfcs" path="res://HatMagician2/scenes/brandBlue.png" id="4_u4mhy"]
+[ext_resource type="Texture2D" uid="uid://dbrj8ddej74ob" path="res://HatMagician2/scenes/brandPurple.png" id="5_iknwd"]
+[ext_resource type="Texture2D" uid="uid://chvhhg6ufwslv" path="res://HatMagician2/scenes/brandOrange.png" id="6_0ud1u"]
+[ext_resource type="Texture2D" uid="uid://caea0p2qvuqyk" path="res://HatMagician2/scenes/brandWhite.png" id="7_1mff0"]
+[ext_resource type="FontVariation" uid="uid://ux4d708e7mk6" path="res://HatMagician2/themes/kreon_bold_glyph_space_one.tres" id="8_4yc0g"]
+[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/BattleLabel.cs" id="9_psfp4"]
 
 [node name="brand_power_show" type="Node2D"]
+scale = Vector2(0.35, 0.35)
 script = ExtResource("1_oojh6")
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Red" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_igeiv")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Red"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 4.0
+speed_scale = 3.0
+gravity = Vector2(1, -4.5)
+tangential_accel_min = -10.0
+tangential_accel_max = 10.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(1, 0.22709695, 0.38706324, 1)
+
+[node name="Yellow" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_slqya")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Yellow"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 2.0
+speed_scale = 1.5
+gravity = Vector2(1, -4.5)
+linear_accel_min = -6.0
+linear_accel_max = 6.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(0.90588236, 0.91764706, 0.19215687, 1)
+
+[node name="Blue" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_u4mhy")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Blue"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 2.0
+speed_scale = 1.5
+gravity = Vector2(1, -4.5)
+linear_accel_min = -6.0
+linear_accel_max = 6.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(0.19215687, 0.6901961, 0.92156863, 1)
+
+[node name="Purple" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_iknwd")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Purple"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 2.0
+speed_scale = 1.5
+gravity = Vector2(1, -4.5)
+linear_accel_min = -6.0
+linear_accel_max = 6.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(0.7607843, 0.19215687, 0.9137255, 1)
+
+[node name="Orange" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_0ud1u")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Orange"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 2.0
+speed_scale = 1.5
+gravity = Vector2(1, -4.5)
+linear_accel_min = -6.0
+linear_accel_max = 6.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(0.9098039, 0.3882353, 0.19215687, 1)
+
+[node name="White" type="TextureRect" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.00001
+offset_top = -180.00002
+offset_right = 99.99999
+offset_bottom = 179.99998
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_1mff0")
+metadata/_edit_lock_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/White"]
+position = Vector2(101, 201)
+amount = 10
+lifetime = 2.0
+speed_scale = 1.5
+gravity = Vector2(1, -4.5)
+linear_accel_min = -6.0
+linear_accel_max = 6.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 1.8
+scale_amount_max = 3.0
+color = Color(0.9098039, 0.9882353, 0.9843137, 1)
+
+[node name="PassiveAmount" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.285715
+offset_top = 22.857141
+offset_right = 70.28571
+offset_bottom = 99.85714
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("8_4yc0g")
+theme_override_font_sizes/font_size = 60
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 2
+script = ExtResource("9_psfp4")
+theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("8_4yc0g")
+theme_override_font_sizes/font_size = 60
+
+[node name="EvokeAmount" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 17.142857
+offset_top = 20.0
+offset_right = 73.14285
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("8_4yc0g")
+theme_override_font_sizes/font_size = 60
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 2
+script = ExtResource("9_psfp4")
+theme_override_colors/font_color = Color(0, 0.9647059, 0.8862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2509804)
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 0.9019608)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("8_4yc0g")
+theme_override_font_sizes/font_size = 60
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_top = -2.2888184e-05
+offset_bottom = -2.2888184e-05
+mouse_filter = 2
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-2.857143, -102.85715)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
