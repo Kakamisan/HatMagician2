@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -38,7 +37,7 @@ public class BrandPurplePower : BrandPower
         if (this.Applier?.Player == null)
             return;
         await PaletteBottle.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
-        await PowerCmd.Apply<DemisePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, this.Applier, null);
+        await PowerCmd.Apply<RoundDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, this.Applier, null);
     }
     
     public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)

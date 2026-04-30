@@ -19,7 +19,7 @@ public class LightningStrike : HatMagician2Card
         BaseBrandColor = BrandColor.Yellow;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7M, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

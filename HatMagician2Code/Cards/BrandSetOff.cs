@@ -22,7 +22,7 @@ public class BrandSetOff : HatMagician2Card
         // BaseBrandColor = BrandColor.Blue;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [HatMagician2Keywords.Evoke];
 

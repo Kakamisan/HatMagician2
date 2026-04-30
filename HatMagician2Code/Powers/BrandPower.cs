@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -18,9 +19,9 @@ public class BrandPower : HatMagician2Power
     protected decimal BasePassiveVal; // 基础被动值
     protected decimal BaseEvokeVal; // 基础刻印值
     protected decimal BaseFusionVal; // 基础叠色值
-    protected BrandColor BaseBrandColor;
-    protected decimal PassiveVal => BasePassiveVal;
-    protected decimal EvokeVal => BaseEvokeVal;
+    public BrandColor BaseBrandColor;
+    public decimal PassiveVal => BasePassiveVal;
+    public decimal EvokeVal => BaseEvokeVal;
     protected decimal FusionVal => BaseFusionVal;
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
@@ -61,7 +62,7 @@ public class BrandPower : HatMagician2Power
         {
             await this.OnFusion(cardSource);
         }
-
+        BrandPowerShow.OnBrandApply(this.Owner, this);
         await Task.CompletedTask;
     }
 
@@ -69,6 +70,7 @@ public class BrandPower : HatMagician2Power
     public override Task AfterRemoved(Creature oldOwner)
     {
         Log.Info("[   Hat2   ]OnRemoved:" + this.BaseBrandColor);
+        BrandPowerShow.OnBrandRemove(oldOwner);
         return base.AfterRemoved(oldOwner);
     }
 
@@ -178,5 +180,11 @@ public class BrandPower : HatMagician2Power
         }
 
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, damage, ValueProp.Unpowered, power.Applier, null);
+    }
+
+    // 是否即将触发刻印
+    public static bool WillEvoke(CardModel? cardSource, Creature? target)
+    {
+        return cardSource is HatMagician2Card card && card.IsEvokeCard() && target?.HasPower<BrandPower>() == true;
     }
 }

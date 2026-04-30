@@ -43,9 +43,7 @@ public class BrandRedPower : BrandPower
         if (side != this.Owner.Side)
             return;
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
-        IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(),
-            this.Owner,
-            this.PassiveVal, ValueProp.Unpowered, null, null);
+        IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.Owner, this.PassiveVal, ValueProp.Unpowered, null, null);
     }
 
     // 只用于预览计算伤害 实际倍率在card.NextPlayMulti
@@ -58,20 +56,14 @@ public class BrandRedPower : BrandPower
 
     // 是否即将刻印火焰印记并造成伤害
     // 只用于预览计算伤害 实际倍率在card.NextPlayMulti 若实际倍率已设置 则不触发本模块的加伤
-    private static bool WillTriggerMultiDamage(CardModel? cardSource)
-    {
-        return cardSource is HatMagician2Card
-        {
-            Type: CardType.Attack, BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, NextPlayMulti: 1, IsBrandApplied: false
-        } || (cardSource?.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke) == true && cardSource is HatMagician2Card
-        {
-            Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false
-        });
-    }
-
     public static bool WillTriggerMultiDamage(CardModel? cardSource, Creature? target)
     {
-        return WillTriggerMultiDamage(cardSource) && target?.HasPower<BrandRedPower>() != null;
+        return WillTriggerMultiDamage(cardSource) && target?.HasPower<BrandRedPower>() == true;
+    }
+
+    private static bool WillTriggerMultiDamage(CardModel? cardSource)
+    {
+        return cardSource is HatMagician2Card card && card.IsEvokeCard() && card is { Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false };
     }
 
     // 即将触发的攻击倍数

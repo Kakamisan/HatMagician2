@@ -18,7 +18,7 @@ public class Fire : HatMagician2Card
         BaseBrandColor = BrandColor.Red;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

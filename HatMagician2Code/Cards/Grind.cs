@@ -20,7 +20,7 @@ public class Grind : HatMagician2Card
         // BaseBrandColor = BrandColor.Blue;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color)];
 

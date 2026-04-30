@@ -15,7 +15,7 @@ public class BlankPainting : HatMagician2Card
         IsTest = true;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Unplayable)];
 

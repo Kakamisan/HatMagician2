@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -78,6 +79,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
     }
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => ((IEnumerable<DynamicVar>)[new EvokePreviewVar()]).Concat(this.Hat2ExtraCanonicalVars);
+
+    protected virtual IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+
     /*已改成patch原版能量检查
     protected override bool IsPlayable => this.CheckBrandColorResource();
 
@@ -133,5 +138,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
 
         return base.AfterCardPlayed(choiceContext, cardPlay);
+    }
+
+    // 是否可触发刻印的卡
+    public bool IsEvokeCard()
+    {
+        return this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow } || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
     }
 }

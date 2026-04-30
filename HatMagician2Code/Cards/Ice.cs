@@ -18,7 +18,7 @@ public class Ice : HatMagician2Card
         BaseBrandColor = BrandColor.Blue;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 

@@ -24,7 +24,7 @@ public class ColorfulPen : HatMagician2Card
         // BaseBrandColor = BrandColor.Blue;
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Fire>(), HoverTipFactory.FromCard<Lightning>(), HoverTipFactory.FromCard<Ice>()];
 
