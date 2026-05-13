@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
+// 冰霜 - 本回合减少伤害 等效于负力量
 public class TmpStrengthPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;

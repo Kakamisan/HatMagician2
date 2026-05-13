@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
-namespace HatMagician2.HatMagician2Code;
+namespace HatMagician2.HatMagician2Code.SceneControl;
 
 public partial class BrandPowerShow : NCreatureVisuals
 {

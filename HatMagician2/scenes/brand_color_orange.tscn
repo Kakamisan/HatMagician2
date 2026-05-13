@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://blev61loxqhxv"]
 
-[ext_resource type="Script" uid="uid://dx36kygcu7k7j" path="res://HatMagician2Code/BattleBrandColorPet.cs" id="1_cgxa8"]
+[ext_resource type="Script" uid="uid://dx36kygcu7k7j" path="res://HatMagician2Code/SceneControl/BattleBrandColorPet.cs" id="1_cgxa8"]
 [ext_resource type="Texture2D" uid="uid://cfbt8uip1hbb" path="res://HatMagician2/scenes/battle_shadow.png" id="2_cy5tl"]
 [ext_resource type="Texture2D" uid="uid://l3cggrjprwbo" path="res://HatMagician2/scenes/battle2.png" id="3_kx3qq"]
 [ext_resource type="Shader" uid="uid://3sv6vmx5y6fb" path="res://HatMagician2/scenes/ghost_glow.gdshader" id="4_5tpl7"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://caea0p2qvuqyk" path="res://HatMagician2/scenes/brandWhite.png" id="9_u4xgw"]
 [ext_resource type="Texture2D" uid="uid://chvhhg6ufwslv" path="res://HatMagician2/scenes/brandOrange.png" id="10_0auhs"]
 [ext_resource type="FontVariation" uid="uid://ux4d708e7mk6" path="res://HatMagician2/themes/kreon_bold_glyph_space_one.tres" id="11_fsy4a"]
-[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/BattleLabel.cs" id="12_d7l1w"]
+[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/SceneControl/BattleLabel.cs" id="12_d7l1w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uubbk"]
 shader = ExtResource("4_5tpl7")

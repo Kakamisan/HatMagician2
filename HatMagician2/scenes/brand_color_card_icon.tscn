@@ -4,7 +4,7 @@
 [ext_resource type="FontVariation" uid="uid://bg85h22rkxs6g" path="res://HatMagician2/themes/kreon_bold_shared.tres" id="2_647du"]
 [ext_resource type="Texture2D" uid="uid://drxa6ixv4wrhn" path="res://HatMagician2/scenes/energy_brand_blue.png" id="2_jioxl"]
 [ext_resource type="Texture2D" uid="uid://bg13e1dv81rau" path="res://HatMagician2/scenes/energy_brand_yellow.png" id="3_7gnwv"]
-[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/BattleLabel.cs" id="3_of80k"]
+[ext_resource type="Script" uid="uid://c7xql2hfaqula" path="res://HatMagician2Code/SceneControl/BattleLabel.cs" id="3_of80k"]
 [ext_resource type="Texture2D" uid="uid://ck5fw2h1ftxdb" path="res://HatMagician2/scenes/unplayable.png" id="4_647du"]
 [ext_resource type="Texture2D" uid="uid://dcsbnp56mrxu0" path="res://HatMagician2/scenes/energy_brand_purple.png" id="4_s1ipk"]
 [ext_resource type="Texture2D" uid="uid://dcss18w6sm51d" path="res://HatMagician2/scenes/energy_brand_orange.png" id="5_cysnk"]

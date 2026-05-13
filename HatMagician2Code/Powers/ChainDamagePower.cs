@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
+// 连锁 伤害 - 下次受到攻击同时对所有其他敌人造成等量伤害 黄昏印记附属能力
 public class ChainDamagePower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;

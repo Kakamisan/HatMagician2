@@ -1,4 +1,5 @@
 ﻿using HatMagician2.HatMagician2Code.Powers;
+using HatMagician2.HatMagician2Code.SceneControl;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;

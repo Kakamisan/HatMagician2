@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
+// 阴郁 - 每回合受到伤害
 public class RoundDamagePower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;

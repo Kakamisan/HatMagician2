@@ -1,12 +1,11 @@
 using Godot;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
-using HatMagician2.HatMagician2Code.SceneControl;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 
-namespace HatMagician2.HatMagician2Code;
+namespace HatMagician2.HatMagician2Code.SceneControl;
 
 public partial class BattleBrandColorPet : NCreatureVisuals
 {
