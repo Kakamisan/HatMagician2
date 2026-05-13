@@ -1,6 +1,5 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
-using BaseLib.Utils;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
@@ -21,33 +20,31 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
     //Full art: 606x852
-    public override string CustomPortraitPath => (IsTest ? "card.png" : $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
+    public override string CustomPortraitPath => (this.IsTest ? "card.png" : $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
 
     //Smaller variants of card images for efficiency:
     //Smaller variant of full art: 250x350
     //Smaller variant of normal art: 250x190
-
     //Uses card_portraits/card_name.png as image path. These should be smaller images.
-    public override string PortraitPath => (IsTest ? "card.png" : $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
-
-    public override string BetaPortraitPath => (IsTest ? "card.png" : $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
+    public override string PortraitPath => (this.IsTest ? "card.png" : $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
+    public override string BetaPortraitPath => (this.IsTest ? "card.png" : $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png").CardImagePath();
 
     // 设置成test的话使用通用的测试卡图
-    protected bool IsTest = false;
+    protected virtual bool IsTest => false;
+
+    // 绘色消耗类型
+    public virtual BrandColor BaseBrandColor => BrandColor.None;
+
+    // 绘色X费
+    public virtual bool HasBrandColorCostX => false;
 
     // 基础绘色消耗
-    public int BaseBrandColorCost = -1;
+    public virtual int BaseBrandColorCost => -1;
 
     // 变化后的绘色消耗
     public int BrandColorCost => this.BaseBrandColorCost;
 
-    // 绘色消耗类型
-    public BrandColor BaseBrandColor = BrandColor.None;
-
-    // 绘色X费
-    public bool HasBrandColorCostX = false;
-
-    // 印记提示
+    // 通用印记Tips
     protected override IEnumerable<IHoverTip> ExtraHoverTips
     {
         get
@@ -73,15 +70,43 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
                 case BrandColor.Orange:
                     baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>());
                     break;
+                case BrandColor.Purple:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>());
+                    break;
+                case BrandColor.White:
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>());
+                    break;
             }
 
-            return hasExtra ? baseTips : [];
+            return (hasExtra ? baseTips : []).Concat(this.Hat2ExtraHoverTips);
         }
     }
 
+    // 子类自己的Tips
+    protected virtual IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => ((IEnumerable<DynamicVar>)[new EvokePreviewVar()]).Concat(this.Hat2ExtraCanonicalVars);
 
+    // 子类自己的Vars
     protected virtual IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => ((IEnumerable<CardKeyword>)[]).Concat(this.Hat2CanonicalKeywords);
+
+    // 子类自己的Keyword
+    protected virtual IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+
+    protected override HashSet<CardTag> CanonicalTags
+    {
+        get
+        {
+            HashSet<CardTag> set = [];
+            set.UnionWith(this.Hat2CanonicalTags);
+            return set;
+        }
+    }
+
+    // 子类自己的Tag
+    protected virtual HashSet<CardTag> Hat2CanonicalTags => [];
 
     /*已改成patch原版能量检查
     protected override bool IsPlayable => this.CheckBrandColorResource();

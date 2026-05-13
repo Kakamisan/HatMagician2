@@ -1,7 +1,5 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,16 +9,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Strike : HatMagician2Card
+public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
-    public Strike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
-    {
-        IsTest = true;
-        // BaseBrandColorCost = 0;
-        // BaseBrandColor = BrandColor.Blue;
-    }
+    protected override bool IsTest => true;
 
-    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+    protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move)];
 

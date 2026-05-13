@@ -3,24 +3,20 @@ using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(ColorlessCardPool))]
-public class Lightning : HatMagician2Card
+public class Lightning() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
 {
-    public Lightning() : base(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
-    {
-        IsTest = true;
-        BaseBrandColorCost = 1;
-        BaseBrandColor = BrandColor.Yellow;
-    }
+    protected override bool IsTest => true;
 
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+    public override int BaseBrandColorCost => 1;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override BrandColor BaseBrandColor => BrandColor.Yellow;
+
+    // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

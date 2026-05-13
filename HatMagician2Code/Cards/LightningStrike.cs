@@ -10,14 +10,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class LightningStrike : HatMagician2Card
+public class LightningStrike() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    public LightningStrike() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
-    {
-        IsTest = true;
-        BaseBrandColorCost = 1;
-        BaseBrandColor = BrandColor.Yellow;
-    }
+    protected override bool IsTest => true;
+
+    public override int BaseBrandColorCost => 1;
+
+    public override BrandColor BaseBrandColor => BrandColor.Yellow;
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7M, ValueProp.Move)];
 

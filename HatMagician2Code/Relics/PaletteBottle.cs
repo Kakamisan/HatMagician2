@@ -2,7 +2,7 @@
 using Godot;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Monsters;
+using HatMagician2.HatMagician2Code.SceneControl;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -46,21 +46,56 @@ public class PaletteBottle : HatMagician2Relic
 
     private async Task SummonPet()
     {
-        await this.SummonPet<BrandColorPetRed>(BrandColor.Red);
-        await this.SummonPet<BrandColorPetBlue>(BrandColor.Blue);
-        await this.SummonPet<BrandColorPetYellow>(BrandColor.Yellow);
-        await this.SummonPet<BrandColorPetPurple>(BrandColor.Purple);
-        await this.SummonPet<BrandColorPetOrange>(BrandColor.Orange);
-        await this.SummonPet<BrandColorPetWhite>(BrandColor.White);
+        // await this.SummonPet<BrandColorPetRed>(BrandColor.Red);
+        // await this.SummonPet<BrandColorPetBlue>(BrandColor.Blue);
+        // await this.SummonPet<BrandColorPetYellow>(BrandColor.Yellow);
+        // await this.SummonPet<BrandColorPetPurple>(BrandColor.Purple);
+        // await this.SummonPet<BrandColorPetOrange>(BrandColor.Orange);
+        // await this.SummonPet<BrandColorPetWhite>(BrandColor.White);
+        
+        await this.SummonBrandColor(BrandColor.Red);
+        await this.SummonBrandColor(BrandColor.Blue);
+        await this.SummonBrandColor(BrandColor.Yellow);
+        await this.SummonBrandColor(BrandColor.Purple);
+        await this.SummonBrandColor(BrandColor.Orange);
+        await this.SummonBrandColor(BrandColor.White);
 
         this.UpdateAllPet();
+
+        //this.TestAdd3DPet();
     }
+
+    // private void TestAdd3DPet()
+    // {
+    //     NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(this.Owner.Creature);
+    //     if (creatureNode == null)
+    //         return;
+    //     if (creatureNode.HasNode("TestNode"))
+    //         return;
+    //     BrandColorBase3d? newNode = NCreatureUtil.InitNode<BrandColorBase3d>("res://HatMagician2/scenes/brand_color_base_3d.tscn");
+    //     if (newNode is null) return;
+    //     newNode.Name = "TestNode";
+    //     newNode.Position = new Vector2(0, -80);
+    //     creatureNode.AddChild(newNode);
+    //     newNode.StartRotate();
+    // }
 
     private async Task SummonPet<T>(BrandColor color) where T : MonsterModel
     {
         Creature creature = await PlayerCmd.AddPet<T>(Owner);
         NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(creature);
         BattleBrandColorPet? pet = creatureNode?.Visuals as BattleBrandColorPet;
+        this.PetVisuals[color] = pet;
+    }
+
+    private async Task SummonBrandColor(BrandColor color)
+    {
+        NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(this.Owner.Creature);
+        if (creatureNode == null)
+            return;
+        BattleBrandColorPet? pet = BattleBrandColorPet.Create(creatureNode, color);
+        if (pet == null)
+            return;
         this.PetVisuals[color] = pet;
     }
 

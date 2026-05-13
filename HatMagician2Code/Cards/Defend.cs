@@ -1,5 +1,4 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -10,16 +9,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Defend : HatMagician2Card
+public class Defend() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
-    public Defend() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
-    {
-        IsTest = true;
-        // BaseBrandColorCost = 1;
-        // BaseBrandColor = HatMagician2BrandColor.Blue;
-    }
+    protected override bool IsTest => true;
 
-    protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
+    protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Defend];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(5, ValueProp.Move)];
 

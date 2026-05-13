@@ -1,11 +1,17 @@
 {
-  "id": "HatMagician2",
-  "name": "绘印魔女",
-  "author": "km131",
-  "description": "原创角色mod：\n一位在绘法师学院中不被主流所理解的抽象派绘师。\n使用巨大画笔描绘独特的烙印魔法，她极致的施法速度以及不被理解的抽象画作被大众视为禁忌。",
-  "version": "v0.0.1",
-  "has_pck": true,
-  "has_dll": true,
-  "dependencies": ["BaseLib"],
-  "affects_gameplay": true
+    "id": "HatMagician2",
+    "name": "绘印魔女",
+    "author": "km131",
+    "description": "原创角色mod：\n一位在绘法师学院中不被主流所理解的抽象派绘师。\n使用巨大画笔描绘独特的烙印魔法，她极致的施法速度以及不被理解的抽象画作被大众视为禁忌。",
+    "version": "v0.0.1",
+    "min_game_version": "0.105.0",
+    "has_pck": true,
+    "has_dll": true,
+    "dependencies": [
+        {
+            "id": "BaseLib",
+            "min_version": "v3.1.2"
+        }
+    ],
+    "affects_gameplay": true
 }

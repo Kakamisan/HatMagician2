@@ -1,32 +1,24 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class ColorfulPen : HatMagician2Card
+public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
     private CardModel? _mockSelectedCard;
 
-    public ColorfulPen() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
-    {
-        IsTest = true;
-        // BaseBrandColorCost = 1;
-        // BaseBrandColor = BrandColor.Blue;
-    }
+    protected override bool IsTest => true;
 
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Fire>(), HoverTipFactory.FromCard<Lightning>(), HoverTipFactory.FromCard<Ice>()];
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Fire>(), HoverTipFactory.FromCard<Lightning>(), HoverTipFactory.FromCard<Ice>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
