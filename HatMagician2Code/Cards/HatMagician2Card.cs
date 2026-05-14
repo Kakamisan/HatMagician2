@@ -130,13 +130,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         if (this.HasBrandColorCostX)
         {
-            PaletteBottle? relic = this.Owner.GetRelic<PaletteBottle>();
-            return relic == null ? 0 : relic.BrandColorEnergyMap[this.BaseBrandColor];
+            BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(this.Owner);
+            return state.BrandColorEnergyMap[this.BaseBrandColor];
         }
 
         CardPile? pile = this.Pile;
         return pile != null && pile.IsCombatPile && this.CombatState != null
-            ? (int)PaletteBottle.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
+            ? (int)BrandColorEnergyMgr.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
             : this.BrandColorCost;
     }
 

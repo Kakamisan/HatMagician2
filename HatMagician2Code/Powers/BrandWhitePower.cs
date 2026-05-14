@@ -38,7 +38,7 @@ public class BrandWhitePower : BrandPower
         await base.OnFusion(cardSource);
         if (this.Applier?.Player == null)
             return;
-        await PaletteBottle.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
+        await BrandColorEnergyMgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
         await CreatureCmd.GainBlock(this.Applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
     }
     
@@ -51,6 +51,6 @@ public class BrandWhitePower : BrandPower
             return;
         if (this.Applier?.Player == null)
             return;
-        await PaletteBottle.AddEnergy(this.Applier.Player, (int)this.PassiveVal);
+        await BrandColorEnergyMgr.AddEnergy(this.Applier.Player, (int)this.PassiveVal);
     }
 }

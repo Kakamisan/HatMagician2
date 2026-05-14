@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -20,8 +21,8 @@ public static class HasEnoughResourcesForPatch
             //Log.Info("[   Hat2   ] HasEnoughResourcesForPatch");
             int num1 = Math.Max(0, card2.GetBrandColorCostWithModifiers());
             Player player = card2.Owner;
-            PaletteBottle? relic = player.GetRelic<PaletteBottle>();
-            if (relic != null && num1 > relic.BrandColorEnergyMap.GetValueOrDefault(card2.BaseBrandColor))
+            BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(player);
+            if (num1 > state.BrandColorEnergyMap.GetValueOrDefault(card2.BaseBrandColor))
                 reason |= UnplayableReason.StarCostTooHigh;
             __result = reason == UnplayableReason.None;
         }
