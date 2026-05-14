@@ -29,5 +29,6 @@ public class EvokePreviewVar() : DynamicVar(DefaultName, 0)
             this._isEvokePreview = true;
             BrandPowerShow.OnHover(this._lastTarget, this._isEvokePreview);
         }
+        // base.UpdateCardPreview(card, previewMode, target, runGlobalHooks);
     }
 }

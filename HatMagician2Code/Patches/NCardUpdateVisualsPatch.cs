@@ -164,13 +164,15 @@ public class NCardUpdateVisualsPatch
     {
         if (state == null)
             return CardCostColor.Unmodified;
-        UnplayableReason reason;
-        if (!card.CanPlay(out reason, out _) && reason.HasFlag(UnplayableReason.StarCostTooHigh))
+        // UnplayableReason reason;
+        // if (!card.CanPlay(out reason, out _) && reason.HasFlag(UnplayableReason.StarCostTooHigh))
+        //     return CardCostColor.InsufficientResources;
+        if (!card.HasEnoughEnergy())
             return CardCostColor.InsufficientResources;
         if (card.HasBrandColorCostX)
             return CardCostColor.Unmodified;
         Decimal hookModifiedCost;
-        if (TryModifyBrandColorCostWithHooks(card, state, out hookModifiedCost))
+        if (BrandColorEnergyMgr.TryModifyBrandColorCostWithHooks(card, state, out hookModifiedCost))
             return GetColorForHookModifiedCost(hookModifiedCost, card.BaseBrandColorCost);
         // 看不懂这行，直接返回无变化
         // return card.TemporaryStarCost != null ? GetColorForLocalCost(card.TemporaryStarCost.Cost, card.BaseBrandColorCost) : CardCostColor.Unmodified;
@@ -190,22 +192,6 @@ public class NCardUpdateVisualsPatch
     //         return CardCostColor.Increased;
     //     return localCost < baseCost ? CardCostColor.Decreased : CardCostColor.Unmodified;
     // }
-
-    public static bool TryModifyBrandColorCostWithHooks(
-        HatMagician2Card card,
-        ICombatState state,
-        out Decimal hookModifiedCost)
-    {
-        hookModifiedCost = card.BaseBrandColorCost;
-        bool flag = false;
-        foreach (AbstractModel iterateHookListener in state.IterateHookListeners())
-            if (iterateHookListener is IHatMagician2AbstractModel it)
-            {
-                flag |= it.TryModifyBrandColorCost(card, hookModifiedCost, out hookModifiedCost);
-            }
-
-        return flag;
-    }
 
     public static Color GetCostTextColorInHand(
         CardCostColor costColor,

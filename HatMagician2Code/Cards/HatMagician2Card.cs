@@ -42,7 +42,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public virtual int BaseBrandColorCost => -1;
 
     // 变化后的绘色消耗
-    public int BrandColorCost => this.BaseBrandColorCost;
+    public int BrandColorCost => (int)this.GetDynamicVar(BrandColorCostVar.DefaultName).BaseValue;
 
     // 通用印记Tips
     protected override IEnumerable<IHoverTip> ExtraHoverTips
@@ -85,7 +85,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 子类自己的Tips
     protected virtual IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => ((IEnumerable<DynamicVar>)[new EvokePreviewVar()]).Concat(this.Hat2ExtraCanonicalVars);
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        ((IEnumerable<DynamicVar>)[new EvokePreviewVar(), new BrandColorCostVar(this.BaseBrandColorCost)]).Concat(this.Hat2ExtraCanonicalVars);
 
     // 子类自己的Vars
     protected virtual IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
@@ -140,11 +141,14 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             : this.BrandColorCost;
     }
 
+    // 战斗状态相关
     // 下次攻击伤害变为N倍 只在火焰印记被刻印 且刻印时打出的是攻击牌时设置此值
     // 打出后复原此值
     public decimal NextPlayMulti = 1;
     public void SetNextPlayMulti(decimal value) => this.NextPlayMulti = value;
-    public bool IsBrandApplied; // 是否已应用印记效果
+    public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
+    public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
+    public virtual bool HasFreeBrandApply => false; // 是否有不消耗绘色即可打出印记的效果
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
@@ -160,6 +164,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         {
             this.IsBrandApplied = false;
             this.NextPlayMulti = 1;
+            this.NextCannotCost = false;
         }
 
         return base.AfterCardPlayed(choiceContext, cardPlay);
@@ -168,6 +173,49 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 是否可触发刻印的卡
     public bool IsEvokeCard()
     {
-        return this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow } || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
+        return this.HasFreeBrandApply
+               || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow } && this.HasEnoughEnergy()
+               || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
+    }
+
+    // 是否有足够的绘色
+    public bool HasEnoughEnergy()
+    {
+        return BrandColorEnergyMgr.HasEnoughEnergy(this.Owner, this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+    }
+
+    // 打出时尝试消耗绘色
+    public void SpendEnergy()
+    {
+        if (!this.HasEnoughEnergy())
+        {
+            // 下次打出不能触发额外效果 反过来写的原因是免费打出时不会走到这一步
+            this.NextCannotCost = true;
+            return;
+        }
+
+        BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(this.Owner);
+        state.SpendEnergy(this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+    }
+
+    // 完整效果
+    protected virtual async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await Task.CompletedTask;
+    }
+
+    // 绘色不足时的普通效果
+    protected virtual async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await Task.CompletedTask;
+    }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (!this.NextCannotCost)
+            await this.OnPlayWhenCostBrandColor(choiceContext, cardPlay);
+        else
+            await this.OnPlayNormal(choiceContext, cardPlay);
+        await base.OnPlay(choiceContext, cardPlay);
     }
 }

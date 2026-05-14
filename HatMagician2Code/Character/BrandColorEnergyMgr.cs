@@ -75,6 +75,7 @@ public class BrandColorEnergyMgr : CustomSingletonModel
         }
 
         state.AddEnergy(applyColor, amount);
+        await Task.CompletedTask;
     }
 
     public static Decimal ModifyBrandColorCost(ICombatState combatState, HatMagician2Card card, Decimal originalCost)
@@ -91,5 +92,26 @@ public class BrandColorEnergyMgr : CustomSingletonModel
         }
 
         return modifiedCost;
+    }
+
+    public static bool TryModifyBrandColorCostWithHooks(HatMagician2Card card, ICombatState state, out Decimal hookModifiedCost)
+    {
+        hookModifiedCost = card.BaseBrandColorCost;
+        bool flag = false;
+        foreach (AbstractModel iterateHookListener in state.IterateHookListeners())
+            if (iterateHookListener is IHatMagician2AbstractModel it)
+            {
+                flag |= it.TryModifyBrandColorCost(card, hookModifiedCost, out hookModifiedCost);
+            }
+
+        return flag;
+    }
+
+    public static bool HasEnoughEnergy(Player player, BrandColor color, decimal cost)
+    {
+        if (color == BrandColor.None) return true;
+        var eState = Instance._playerEnergyStates.GetValueOrDefault(player);
+        if (eState == null) return false;
+        return cost <= eState.BrandColorEnergyMap[color];
     }
 }

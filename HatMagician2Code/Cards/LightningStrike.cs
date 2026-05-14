@@ -20,9 +20,15 @@ public class LightningStrike() : HatMagician2Card(1, CardType.Attack, CardRarity
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7M, ValueProp.Move)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
+        await this.OnPlayNormal(choiceContext, play);
+    }
+    
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        // await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
         await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
             .FromCard(this) // 伤害来源于这张卡牌
             .Targeting(play.Target!) // 伤害目标是玩家选择的目标

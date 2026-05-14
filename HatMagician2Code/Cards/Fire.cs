@@ -18,7 +18,7 @@ public class Fire() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targ
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
     }

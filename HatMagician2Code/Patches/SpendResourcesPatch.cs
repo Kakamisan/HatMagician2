@@ -14,8 +14,9 @@ public class SpendResourcesPatch
     {
         if (__instance is HatMagician2Card card)
         {
-            BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(card.Owner);
-            state.SpendEnergy(card.BaseBrandColor, card.GetBrandColorCostWithModifiers());
+            // BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(card.Owner);
+            // state.SpendEnergy(card.BaseBrandColor, card.GetBrandColorCostWithModifiers());
+            card.SpendEnergy();
         }
     }
 }

@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Patches;
 
+/// ！已弃用！
+/// 现在不再强制消耗绘色 而是在消耗时触发额外效果
 [HarmonyPatch(typeof(PlayerCombatState), nameof(PlayerCombatState.HasEnoughResourcesFor))]
 public static class HasEnoughResourcesForPatch
 {
@@ -16,15 +18,15 @@ public static class HasEnoughResourcesForPatch
     public static void Postfix(ref bool __result, PlayerCombatState __instance, CardModel card,
         ref UnplayableReason reason)
     {
-        if (card is HatMagician2Card card2)
-        {
-            //Log.Info("[   Hat2   ] HasEnoughResourcesForPatch");
-            int num1 = Math.Max(0, card2.GetBrandColorCostWithModifiers());
-            Player player = card2.Owner;
-            BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(player);
-            if (num1 > state.BrandColorEnergyMap.GetValueOrDefault(card2.BaseBrandColor))
-                reason |= UnplayableReason.StarCostTooHigh;
-            __result = reason == UnplayableReason.None;
-        }
+        // if (card is HatMagician2Card card2)
+        // {
+        //     //Log.Info("[   Hat2   ] HasEnoughResourcesForPatch");
+        //     int num1 = Math.Max(0, card2.GetBrandColorCostWithModifiers());
+        //     Player player = card2.Owner;
+        //     BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(player);
+        //     if (num1 > state.BrandColorEnergyMap.GetValueOrDefault(card2.BaseBrandColor))
+        //         reason |= UnplayableReason.StarCostTooHigh;
+        //     __result = reason == UnplayableReason.None;
+        // }
     }
 }

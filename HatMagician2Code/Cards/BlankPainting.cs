@@ -16,10 +16,6 @@ public class BlankPainting() : HatMagician2Card(-1, CardType.Quest, CardRarity.Q
 
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Unplayable)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
-    {
-    }
-
     protected override void OnUpgrade()
     {
     }
