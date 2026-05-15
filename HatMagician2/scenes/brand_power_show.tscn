@@ -31,6 +31,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2_igeiv")
 metadata/_edit_lock_ = true
 
@@ -62,6 +63,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_slqya")
 metadata/_edit_lock_ = true
 
@@ -95,6 +97,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("4_u4mhy")
 metadata/_edit_lock_ = true
 
@@ -128,6 +131,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("5_iknwd")
 metadata/_edit_lock_ = true
 
@@ -161,6 +165,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("6_0ud1u")
 metadata/_edit_lock_ = true
 
@@ -194,6 +199,7 @@ offset_right = 99.99999
 offset_bottom = 179.99998
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("7_1mff0")
 metadata/_edit_lock_ = true
 

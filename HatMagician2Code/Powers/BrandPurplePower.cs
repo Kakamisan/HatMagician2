@@ -3,6 +3,7 @@ using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -16,6 +17,8 @@ public class BrandPurplePower : BrandPower
     protected override decimal BaseFusionVal => 6;
 
     // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new PowerVar<StrengthPower>(4)); // 本回合失去力量
+
+    // protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FreezeStrengthPower>()];
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {

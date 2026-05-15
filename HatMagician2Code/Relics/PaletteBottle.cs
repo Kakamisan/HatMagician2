@@ -10,11 +10,12 @@ public class PaletteBottle : HatMagician2Relic
     public override RelicRarity Rarity =>
         RelicRarity.Starter;
 
-    public override Task BeforeCombatStartLate()
+    public override async Task BeforeCombatStartLate()
     {
-        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Red);
-        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Yellow);
-        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Blue);
-        return base.BeforeCombatStartLate();
+        this.Flash();
+        await HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Red);
+        await HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Yellow);
+        await HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Blue);
+        await base.BeforeCombatStartLate();
     }
 }

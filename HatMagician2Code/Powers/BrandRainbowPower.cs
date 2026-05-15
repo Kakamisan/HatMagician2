@@ -9,7 +9,7 @@ public class BrandRainbowPower : BrandPower
     public override BrandColor BaseBrandColor => BrandColor.Rainbow;
     protected override decimal BasePassiveVal => 0;
     protected override decimal BaseEvokeVal => 0;
-    protected override decimal BaseFusionVal => 0;
+    protected override decimal BaseFusionVal => 1;
 
     protected override async Task OnFusion(HatMagician2Card? cardSource)
     {

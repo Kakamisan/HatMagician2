@@ -3,6 +3,7 @@ using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -17,7 +18,7 @@ public class BrandBluePower : BrandPower
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_frost_channel";
 
-    // protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>()];
+    // protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FreezeStrengthPower>()];
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
