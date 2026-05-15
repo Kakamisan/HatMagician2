@@ -172,7 +172,7 @@ public class NCardUpdateVisualsPatch
         if (card.HasBrandColorCostX)
             return CardCostColor.Unmodified;
         Decimal hookModifiedCost;
-        if (BrandColorEnergyMgr.TryModifyBrandColorCostWithHooks(card, state, out hookModifiedCost))
+        if (HatMagician2Mgr.TryModifyBrandColorCostWithHooks(card, state, out hookModifiedCost))
             return GetColorForHookModifiedCost(hookModifiedCost, card.BaseBrandColorCost);
         // 看不懂这行，直接返回无变化
         // return card.TemporaryStarCost != null ? GetColorForLocalCost(card.TemporaryStarCost.Cost, card.BaseBrandColorCost) : CardCostColor.Unmodified;

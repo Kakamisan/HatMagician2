@@ -17,6 +17,8 @@ public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, T
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move)];
 
+    // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep]; // 测试机制
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         // await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);

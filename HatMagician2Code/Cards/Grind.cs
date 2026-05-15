@@ -25,7 +25,7 @@ public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Tar
         {
             foreach (var color in list)
             {
-                await BrandColorEnergyMgr.AddEnergy(this.Owner.Creature.Player, 1, color);
+                await HatMagician2Mgr.AddEnergy(this.Owner.Creature.Player, 1, color);
             }
         }
         else
@@ -33,7 +33,7 @@ public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Tar
             var list2 = list.TakeRandom(2, this.Owner.RunState.Rng.CombatEnergyCosts);
             foreach (var color in list2)
             {
-                await BrandColorEnergyMgr.AddEnergy(this.Owner.Creature.Player, 1, color);
+                await HatMagician2Mgr.AddEnergy(this.Owner.Creature.Player, 1, color);
             }
         }
     }

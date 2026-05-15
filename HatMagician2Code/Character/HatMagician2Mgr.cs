@@ -6,19 +6,19 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
-public class BrandColorEnergyMgr : CustomSingletonModel
+public class HatMagician2Mgr : CustomSingletonModel
 {
-    public BrandColorEnergyMgr() : base(true, false)
+    public HatMagician2Mgr() : base(true, false)
     {
         _instance = this;
         _playerEnergyStates = new Dictionary<Player, BrandColorEnergyState>();
     }
 
-    private static BrandColorEnergyMgr? _instance;
+    private static HatMagician2Mgr? _instance;
 
-    public static BrandColorEnergyMgr Instance => _instance!;
+    public static HatMagician2Mgr Instance => _instance!;
 
-    private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates;
+    private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates; // 绘色能量管理
 
     // 战前清空绘色能量
     public override async Task BeforeCombatStart()

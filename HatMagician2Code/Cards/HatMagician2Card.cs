@@ -4,9 +4,11 @@ using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
 using HatMagician2.HatMagician2Code.Powers;
-using HatMagician2.HatMagician2Code.Relics;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -56,27 +58,16 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             ];
             if (this.BaseBrandColor is > BrandColor.None and <= BrandColor.Rainbow)
                 hasExtra = true;
-            switch (this.BaseBrandColor)
+            baseTips = this.BaseBrandColor switch
             {
-                case BrandColor.Red:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>());
-                    break;
-                case BrandColor.Blue:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>());
-                    break;
-                case BrandColor.Yellow:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>());
-                    break;
-                case BrandColor.Orange:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>());
-                    break;
-                case BrandColor.Purple:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>());
-                    break;
-                case BrandColor.White:
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>());
-                    break;
-            }
+                BrandColor.Red => baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>()),
+                BrandColor.Blue => baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>()),
+                BrandColor.Yellow => baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>()),
+                BrandColor.Orange => baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>()),
+                BrandColor.Purple => baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>()),
+                BrandColor.White => baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>()),
+                _ => baseTips
+            };
 
             return (hasExtra ? baseTips : []).Concat(this.Hat2ExtraHoverTips);
         }
@@ -131,13 +122,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         if (this.HasBrandColorCostX)
         {
-            BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(this.Owner);
+            BrandColorEnergyState state = HatMagician2Mgr.Instance.GetState(this.Owner);
             return state.BrandColorEnergyMap[this.BaseBrandColor];
         }
 
         CardPile? pile = this.Pile;
-        return pile != null && pile.IsCombatPile && this.CombatState != null
-            ? (int)BrandColorEnergyMgr.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
+        return pile is { IsCombatPile: true } && this.CombatState != null
+            ? (int)HatMagician2Mgr.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
             : this.BrandColorCost;
     }
 
@@ -149,6 +140,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public virtual bool HasFreeBrandApply => false; // 是否有不消耗绘色即可打出印记的效果
+    public bool IsSleepApplied; // 是否已触发睡衣
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
@@ -181,7 +173,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 是否有足够的绘色
     public bool HasEnoughEnergy()
     {
-        return BrandColorEnergyMgr.HasEnoughEnergy(this.Owner, this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+        return HatMagician2Mgr.HasEnoughEnergy(this.Owner, this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
     }
 
     // 打出时尝试消耗绘色
@@ -194,7 +186,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             return;
         }
 
-        BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(this.Owner);
+        BrandColorEnergyState state = HatMagician2Mgr.Instance.GetState(this.Owner);
         state.SpendEnergy(this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
     }
 
@@ -217,5 +209,42 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         else
             await this.OnPlayNormal(choiceContext, cardPlay);
         await base.OnPlay(choiceContext, cardPlay);
+    }
+
+    // 处理睡衣效果
+    public override async Task AfterHandEmptied(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player != this.Owner || !IsValidPhase(player.PlayerCombatState))
+            return;
+        if (this.CanonicalKeywords.Contains(HatMagician2Keywords.Sleep) && !this.IsSleepApplied)
+        {
+            this.IsSleepApplied = true;
+            if (this.Pile is { Type: PileType.Discard or PileType.Exhaust })
+            {
+                await CardPileCmd.Add(this, PileType.Hand);
+            }
+        }
+        await base.AfterHandEmptied(choiceContext, player);
+    }
+
+    private static bool IsValidPhase(PlayerCombatState? state)
+    {
+        if (state == null)
+            return false;
+        var phase = state.Phase;
+        bool flag = phase switch
+        {
+            PlayerTurnPhase.AutoPrePlay or PlayerTurnPhase.Play or PlayerTurnPhase.AutoPostPlay => true,
+            _ => false
+        };
+
+        return flag;
+    }
+
+    // 回合结束后重置睡衣状态
+    public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    {
+        this.IsSleepApplied = false;
+        return base.AfterTurnEndLate(choiceContext, side);
     }
 }

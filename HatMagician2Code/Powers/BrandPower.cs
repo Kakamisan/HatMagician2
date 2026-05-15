@@ -133,6 +133,11 @@ public class BrandPower : HatMagician2Power
             case BrandColor.Rainbow:
                 await PowerCmd.Apply<BrandRainbowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
                 break;
+            case BrandColor.None:
+            case BrandColor.Any:
+            case BrandColor.All:
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         // 是否触发叠色效果

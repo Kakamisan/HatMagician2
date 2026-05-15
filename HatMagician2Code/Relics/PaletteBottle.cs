@@ -12,9 +12,9 @@ public class PaletteBottle : HatMagician2Relic
 
     public override Task BeforeCombatStartLate()
     {
-        _ = BrandColorEnergyMgr.AddEnergy(this.Owner, 3, BrandColor.Red);
-        _ = BrandColorEnergyMgr.AddEnergy(this.Owner, 3, BrandColor.Yellow);
-        _ = BrandColorEnergyMgr.AddEnergy(this.Owner, 3, BrandColor.Blue);
+        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Red);
+        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Yellow);
+        _ = HatMagician2Mgr.AddEnergy(this.Owner, 3, BrandColor.Blue);
         return base.BeforeCombatStartLate();
     }
 }

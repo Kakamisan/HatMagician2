@@ -38,7 +38,7 @@ public class BrandOrangePower : BrandPower
         await base.OnFusion(cardSource);
         if (this.Applier?.Player == null)
             return;
-        await BrandColorEnergyMgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
+        await HatMagician2Mgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
         await BrandPower.ChainDamageCmd(this, this.FusionVal);
     }
     
