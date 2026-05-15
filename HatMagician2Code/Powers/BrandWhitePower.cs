@@ -1,6 +1,5 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,13 +10,10 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandWhitePower : BrandPower
 {
-    public BrandWhitePower()
-    {
-        BaseBrandColor = BrandColor.White;
-        BasePassiveVal = 1;
-        BaseEvokeVal = 2;
-        BaseFusionVal = 6;
-    }
+    public override BrandColor BaseBrandColor => BrandColor.White;
+    protected override decimal BasePassiveVal => 1;
+    protected override decimal BaseEvokeVal => 2;
+    protected override decimal BaseFusionVal => 6;
 
     // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new BlockVar(5, ValueProp.Unpowered)); // 格挡数
     

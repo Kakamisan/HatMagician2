@@ -5,7 +5,7 @@
   "HATMAGICIAN2-DEFEND.title": "防御",
   "HATMAGICIAN2-BLANK_PAINTING.description": "[gold]不能被打出[/gold]\n使用印记将使画作完成",
   "HATMAGICIAN2-BLANK_PAINTING.title": "空白画作",
-  "HATMAGICIAN2-COLORFUL_PEN.description": "从烦躁/忧虑/孤寂中选择1张加入你的[gold]手牌[/gold]",
+  "HATMAGICIAN2-COLORFUL_PEN.description": "从{IfUpgraded:show:烦躁+/忧虑+/孤寂+|烦躁/忧虑/孤寂}中选择1张加入你的[gold]手牌[/gold]",
   "HATMAGICIAN2-COLORFUL_PEN.title": "起草",
   "HATMAGICIAN2-LIGHTNING_STRIKE.description": "绘色:给予[color=#e7ea31]闪电[/color]印记\n造成{Damage:diff()}点伤害",
   "HATMAGICIAN2-LIGHTNING_STRIKE.title": "雷击",
@@ -18,5 +18,7 @@
   "HATMAGICIAN2-GRIND.description": "{IfUpgraded:show:收集1点火焰/冰霜/闪电[gold]绘色[/gold]|从火焰/冰霜/闪电中随机收集2点[gold]绘色[/gold]}",
   "HATMAGICIAN2-GRIND.title": "研磨",
   "HATMAGICIAN2-BRAND_SET_OFF.description": "造成{Damage:diff()}点伤害",
-  "HATMAGICIAN2-BRAND_SET_OFF.title": "落印"
+  "HATMAGICIAN2-BRAND_SET_OFF.title": "落印",
+  "HATMAGICIAN2-DESSERT_TIME.description": "所有生物回复{Heal:diff()}点生命\n绘色:友军回复量增加{Hat2Var:diff()}",
+  "HATMAGICIAN2-DESSERT_TIME.title": "甜点时间"
 }

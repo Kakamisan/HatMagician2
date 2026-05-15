@@ -1,6 +1,5 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,18 +9,15 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandOrangePower : BrandPower
 {
-    public BrandOrangePower()
-    {
-        BaseBrandColor = BrandColor.Orange;
-        BasePassiveVal = 6;
-        BaseEvokeVal = 1;
-        BaseFusionVal = 8;
-    }
-    
+    public override BrandColor BaseBrandColor => BrandColor.Orange;
+    protected override decimal BasePassiveVal => 6;
+    protected override decimal BaseEvokeVal => 1;
+    protected override decimal BaseFusionVal => 8;
+
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
-    
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Chain)];
-    
+
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
         await base.OnEvoke(card);
@@ -41,7 +37,7 @@ public class BrandOrangePower : BrandPower
         await HatMagician2Mgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
         await BrandPower.ChainDamageCmd(this, this.FusionVal);
     }
-    
+
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
         await base.OnPassive();

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using BaseLib.Extensions;
 using Godot;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Cards;
@@ -141,7 +142,7 @@ public class NCardUpdateVisualsPatch
     {
         Color color1 = StsColors.cream;
         Color color2 = StsColors.defaultStarCostOutline;
-        if (!card.HasBrandColorCostX && card.WasStarCostJustUpgraded)
+        if (!card.HasBrandColorCostX && card.DynamicBrandCost.WasJustUpgraded)
         {
             color1 = StsColors.green;
             color2 = StsColors.energyGreenOutline;

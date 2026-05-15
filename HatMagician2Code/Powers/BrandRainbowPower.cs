@@ -1,20 +1,16 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Commands;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandRainbowPower : BrandPower
 {
-    public BrandRainbowPower()
-    {
-        BaseBrandColor = BrandColor.Rainbow;
-        BasePassiveVal = 1;
-        BaseEvokeVal = 1;
-        BaseFusionVal = 1;
-    }
-    
+    public override BrandColor BaseBrandColor => BrandColor.Rainbow;
+    protected override decimal BasePassiveVal => 0;
+    protected override decimal BaseEvokeVal => 0;
+    protected override decimal BaseFusionVal => 0;
+
     protected override async Task OnFusion(HatMagician2Card? cardSource)
     {
         await base.OnFusion(cardSource);

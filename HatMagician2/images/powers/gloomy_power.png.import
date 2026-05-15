@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3lagj4eptqkd"
-path="res://.godot/imported/tmp_strength_power.png-dec7de823a67439cf9394c9a89be8682.ctex"
+uid="uid://oji1e75ykjm7"
+path="res://.godot/imported/gloomy_power.png-42a8d59eefe2a09b3c6751929f220ed8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HatMagician2/images/powers/big/tmp_strength_power.png"
-dest_files=["res://.godot/imported/tmp_strength_power.png-dec7de823a67439cf9394c9a89be8682.ctex"]
+source_file="res://HatMagician2/images/powers/gloomy_power.png"
+dest_files=["res://.godot/imported/gloomy_power.png-42a8d59eefe2a09b3c6751929f220ed8.ctex"]
 
 [params]
 

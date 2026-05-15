@@ -12,9 +12,11 @@ public class Fire() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targ
 {
     protected override bool IsTest => true;
 
-    public override int BaseBrandColorCost => 1;
+    public override int BaseBrandColorCost => 2;
 
     public override BrandColor BaseBrandColor => BrandColor.Red;
+
+    public override bool HasBrandApply => true;
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -23,5 +25,6 @@ public class Fire() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targ
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
     }
 
-    protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Retain);
+    // protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Retain);
+    protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
 }

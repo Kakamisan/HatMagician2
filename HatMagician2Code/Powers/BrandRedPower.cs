@@ -12,12 +12,10 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandRedPower : BrandPower
 {
-    public BrandRedPower()
-    {
-        BaseBrandColor = BrandColor.Red;
-        BasePassiveVal = 6;
-        BaseEvokeVal = 2;
-    }
+    public override BrandColor BaseBrandColor => BrandColor.Red;
+    protected override decimal BasePassiveVal => 6;
+    protected override decimal BaseEvokeVal => 2;
+    protected override decimal BaseFusionVal => 0;
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_dark_channel";
 

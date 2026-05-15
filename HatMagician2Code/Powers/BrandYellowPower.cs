@@ -10,12 +10,10 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandYellowPower : BrandPower
 {
-    public BrandYellowPower()
-    {
-        BaseBrandColor = BrandColor.Yellow;
-        BasePassiveVal = 3;
-        BaseEvokeVal = 5;
-    }
+    public override BrandColor BaseBrandColor => BrandColor.Yellow;
+    protected override decimal BasePassiveVal => 3;
+    protected override decimal BaseEvokeVal => 8;
+    protected override decimal BaseFusionVal => 0;
 
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
     protected override string EvokeSfx => "event:/sfx/characters/defect/defect_lightning_evoke";

@@ -10,12 +10,10 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandBluePower : BrandPower
 {
-    public BrandBluePower()
-    {
-        BaseBrandColor = BrandColor.Blue;
-        BasePassiveVal = 1;
-        BaseEvokeVal = 3;
-    }
+    public override BrandColor BaseBrandColor => BrandColor.Blue;
+    protected override decimal BasePassiveVal => 2;
+    protected override decimal BaseEvokeVal => 3;
+    protected override decimal BaseFusionVal => 0;
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_frost_channel";
 
@@ -29,7 +27,7 @@ public class BrandBluePower : BrandPower
         if (this.Owner.CombatState == null)
             return;
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
-        await PowerCmd.Apply<TmpStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
+        await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
     }
 
     public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)

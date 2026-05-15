@@ -18,7 +18,10 @@ public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basi
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Fire>(), HoverTipFactory.FromCard<Lightning>(), HoverTipFactory.FromCard<Ice>()];
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips =>
+    [
+        HoverTipFactory.FromCard<Fire>(this.IsUpgraded), HoverTipFactory.FromCard<Lightning>(this.IsUpgraded), HoverTipFactory.FromCard<Ice>(this.IsUpgraded)
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -34,11 +37,11 @@ public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basi
 
         if (card == null)
             return;
-        card.SetToFreeThisTurn();
+        //card.SetToFreeThisTurn();
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, this.Owner);
     }
 
-    public static IReadOnlyList<CardModel> GenCards(List<CardModel> cards, Player player)
+    public IReadOnlyList<CardModel> GenCards(List<CardModel> cards, Player player)
     {
         if (player.Creature.CombatState is null)
             return [];
@@ -46,10 +49,18 @@ public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basi
         List<CardModel> forCombat = [];
         forCombat.AddRange(list1.Select(canonicalCard => player.Creature.CombatState.CreateCard(canonicalCard, player)));
 
+        if (this.IsUpgraded)
+        {
+            foreach (var card in forCombat)
+            {
+                CardCmd.Upgrade(card);
+            }
+        }
+
         return forCombat;
     }
 
-    protected override void OnUpgrade() => this.EnergyCost.UpgradeBy(-1);
+    // protected override void OnUpgrade() => this.EnergyCost.UpgradeBy(-1);
 
     public void MockSelectedCard(CardModel card)
     {

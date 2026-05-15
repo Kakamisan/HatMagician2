@@ -22,6 +22,8 @@ public partial class BrandPowerShow : NCreatureVisuals
 	private BattleLabel? _evokeAmount;
 
 	private bool _isHover;
+	private decimal _passiveVal;
+	private decimal _evokeVal;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -76,6 +78,8 @@ public partial class BrandPowerShow : NCreatureVisuals
 		this._purple!.Visible = color == BrandColor.Purple;
 		this._orange!.Visible = color == BrandColor.Orange;
 		this._white!.Visible = color == BrandColor.White;
+		this._passiveVal = power.PassiveVal;
+		this._evokeVal = power.EvokeVal;
 		this._passiveAmount!.SetTextAutoSize(((int)power.PassiveVal).ToString());
 		this._evokeAmount!.SetTextAutoSize(((int)power.EvokeVal).ToString());
 		this.UpdateAmountShow();
@@ -89,8 +93,8 @@ public partial class BrandPowerShow : NCreatureVisuals
 
 	private void UpdateAmountShow()
 	{
-		this._passiveAmount!.Visible = !this._isHover;
-		this._evokeAmount!.Visible = this._isHover;
+		this._passiveAmount!.Visible = !this._isHover && this._passiveVal > 0;
+		this._evokeAmount!.Visible = this._isHover && this._evokeVal > 0;
 	}
 
 	private void SetIsHover(bool evoke)
@@ -123,7 +127,9 @@ public partial class BrandPowerShow : NCreatureVisuals
 		if (newNode is null) return node;
 		// Log.Info("[   Hat2   ]Show GetOrInit");
 		newNode.Name = BrandPowerShowNodeName;
-		newNode.Position = new Vector2(creatureNode.Visuals.IntentPosition.Position.X - 80, creatureNode.Visuals.IntentPosition.Position.Y + 20);
+		const int xOffset = 0;
+		const int yOffset = 0;
+		newNode.Position = new Vector2(creatureNode.Visuals.IntentPosition.Position.X - xOffset, creatureNode.Visuals.IntentPosition.Position.Y + yOffset);
 		//Log.Info("[   Hat2   ]Show GetOrInit Pos:" + creatureNode.Visuals.VfxSpawnPosition.Position.X + "," + creatureNode.Visuals.VfxSpawnPosition.Position.Y);
 		creatureNode.AddChild(newNode);
 		node = newNode;

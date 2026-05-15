@@ -17,6 +17,8 @@ public class LightningStrike() : HatMagician2Card(1, CardType.Attack, CardRarity
     public override int BaseBrandColorCost => 1;
 
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
+    
+    public override bool HasBrandApply => true;
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7M, ValueProp.Move)];
 

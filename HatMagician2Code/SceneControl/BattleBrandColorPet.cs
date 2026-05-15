@@ -3,7 +3,11 @@ using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.HoverTips;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace HatMagician2.HatMagician2Code.SceneControl;
 
@@ -16,6 +20,8 @@ public partial class BattleBrandColorPet : NCreatureVisuals
 	private bool _isTween;
 	private TextureRect? _textureRect; // 实际显示的节点
 	private Marker2D? _playerCenter;
+	private BrandColor _brandColor;
+	private bool _isFocused;
 
 	private static Dictionary<BrandColor, string> _scenePath = new()
 	{
@@ -37,8 +43,45 @@ public partial class BattleBrandColorPet : NCreatureVisuals
 		this._brandColorEnergyLabel = this.GetNode<MegaLabel>((NodePath)"%PassiveAmount");
 		this._body = this.GetNode<Node2D>((NodePath)"%Visuals");
 		this._textureRect = (TextureRect?)this._body.GetChildren().FirstOrDefault(node => node is TextureRect { Visible: true });
+		this.Bounds.FocusMode = Control.FocusModeEnum.All;
+		this.Bounds.Connect(Control.SignalName.FocusEntered, Callable.From(this.OnFocus));
+		this.Bounds.Connect(Control.SignalName.FocusExited, Callable.From(this.OnUnfocus));
+		this.Bounds.Connect(Control.SignalName.MouseEntered, Callable.From(this.OnFocus));
+		this.Bounds.Connect(Control.SignalName.MouseExited, Callable.From(this.OnUnfocus));
+		
+		// Log.Info("[   Hat2   ]绘色 _Ready");
 		this._SubReady();
 	}
+
+	private void OnFocus()
+	{
+		// Log.Info("[   Hat2   ]绘色 OnFocus");
+		if (this._isFocused) return;
+		this._isFocused = true;
+		List<IHoverTip> tips =
+		[
+			HoverTipFactory.FromKeyword(HatMagician2Keywords.Color)
+		];
+		this.ShowHoverTips(tips);
+	}
+
+	private void OnUnfocus()
+	{
+		// Log.Info("[   Hat2   ]绘色 OnUnfocus");
+		this._isFocused = false;
+		this.HideHoverTips();
+	}
+	
+	public void ShowHoverTips(IEnumerable<IHoverTip> hoverTips)
+	{
+		if (NCombatRoom.Instance != null && NCombatRoom.Instance.Ui.Hand.InCardPlay)
+			return;
+		this.HideHoverTips();
+		NHoverTipSet.CreateAndShow(this.Bounds, hoverTips, HoverTip.GetHoverTipAlignment(this, 0.5f));
+	}
+	
+	public void HideHoverTips() => NHoverTipSet.Remove(this.Bounds);
+	
 
 	public void UpdateVisuals()
 	{
@@ -93,6 +136,7 @@ public partial class BattleBrandColorPet : NCreatureVisuals
 		BattleBrandColorPet? node = NCreatureUtil.InitNode<BattleBrandColorPet>(path);
 		if (node is null) return null;
 		node.Name = nodeName;
+		node._brandColor = color;
 		owner.AddChild(node);
 		if (color is BrandColor.Red or BrandColor.White)
 			owner.MoveChild(node, 0);

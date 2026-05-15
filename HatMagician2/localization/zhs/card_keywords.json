@@ -5,8 +5,8 @@
   "HATMAGICIAN2-EVOKE.title": "刻印",
   "HATMAGICIAN2-FUSION.description": "两个印记合成新印记并使用其叠色效果，叠色规则:\n紫=红+蓝\n橙=红+黄\n白=黄+蓝\n虹=红+黄+蓝",
   "HATMAGICIAN2-FUSION.title": "叠色",
-  "HATMAGICIAN2-COLOR.description": "你需要消耗绘色打出特定的牌",
+  "HATMAGICIAN2-COLOR.description": "你需要消耗绘色打出卡牌中记述的绘色效果",
   "HATMAGICIAN2-COLOR.title": "绘色",
   "HATMAGICIAN2-SLEEP.description": "每回合首次手牌为空时，这张牌从[gold]弃牌堆/消耗堆[/gold]加入手牌",
-  "HATMAGICIAN2-SLEEP.title": "睡衣"
+  "HATMAGICIAN2-SLEEP.title": "睡衣时间"
 }

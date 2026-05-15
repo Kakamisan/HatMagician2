@@ -17,13 +17,16 @@ public class BrandPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
-    protected decimal BasePassiveVal; // 基础被动值
-    protected decimal BaseEvokeVal; // 基础刻印值
-    protected decimal BaseFusionVal; // 基础叠色值
-    public BrandColor BaseBrandColor;
+
+    public virtual BrandColor BaseBrandColor => BrandColor.None;
+    protected virtual decimal BasePassiveVal => 0; // 基础被动值
+    protected virtual decimal BaseEvokeVal => 0; // 基础刻印值
+    protected virtual decimal BaseFusionVal => 0; // 基础叠色值
+
     public decimal PassiveVal => BasePassiveVal;
     public decimal EvokeVal => BaseEvokeVal;
     protected decimal FusionVal => BaseFusionVal;
+
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
     protected virtual string ChannelSfx => "";
@@ -63,6 +66,7 @@ public class BrandPower : HatMagician2Power
         {
             await this.OnFusion(cardSource);
         }
+
         BrandPowerShow.OnBrandApply(this.Owner, this);
         await Task.CompletedTask;
     }

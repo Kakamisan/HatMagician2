@@ -168,7 +168,6 @@ offset_left = -122.0
 offset_top = -221.0
 offset_right = -92.0
 offset_bottom = -164.0
-mouse_filter = 2
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true

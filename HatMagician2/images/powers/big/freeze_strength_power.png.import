@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctitdfipbjtsl"
-path="res://.godot/imported/tmp_strength_power.png-faaba244bd0016e9c22e0e38e16a312d.ctex"
+uid="uid://b3lagj4eptqkd"
+path="res://.godot/imported/freeze_strength_power.png-b325dcff6ec2f7cf39f574a78036f2f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HatMagician2/images/powers/tmp_strength_power.png"
-dest_files=["res://.godot/imported/tmp_strength_power.png-faaba244bd0016e9c22e0e38e16a312d.ctex"]
+source_file="res://HatMagician2/images/powers/big/freeze_strength_power.png"
+dest_files=["res://.godot/imported/freeze_strength_power.png-b325dcff6ec2f7cf39f574a78036f2f4.ctex"]
 
 [params]
 

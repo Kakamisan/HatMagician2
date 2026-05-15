@@ -44,7 +44,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public virtual int BaseBrandColorCost => -1;
 
     // 变化后的绘色消耗
-    public int BrandColorCost => (int)this.GetDynamicVar(BrandColorCostVar.DefaultName).BaseValue;
+    public int BrandColorCost => (int)this.DynamicBrandCost.BaseValue;
+
+    public BrandColorCostVar DynamicBrandCost => (BrandColorCostVar)this.GetDynamicVar(BrandColorCostVar.DefaultName);
+
+    public Hat2Var DynamicHat2Var => (Hat2Var)this.GetDynamicVar(Hat2Var.DefaultName);
 
     // 通用印记Tips
     protected override IEnumerable<IHoverTip> ExtraHoverTips
@@ -52,12 +56,14 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         get
         {
             var hasExtra = false;
-            IEnumerable<IHoverTip> baseTips =
-            [
-                HoverTipFactory.FromPower<BrandPower>()
-            ];
-            if (this.BaseBrandColor is > BrandColor.None and <= BrandColor.Rainbow)
+            IEnumerable<IHoverTip> baseTips = [];
+
+            if (this.HasBrandApply)
+            {
+                baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPower>());
                 hasExtra = true;
+            }
+
             baseTips = this.BaseBrandColor switch
             {
                 BrandColor.Red => baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>()),
@@ -140,6 +146,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public virtual bool HasFreeBrandApply => false; // 是否有不消耗绘色即可打出印记的效果
+    public virtual bool HasBrandApply => false; // 是否有打出印记的效果
     public bool IsSleepApplied; // 是否已触发睡衣
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
@@ -166,7 +173,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public bool IsEvokeCard()
     {
         return this.HasFreeBrandApply
-               || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow } && this.HasEnoughEnergy()
+               || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, HasBrandApply: true } && this.HasEnoughEnergy()
                || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
     }
 
@@ -224,6 +231,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
                 await CardPileCmd.Add(this, PileType.Hand);
             }
         }
+
         await base.AfterHandEmptied(choiceContext, player);
     }
 
