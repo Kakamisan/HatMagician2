@@ -10,13 +10,11 @@ public class HatMagician2Mgr : CustomSingletonModel
 {
     public HatMagician2Mgr() : base(true, false)
     {
-        _instance = this;
+        Instance = this;
         _playerEnergyStates = new Dictionary<Player, BrandColorEnergyState>();
     }
 
-    private static HatMagician2Mgr? _instance;
-
-    public static HatMagician2Mgr Instance => _instance!;
+    public static HatMagician2Mgr? Instance { get; private set; }
 
     private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates; // 绘色能量管理
 
@@ -51,8 +49,8 @@ public class HatMagician2Mgr : CustomSingletonModel
     // 获得绘色能量
     public static async Task AddEnergy(Player player, int amount, BrandColor color = BrandColor.Any)
     {
-        if (_instance == null) return;
-        var state = _instance.InitState(player);
+        if (Instance == null) return;
+        var state = Instance.InitState(player);
 
         var applyColor = color;
         if (applyColor == BrandColor.Any)
@@ -110,6 +108,7 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static bool HasEnoughEnergy(Player player, BrandColor color, decimal cost)
     {
         if (color == BrandColor.None) return true;
+        if (Instance == null) return true;
         var eState = Instance._playerEnergyStates.GetValueOrDefault(player);
         if (eState == null) return false;
         return cost <= eState.BrandColorEnergyMap[color];

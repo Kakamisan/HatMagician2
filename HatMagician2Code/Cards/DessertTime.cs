@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Rooms;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class DessertTime() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, TargetType.None)
+public class DessertTime() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
     protected override bool IsTest => true;
     public override BrandColor BaseBrandColor => BrandColor.White;
@@ -27,8 +27,8 @@ public class DessertTime() : HatMagician2Card(0, CardType.Skill, CardRarity.Comm
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        var value1 = this.DynamicVars.Heal.BaseValue + this.DynamicHat2Var.BaseValue;
-        var value2 = this.DynamicVars.Heal.BaseValue;
+        var value1 = this.DynamicVars.Heal.IntValue + this.DynamicHat2Var.IntValue;
+        var value2 = this.DynamicVars.Heal.IntValue;
         var list1 = this.CombatState.GetTeammatesOf(this.Owner.Creature).Where(c => c.IsAlive);
         var list2 = this.CombatState.Enemies.Where(c => c.IsAlive);
         foreach (var creature in list1)
@@ -47,7 +47,7 @@ public class DessertTime() : HatMagician2Card(0, CardType.Skill, CardRarity.Comm
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        var value = this.DynamicVars.Heal.BaseValue;
+        var value = this.DynamicVars.Heal.IntValue;
         var list = this.CombatState.Creatures.Where(c => c.IsAlive);
         foreach (var creature in list)
         {

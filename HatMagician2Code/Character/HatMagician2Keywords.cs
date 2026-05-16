@@ -20,4 +20,7 @@ public class HatMagician2Keywords
     [CustomEnum("SLEEP")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Sleep;    // 睡衣
+    [CustomEnum("DREAM")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Dream;    // 梦乡
 }

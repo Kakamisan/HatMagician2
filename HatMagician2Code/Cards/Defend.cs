@@ -21,7 +21,7 @@ public class Defend() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Ta
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3M);
