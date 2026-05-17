@@ -1,6 +1,7 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.SceneControl;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -35,6 +36,18 @@ public class BrandPower : HatMagician2Power
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new("Passive", this.PassiveVal), new("Evoke", this.EvokeVal), new("Fusion", this.FusionVal)];
 
+    private bool _thisTurnIsTriggeredPassive; // 用于辅助判断死亡时是否需要触发一次被动（触发连锁伤害）
+
+    public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    {
+        if (side == this.Owner.Side)
+        {
+            this._thisTurnIsTriggeredPassive = false;
+        }
+
+        return base.AfterTurnEndLate(choiceContext, side);
+    }
+
     // 刻印效果
     protected virtual async Task OnEvoke(HatMagician2Card? cardSource)
     {
@@ -44,9 +57,14 @@ public class BrandPower : HatMagician2Power
     }
 
     // 被动效果
-    protected virtual async Task OnPassive()
+    protected virtual async Task OnPassive(bool setFlag = true)
     {
         Log.Info("[   Hat2   ]OnPassive:" + this.BaseBrandColor);
+        if (setFlag)
+        {
+            this._thisTurnIsTriggeredPassive = true;
+        }
+
         await Task.CompletedTask;
     }
 
@@ -146,11 +164,7 @@ public class BrandPower : HatMagician2Power
 
         // 是否触发叠色效果
         var newPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
-        var isFusion = false;
-        if (newPower != null && color != applyColor)
-        {
-            isFusion = true;
-        }
+        var isFusion = newPower != null && color != applyColor;
 
         if (newPower != null)
         {
@@ -175,26 +189,84 @@ public class BrandPower : HatMagician2Power
     }
 
     // 连锁伤害
-    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true)
+    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true, int cnt = 1)
     {
-        if (!power.Owner.IsAlive)
-            return;
-        if (power.Owner.CombatState == null)
-            return;
-        var enemies = power.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower)).ToList();
-        if (withDefaultVfx)
+        // if (!power.Owner.IsAlive)
+        //     return;
+        // if (power.Owner.CombatState == null)
+        //     return;
+        // var enemies = power.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        // if (withDefaultVfx)
+        // {
+        //     foreach (var target1 in (IEnumerable<Creature>)enemies)
+        //         VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
+        //     SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
+        // }
+        // await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, damage, ValueProp.Unpowered, power.Applier, null);
+        await ChainDamageCmd(power.Owner, damage, power.Applier, null, withDefaultVfx, cnt);
+    }
+
+    public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    {
+        if (target.CombatState == null) return;
+        var enemies = target.CombatState.GetTeammatesOf(target).Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        for (int i = 0; i < cnt; i++)
         {
-            foreach (var target1 in (IEnumerable<Creature>)enemies)
-                VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
-            SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
+            var enemies2 = enemies.Where(c => c.IsAlive).ToList();
+            if (withDefaultVfx)
+            {
+                foreach (var target1 in (IEnumerable<Creature>)enemies2)
+                    VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
+                SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
+            }
+
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies2, damage, ValueProp.Unpowered, applier, card);
         }
 
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, damage, ValueProp.Unpowered, power.Applier, null);
+        await Task.CompletedTask;
     }
 
     // 是否即将触发刻印
     public static bool WillEvoke(CardModel? cardSource, Creature? target)
     {
         return cardSource is HatMagician2Card card && card.IsEvokeCard() && target?.HasPower<BrandPower>() == true;
+    }
+
+    // 在死亡动画前移除
+    public override async Task BeforeDeath(Creature creature)
+    {
+        if (this.Owner == creature)
+        {
+            // 怪物在他的回合死亡 且未触发过被动 则触发一次被动
+            if (!this._thisTurnIsTriggeredPassive && this.CombatState.CurrentSide == this.Owner.Side)
+                await this.OnPassive();
+            await PowerCmd.Remove(this);
+        }
+
+        await base.BeforeDeath(creature);
+    }
+
+    // 使用印记被动效果
+    public static async Task UsePassiveCmd(Creature target, CardModel card, int cnt = 1)
+    {
+        var power = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
+        if (power == null) return;
+        switch (power.BaseBrandColor)
+        {
+            case BrandColor.Red:
+                await BrandRedPower.UsePassive(power, card, cnt); break;
+            case BrandColor.Yellow:
+                await BrandYellowPower.UsePassive(power, card, cnt); break;
+            case BrandColor.Blue:
+                await BrandBluePower.UsePassive(power, card, cnt); break;
+            case BrandColor.Purple:
+                await BrandPurplePower.UsePassive(power, card, cnt); break;
+            case BrandColor.Orange:
+                await BrandOrangePower.UsePassive(power, card, cnt); break;
+            case BrandColor.White:
+                await BrandWhitePower.UsePassive(power, card, cnt); break;
+        }
+
+        await Task.CompletedTask;
     }
 }

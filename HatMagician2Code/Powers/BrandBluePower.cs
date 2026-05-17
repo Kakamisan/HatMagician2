@@ -22,17 +22,25 @@ public class BrandBluePower : BrandPower
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
+        if (!this.Owner.IsAlive) return;
+        if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
-        if (!this.Owner.IsAlive)
-            return;
-        if (this.Owner.CombatState == null)
-            return;
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
         await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
     }
 
-    public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         return this.Owner != dealer || !props.IsPoweredAttack() ? 0M : -this.PassiveVal;
+    }
+
+    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    {
+        for (int i = 0; i < cnt; i++)
+        {
+            VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
+            await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card);
+        }
+        await Task.CompletedTask;
     }
 }

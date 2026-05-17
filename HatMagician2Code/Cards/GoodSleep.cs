@@ -35,10 +35,9 @@ public class GoodSleep() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncomm
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var cardSource = this;
         // await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
         // Decimal num = await CreatureCmd.GainBlock(cardSource.Owner.Creature, cardSource.DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, cardSource.Owner.Creature, cardSource.DynamicVars.Energy.BaseValue, cardSource.Owner.Creature, cardSource);
+        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, this.Owner.Creature, this.DynamicVars.Energy.BaseValue, this.Owner.Creature, this);
 
         await base.OnPlayNormal(choiceContext, play);
     }

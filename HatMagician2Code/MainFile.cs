@@ -1,6 +1,8 @@
+using BaseLib.Config;
 using Godot;
 using Godot.Bridge;
 using HarmonyLib;
+using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Modding;
 
 namespace HatMagician2.HatMagician2Code;
@@ -18,6 +20,8 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
 
         harmony.PatchAll();
+        
+        ModConfigRegistry.Register(ModId, new Hat2ModConfig());
         
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(MainFile).Assembly);
     }

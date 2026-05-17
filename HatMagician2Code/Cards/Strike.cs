@@ -27,7 +27,7 @@ public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, T
             .FromCard(this) // 伤害来源于这张卡牌
             .Targeting(play.Target!) // 伤害目标是玩家选择的目标
             // .WithHitFx("vfx/vfx_starry_impact", "blunt_attack.mp3")
-            // .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
     }
 

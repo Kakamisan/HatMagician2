@@ -13,9 +13,8 @@ public class BrandRainbowPower : BrandPower
 
     protected override async Task OnFusion(HatMagician2Card? cardSource)
     {
+        if (this.Applier?.Player == null) return;
         await base.OnFusion(cardSource);
-        if (this.Applier?.Player == null)
-            return;
         await HatMagician2Mgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
         await PlayerCmd.GainEnergy(this.FusionVal, this.Applier.Player);
     }

@@ -1,49 +1,49 @@
 {
-  "HATMAGICIAN2-BRAND_POWER.description": "·每个目标至多拥有一个印记\n·给予印记会使原有印记[gold]刻印[/gold]\n·满足条件时，给予的印记会与原有印记[gold]叠色[/gold]成新印记并使用其叠色效果，叠色规则:\n·紫=红+蓝 ·橙=红+黄\n·白=黄+蓝 ·虹=红+黄+蓝",
+  "HATMAGICIAN2-BRAND_POWER.description": "·每个目标至多拥有一个印记。\n·给予印记会使原有印记[gold]刻印[/gold]。\n·满足条件时，给予的印记会与原有印记[gold]叠色[/gold]成新印记并使用其叠色效果，叠色规则:\n·紫=红+蓝 ·橙=红+黄\n·白=黄+蓝 ·虹=红+黄+蓝",
   "HATMAGICIAN2-BRAND_POWER.smartDescription": "",
   "HATMAGICIAN2-BRAND_POWER.title": "印记",
 
-  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动:每回合受到[blue]6[/blue]点伤害\n刻印:下次受击时，伤害变为[blue]2[/blue]倍",
-  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动:每回合受到[blue]{Passive}[/blue]点伤害\n刻印:下次受击时，伤害变为[blue]{Evoke}[/blue]倍",
+  "HATMAGICIAN2-BRAND_RED_POWER.description": "被动:每回合受到[blue]6[/blue]点伤害。\n刻印:下次受击时，伤害变为[blue]2[/blue]倍。",
+  "HATMAGICIAN2-BRAND_RED_POWER.smartDescription": "被动:每回合受到[blue]{Passive}[/blue]点伤害。\n刻印:下次受击时，伤害变为[blue]{Evoke}[/blue]倍。",
   "HATMAGICIAN2-BRAND_RED_POWER.title": "火焰印记",
 
-  "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动:每回合产生[blue]3[/blue]点[gold]连锁[/gold]伤害\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]8[/blue]点[gold]连锁[/gold]伤害",
-  "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动:每回合产生[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]{Evoke}[/blue]点[gold]连锁[/gold]伤害",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.description": "被动:每回合[blue]3[/blue]点[gold]连锁[/gold]伤害。\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]8[/blue]点[gold]连锁[/gold]伤害。",
+  "HATMAGICIAN2-BRAND_YELLOW_POWER.smartDescription": "被动:每回合[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害。\n刻印:给予[blue]1[/blue]层[gold]易伤[/gold]，产生[blue]{Evoke}[/blue]点[gold]连锁[/gold]伤害。",
   "HATMAGICIAN2-BRAND_YELLOW_POWER.title": "闪电印记",
   
-  "HATMAGICIAN2-BRAND_BLUE_POWER.description": "被动:攻击伤害减少[blue]2[/blue]点\n刻印:给予[blue]3[/blue]层[gold]冰霜[/gold]",
-  "HATMAGICIAN2-BRAND_BLUE_POWER.smartDescription": "被动:攻击伤害减少[blue]{Passive}[/blue]点\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]",
+  "HATMAGICIAN2-BRAND_BLUE_POWER.description": "被动:攻击伤害减少[blue]2[/blue]点。\n刻印:给予[blue]3[/blue]层[gold]冰霜[/gold]。",
+  "HATMAGICIAN2-BRAND_BLUE_POWER.smartDescription": "被动:攻击伤害减少[blue]{Passive}[/blue]点。\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]。",
   "HATMAGICIAN2-BRAND_BLUE_POWER.title": "冰霜印记",
   
-  "HATMAGICIAN2-BRAND_ORANGE_POWER.description": "由[red]火焰[/red]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]，产生[blue]8[/blue]点[gold]连锁[/gold]伤害\n被动:每回合产生[blue]6[/blue]点[gold]连锁[/gold]伤害\n刻印:下[blue]1[/blue]次受击时，该阵营所有单位受到等量伤害",
-  "HATMAGICIAN2-BRAND_ORANGE_POWER.smartDescription": "由[red]火焰[/red]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]，产生[blue]{Fusion}[/blue]点[gold]连锁[/gold]伤害\n被动:每回合产生[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害\n刻印:下[blue]{Evoke}[/blue]次受击时，该阵营所有单位受到等量伤害",
+  "HATMAGICIAN2-BRAND_ORANGE_POWER.description": "由[red]火焰[/red]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]，产生[blue]8[/blue]点[gold]连锁[/gold]伤害。\n被动:每回合[blue]6[/blue]点[gold]连锁[/gold]伤害。\n刻印:下[blue]1[/blue]次受击时，该阵营所有单位受到等量伤害。",
+  "HATMAGICIAN2-BRAND_ORANGE_POWER.smartDescription": "由[red]火焰[/red]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]，产生[blue]{Fusion}[/blue]点[gold]连锁[/gold]伤害。\n被动:每回合[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害。\n刻印:下[blue]{Evoke}[/blue]次受击时，该阵营所有单位受到等量伤害。",
   "HATMAGICIAN2-BRAND_ORANGE_POWER.title": "黄昏印记",
   
-  "HATMAGICIAN2-BRAND_PURPLE_POWER.description": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]6[/blue]层[gold]阴郁[/gold]\n被动:攻击伤害减少[blue]4[/blue]点\n刻印:给予[blue]6[/blue]层[gold]冰霜[/gold]",
-  "HATMAGICIAN2-BRAND_PURPLE_POWER.smartDescription": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]{Fusion}[/blue]层[gold]阴郁[/gold]\n被动:攻击伤害减少[blue]{Passive}[/blue]点\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.description": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]6[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]4[/blue]点。\n刻印:给予[blue]6[/blue]层[gold]冰霜[/gold]。",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.smartDescription": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]{Fusion}[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]{Passive}[/blue]点。\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]。",
   "HATMAGICIAN2-BRAND_PURPLE_POWER.title": "紫幽印记",
   
-  "HATMAGICIAN2-BRAND_WHITE_POWER.description": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]6[/blue]点格挡\n被动:每回合收集[blue]1[/blue]点随机[gold]绘色[/gold]\n刻印:抽[blue]2[/blue]张牌",
-  "HATMAGICIAN2-BRAND_WHITE_POWER.smartDescription": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]{Fusion}[/blue]点格挡\n被动:每回合收集[blue]{Passive}[/blue]点随机[gold]绘色[/gold]\n刻印:抽[blue]{Evoke}[/blue]张牌",
+  "HATMAGICIAN2-BRAND_WHITE_POWER.description": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]6[/blue]点格挡。\n被动:每回合收集[blue]1[/blue]点随机[gold]绘色[/gold]。\n刻印:抽[blue]2[/blue]张牌。",
+  "HATMAGICIAN2-BRAND_WHITE_POWER.smartDescription": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]{Fusion}[/blue]点格挡。\n被动:每回合收集[blue]{Passive}[/blue]点随机[gold]绘色[/gold]。\n刻印:抽[blue]{Evoke}[/blue]张牌。",
   "HATMAGICIAN2-BRAND_WHITE_POWER.title": "光辉印记",
   
-  "HATMAGICIAN2-BRAND_RAINBOW_POWER.description": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}",
-  "HATMAGICIAN2-BRAND_RAINBOW_POWER.smartDescription": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]{Fusion}[/blue]点{energyPrefix:energyIcons(1)}",
+  "HATMAGICIAN2-BRAND_RAINBOW_POWER.description": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}。",
+  "HATMAGICIAN2-BRAND_RAINBOW_POWER.smartDescription": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]{Fusion}[/blue]点{energyPrefix:energyIcons(1)}。",
   "HATMAGICIAN2-BRAND_RAINBOW_POWER.title": "虹色印记",
   
-  "HATMAGICIAN2-FREEZE_STRENGTH_POWER.description": "冰霜会降低本回合攻击造成的伤害",
-  "HATMAGICIAN2-FREEZE_STRENGTH_POWER.smartDescription": "本回合攻击伤害减少[blue]{Amount}[/blue]点",
+  "HATMAGICIAN2-FREEZE_STRENGTH_POWER.description": "冰霜会降低本回合攻击造成的伤害。",
+  "HATMAGICIAN2-FREEZE_STRENGTH_POWER.smartDescription": "本回合攻击伤害减少[blue]{Amount}[/blue]点。",
   "HATMAGICIAN2-FREEZE_STRENGTH_POWER.title": "冰霜",
 
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下次受击时，伤害变为[blue]2[/blue]倍",
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下次受击时，伤害变为[blue]{Amount}[/blue]倍",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下次受击时，伤害变为[blue]2[/blue]倍。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下次受击时，伤害变为[blue]{Amount}[/blue]倍。",
   "HATMAGICIAN2-MULTI_DAMAGE_POWER.title": "灼痕",
   
-  "HATMAGICIAN2-CHAIN_DAMAGE_POWER.description": "下[blue]1[/blue]次受击时，该阵营所有单位受到等量伤害",
-  "HATMAGICIAN2-CHAIN_DAMAGE_POWER.smartDescription": "下[blue]{Amount}[/blue]次受击时，该阵营所有单位受到等量伤害",
+  "HATMAGICIAN2-CHAIN_DAMAGE_POWER.description": "下[blue]1[/blue]次受击时，该阵营所有单位受到等量伤害。",
+  "HATMAGICIAN2-CHAIN_DAMAGE_POWER.smartDescription": "下[blue]{Amount}[/blue]次受击时，该阵营所有单位受到等量伤害。",
   "HATMAGICIAN2-CHAIN_DAMAGE_POWER.title": "连锁",
   
-  "HATMAGICIAN2-GLOOMY_POWER.description": "攻击时失去生命",
-  "HATMAGICIAN2-GLOOMY_POWER.smartDescription": "攻击时失去[blue]{Amount}[/blue]点生命",
+  "HATMAGICIAN2-GLOOMY_POWER.description": "攻击时失去生命。",
+  "HATMAGICIAN2-GLOOMY_POWER.smartDescription": "攻击时失去[blue]{Amount}[/blue]点生命。",
   "HATMAGICIAN2-GLOOMY_POWER.title": "阴郁"
 }

@@ -2,8 +2,10 @@
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -24,22 +26,30 @@ public class BrandYellowPower : BrandPower
 
     protected override async Task OnEvoke(HatMagician2Card? card)
     {
+        if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
-        if (!this.Owner.IsAlive)
-            return;
-        if (this.Owner.CombatState == null)
-            return;
         await BrandPower.ChainDamageCmd(this, this.EvokeVal);
+        if (!this.Owner.IsAlive) return;
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, 1, this.Applier, null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
-        await base.OnPassive();
-        if (side != this.Owner.Side)
-            return;
-        if (this.Owner.CombatState == null)
-            return;
-        await BrandPower.ChainDamageCmd(this, this.PassiveVal);
+        if (side != this.Owner.Side) return;
+        await this.OnPassive();
+        await base.AfterSideTurnStart(side, combatState);
+    }
+
+    protected override async Task OnPassive(bool setFlag = true)
+    {
+        if (this.Owner.CombatState == null) return;
+        await base.OnPassive(setFlag);
+        await UsePassive(this);
+    }
+
+    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    {
+        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card, true, cnt);
+        await Task.CompletedTask;
     }
 }

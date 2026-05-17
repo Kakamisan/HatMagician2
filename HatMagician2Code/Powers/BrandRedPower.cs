@@ -37,11 +37,27 @@ public class BrandRedPower : BrandPower
 
     public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
     {
-        await base.OnPassive();
-        if (side != this.Owner.Side)
-            return;
-        VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
-        IEnumerable<DamageResult> damageResults = await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.Owner, this.PassiveVal, ValueProp.Unpowered, null, null);
+        if (side != this.Owner.Side) return;
+        await this.OnPassive();
+        await base.AfterSideTurnStart(side, combatState);
+    }
+
+    protected override async Task OnPassive(bool setFlag = true)
+    {
+        if (!this.Owner.IsAlive) return;
+        await base.OnPassive(setFlag);
+        await UsePassive(this);
+    }
+
+    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    {
+        for (int i = 0; i < cnt; i++)
+        {
+            VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card != null ? card.Owner.Creature : power.Applier, card);
+        }
+
+        await Task.CompletedTask;
     }
 
     // 只用于预览计算伤害 实际倍率在card.NextPlayMulti

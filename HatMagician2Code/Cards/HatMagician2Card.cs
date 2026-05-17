@@ -68,7 +68,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected virtual HashSet<CardTag> Hat2CanonicalTags => [];
 
     // 变化后的绘色消耗
-    public int BrandColorCost => (int)this.DynamicBrandCost.BaseValue;
+    public int BrandColorCost => this.DynamicBrandCost.IntValue;
 
     // 绘色消耗Var
     public BrandColorCostVar DynamicBrandCost => (BrandColorCostVar)this.GetDynamicVar(BrandColorCostVar.DefaultName);
@@ -86,7 +86,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
             if (this.HasBrandApply)
             {
-                baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPower>());
+                if (Hat2ModConfig.ShowBaseBrandColorTips)
+                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPower>());
                 hasExtra = true;
             }
 
