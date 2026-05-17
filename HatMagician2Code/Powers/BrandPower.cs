@@ -107,13 +107,16 @@ public class BrandPower : HatMagician2Power
     }
 
     // 应用印记的逻辑
-    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color)
+    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color) =>
+        await ApplyBrandPower(card, choiceContext, play.Target!, color);
+
+    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, Creature target, BrandColor color)
     {
         // 检查
         if (color is BrandColor.None or > BrandColor.Rainbow)
             return;
 
-        var oldPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
+        var oldPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
 
         // 实际应用的印记颜色
         var applyColor = color;
@@ -135,25 +138,25 @@ public class BrandPower : HatMagician2Power
         switch (applyColor)
         {
             case BrandColor.Red:
-                await PowerCmd.Apply<BrandRedPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandRedPower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Yellow:
-                await PowerCmd.Apply<BrandYellowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandYellowPower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Blue:
-                await PowerCmd.Apply<BrandBluePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandBluePower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Purple:
-                await PowerCmd.Apply<BrandPurplePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandPurplePower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Orange:
-                await PowerCmd.Apply<BrandOrangePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandOrangePower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.White:
-                await PowerCmd.Apply<BrandWhitePower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandWhitePower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.Rainbow:
-                await PowerCmd.Apply<BrandRainbowPower>(choiceContext, play.Target!, 1, card.Owner.Creature, card, true);
+                await PowerCmd.Apply<BrandRainbowPower>(choiceContext, target, 1, card.Owner.Creature, card, true);
                 break;
             case BrandColor.None:
             case BrandColor.Any:
@@ -163,7 +166,7 @@ public class BrandPower : HatMagician2Power
         }
 
         // 是否触发叠色效果
-        var newPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
+        var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
         var isFusion = newPower != null && color != applyColor;
 
         if (newPower != null)

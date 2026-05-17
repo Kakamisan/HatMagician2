@@ -15,7 +15,7 @@
   "HATMAGICIAN2-LIGHTNING.title": "忧虑",
   "HATMAGICIAN2-ICE.description": "绘色:给予[color=#31b0eb]冰霜[/color]印记。",
   "HATMAGICIAN2-ICE.title": "孤寂",
-  "HATMAGICIAN2-GRIND.description": "{IfUpgraded:show:收集1点火焰/冰霜/闪电[gold]绘色[/gold]|从火焰/冰霜/闪电中随机收集2点[gold]绘色[/gold]}。",
+  "HATMAGICIAN2-GRIND.description": "收集{Hat2Var:diff()}点数量最少的[gold]基础绘色[/gold]{Repeat:diff()}次。",
   "HATMAGICIAN2-GRIND.title": "研磨",
   "HATMAGICIAN2-BRAND_SET_OFF.description": "造成{Damage:diff()}点伤害。",
   "HATMAGICIAN2-BRAND_SET_OFF.title": "落印",
@@ -28,12 +28,14 @@
   "HATMAGICIAN2-CROUCH.title": "蜷缩",
   "HATMAGICIAN2-GOOD_SLEEP.description": "绘色:下回合抽{Cards:diff()}张牌。\n下回合获得{Energy:energyIcons()}。",
   "HATMAGICIAN2-GOOD_SLEEP.title": "优质睡眠",
-  "HATMAGICIAN2-INTO_BED.description": "获得{Block:diff()}点格挡，结束你的回合。",
+  "HATMAGICIAN2-INTO_BED.description": "获得{Block:diff()}点格挡。\n结束你的回合。",
   "HATMAGICIAN2-INTO_BED.title": "钻入被窝",
   "HATMAGICIAN2-SLEEP_TALK.description": "对所有敌人造成{Damage:diff()}点伤害。\n本回合每打出一张[gold]睡衣时间[/gold]卡，伤害增加{Hat2Var:diff()}。",
   "HATMAGICIAN2-SLEEP_TALK.title": "梦话",
   "HATMAGICIAN2-FIRE_STRIKE.description": "绘色:给予[red]火焰[/red]印记。\n造成{Damage:diff()}点伤害。",
   "HATMAGICIAN2-FIRE_STRIKE.title": "燃起",
-  "HATMAGICIAN2-FLOURISH.description": "触发印记的被动效果{Hat2Var:diff()}次。\n造成{Damage:diff()}点伤害。",
-  "HATMAGICIAN2-FLOURISH.title": "点缀"
+  "HATMAGICIAN2-FLOURISH.description": "触发印记的被动效果{Repeat:diff()}次。\n造成{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-FLOURISH.title": "点缀",
+  "HATMAGICIAN2-DISCHARGE.description": "给予随机敌人[color=#e7ea31]闪电[/color]印记\n绘色:这个效果重复{Repeat:diff()}次。",
+  "HATMAGICIAN2-DISCHARGE.title": "放电"
 }

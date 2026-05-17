@@ -20,7 +20,7 @@ public class Flourish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, 
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move), new Hat2Var(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move), new RepeatVar(1)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -31,7 +31,7 @@ public class Flourish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await BrandPower.UsePassiveCmd(play.Target!, play.Card, this.DynamicHat2Var.IntValue);
+        await BrandPower.UsePassiveCmd(play.Target!, play.Card, this.DynamicVars.Repeat.IntValue);
         if (play.Target!.IsDead) return;
         await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
             .FromCard(this) // 伤害来源于这张卡牌
@@ -44,6 +44,6 @@ public class Flourish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, 
     protected override void OnUpgrade()
     {
         this.DynamicVars.Damage.UpgradeValueBy(4);
-        this.DynamicHat2Var.UpgradeValueBy(1);
+        this.DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

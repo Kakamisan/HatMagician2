@@ -110,4 +110,10 @@ public class BrandColorEnergyState(Player player)
             SfxCmd.Play("event:/sfx/ui/gain_energy");
         }
     }
+    
+    // 获取当前绘色的值
+    public int GetEnergy(BrandColor color)
+    {
+        return color is not (> BrandColor.None and < BrandColor.Rainbow) ? 0 : this.BrandColorEnergyMap[color];
+    }
 }
