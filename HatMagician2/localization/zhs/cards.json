@@ -37,5 +37,10 @@
   "HATMAGICIAN2-FLOURISH.description": "触发印记的被动效果{Repeat:diff()}次。\n造成{Damage:diff()}点伤害。",
   "HATMAGICIAN2-FLOURISH.title": "点缀",
   "HATMAGICIAN2-DISCHARGE.description": "给予随机敌人[color=#e7ea31]闪电[/color]印记\n绘色:这个效果重复{Repeat:diff()}次。",
-  "HATMAGICIAN2-DISCHARGE.title": "放电"
+  "HATMAGICIAN2-DISCHARGE.title": "放电",
+  "HATMAGICIAN2-YAWN.description": "给予{WeakPower:diff()}层[gold]虚弱[/gold]。",
+  "HATMAGICIAN2-YAWN.title": "哈欠",
+  "HATMAGICIAN2-CAMP.description": "获得{Block:diff()}点格挡。\n将{Hat2Var:diff()}张手牌放回抽牌堆顶部。",
+  "HATMAGICIAN2-CAMP.selectionScreenPrompt": "选择要放到你抽牌堆顶的牌",
+  "HATMAGICIAN2-CAMP.title": "扎营"
 }

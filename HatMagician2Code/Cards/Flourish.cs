@@ -14,8 +14,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class Flourish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    protected override bool IsTest => true;
-
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;

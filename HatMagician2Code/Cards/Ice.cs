@@ -10,8 +10,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(TokenCardPool))]
 public class Ice() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
 {
-    protected override bool IsTest => true;
-
     public override int BaseBrandColorCost => 2;
 
     public override BrandColor BaseBrandColor => BrandColor.Blue;

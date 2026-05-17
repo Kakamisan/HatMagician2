@@ -13,8 +13,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
-    protected override bool IsTest => true;
-
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips =>
         [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color), HoverTipFactory.FromKeyword(HatMagician2Keywords.BaseColor)];
 

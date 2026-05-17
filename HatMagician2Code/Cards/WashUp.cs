@@ -15,8 +15,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
-    protected override bool IsTest => true;
-
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];

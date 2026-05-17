@@ -14,7 +14,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class DessertTime() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
-    protected override bool IsTest => true;
     public override BrandColor BaseBrandColor => BrandColor.White;
 
     public override int BaseBrandColorCost => 1;

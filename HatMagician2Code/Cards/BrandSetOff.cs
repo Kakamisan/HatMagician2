@@ -12,8 +12,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
-    protected override bool IsTest => true;
-
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move)];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Evoke];

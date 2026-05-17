@@ -14,8 +14,6 @@ public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basi
 {
     private CardModel? _mockSelectedCard;
 
-    protected override bool IsTest => true;
-
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips =>

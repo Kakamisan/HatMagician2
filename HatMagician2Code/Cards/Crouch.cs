@@ -14,7 +14,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class Crouch() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
-    protected override bool IsTest => true;
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 1;
 

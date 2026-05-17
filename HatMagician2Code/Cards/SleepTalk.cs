@@ -17,8 +17,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
 {
-    protected override bool IsTest => true;
-
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;

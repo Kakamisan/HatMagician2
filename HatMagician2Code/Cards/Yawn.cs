@@ -6,21 +6,20 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class IntoBed() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class Yawn() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
-    public override bool HasEndTurn => true;
-
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(6, ValueProp.Move)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new PowerVar<WeakPower>(1)];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust, HatMagician2Keywords.Sleep];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -30,10 +29,9 @@ public class IntoBed() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
-        PlayerCmd.EndTurn(this.Owner, false);
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target!, this.DynamicVars.Weak.IntValue, this.Owner.Creature, this);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Block.UpgradeValueBy(3);
+    protected override void OnUpgrade() => this.DynamicVars.Weak.UpgradeValueBy(1);
 }

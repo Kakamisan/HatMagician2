@@ -11,8 +11,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
-    protected override bool IsTest => true;
-
     protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move)];

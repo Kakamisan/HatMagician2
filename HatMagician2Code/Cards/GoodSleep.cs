@@ -15,7 +15,6 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class GoodSleep() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
-    protected override bool IsTest => true;
     public override BrandColor BaseBrandColor => BrandColor.White;
 
     public override int BaseBrandColorCost => 1;
