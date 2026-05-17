@@ -42,5 +42,13 @@
   "HATMAGICIAN2-YAWN.title": "哈欠",
   "HATMAGICIAN2-CAMP.description": "获得{Block:diff()}点格挡。\n将{Hat2Var:diff()}张手牌放回抽牌堆顶部。",
   "HATMAGICIAN2-CAMP.selectionScreenPrompt": "选择要放到你抽牌堆顶的牌",
-  "HATMAGICIAN2-CAMP.title": "扎营"
+  "HATMAGICIAN2-CAMP.title": "扎营",
+  "HATMAGICIAN2-NIGHTMARE.description": "绘色:给予所有敌人[color=#e7ea31]闪电[/color]印记。",
+  "HATMAGICIAN2-NIGHTMARE.title": "恶梦",
+  "HATMAGICIAN2-SWEET_DREAM.description": "在你的回合开始时，抽{Cards:diff()}张牌，选{Hat2Var:diff()}张手牌放回抽牌堆顶部。",
+  "HATMAGICIAN2-SWEET_DREAM.title": "好梦",
+  "HATMAGICIAN2-ROLLING.description": "丢弃一张牌。\n将弃牌堆中的一张牌放入你的手牌。",
+  "HATMAGICIAN2-ROLLING.selectionScreenPrompt": "选择一张牌丢弃",
+  "HATMAGICIAN2-ROLLING.selectionScreenPrompt2": "选择一张牌放入你的手牌",
+  "HATMAGICIAN2-ROLLING.title": "打滚"
 }

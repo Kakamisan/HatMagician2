@@ -22,7 +22,7 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep, CardKeyword.Exhaust];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
-    protected override bool IsPlayable => PileType.Draw.GetPile(this.Owner).Cards.Count > 0 || PileType.Discard.GetPile(this.Owner).Cards.Count > 0;
+    protected override bool IsPlayableSub => PileType.Draw.GetPile(this.Owner).Cards.Count > 0 || PileType.Discard.GetPile(this.Owner).Cards.Count > 0;
 
     protected override bool ShouldGlowRedInternal => !this.IsPlayable;
 

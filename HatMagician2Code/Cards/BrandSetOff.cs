@@ -12,7 +12,7 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move)];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Evoke];
 
@@ -28,5 +28,5 @@ public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Bas
             .Execute(choiceContext);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(3);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);
 }

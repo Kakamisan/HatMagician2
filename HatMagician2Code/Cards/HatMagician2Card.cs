@@ -77,6 +77,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 额外的一个通用Var
     public Hat2Var DynamicHat2Var => (Hat2Var)this.GetDynamicVar(Hat2Var.DefaultName);
 
+    // 子类的是否可打出
+    protected virtual bool IsPlayableSub => true;
+
+    // 通用判断 不能从手牌打出
+    protected override bool IsPlayable =>
+        this.IsPlayableSub && (!this.Keywords.Contains(HatMagician2Keywords.OnlyDream) || this.Pile?.Type != PileType.Hand);
+
     // 添加通用Tips
     protected override IEnumerable<IHoverTip> ExtraHoverTips
     {

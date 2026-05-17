@@ -21,7 +21,7 @@ public class GoodSleep() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncomm
 
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(2), new EnergyVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(2), new EnergyVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
