@@ -20,7 +20,7 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
-    // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Sleep)];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move), new Hat2Var(4)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];

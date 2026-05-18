@@ -32,9 +32,6 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
 
-    // 设置成test的话使用通用的测试卡图
-    protected virtual bool IsTest => false;
-
     // 绘色消耗类型
     public virtual BrandColor BaseBrandColor => BrandColor.None;
 
@@ -252,6 +249,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             this.IsSleepApplied = true;
             if (this.Pile is { Type: PileType.Discard or PileType.Exhaust })
             {
+                this.EnergyCost.AddThisTurn(DreamButterflyPower.AddCostThisTurn(this.Owner));
                 await CardPileCmd.Add(this, PileType.Hand);
             }
         }

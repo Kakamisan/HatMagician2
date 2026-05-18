@@ -19,7 +19,7 @@ public class HatMagician2Keywords
     public static CardKeyword Color;    // 绘色
     [CustomEnum("BASE_COLOR")]
     [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword BaseColor;    // 绘色
+    public static CardKeyword BaseColor;// 基础绘色
     [CustomEnum("SLEEP")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Sleep;    // 睡衣

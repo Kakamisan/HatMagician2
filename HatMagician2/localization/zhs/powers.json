@@ -50,5 +50,9 @@
   "HATMAGICIAN2-SWEET_DREAM_POWER.description": "在你的回合开始时，抽[blue]1[/blue]张牌，选[blue]1[/blue]张手牌放回抽牌堆顶部。",
   "HATMAGICIAN2-SWEET_DREAM_POWER.smartDescription": "在你的回合开始时，抽[blue]{Amount}[/blue]张牌，选[blue]1[/blue]张手牌放回抽牌堆顶部。",
   "HATMAGICIAN2-SWEET_DREAM_POWER.selectionScreenPrompt": "选择要放到你抽牌堆顶的牌",
-  "HATMAGICIAN2-SWEET_DREAM_POWER.title": "好梦"
+  "HATMAGICIAN2-SWEET_DREAM_POWER.title": "好梦",
+
+  "HATMAGICIAN2-DREAM_BUTTERFLY_POWER.description": "卡牌通过[gold]睡衣时间[/gold]回到手牌时，耗能减少{energyPrefix:energyIcons(1)}。",
+  "HATMAGICIAN2-DREAM_BUTTERFLY_POWER.smartDescription": "卡牌通过[gold]睡衣时间[/gold]回到手牌时，耗能减少{Amount:energyIcons()}。",
+  "HATMAGICIAN2-DREAM_BUTTERFLY_POWER.title": "梦中之蝶"
 }
