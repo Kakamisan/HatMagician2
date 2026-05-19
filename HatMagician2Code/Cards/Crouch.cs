@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Crouch() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class Crouch() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 1;

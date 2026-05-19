@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
@@ -25,6 +26,7 @@ public class BrandOrangePower : BrandPower
         if (!this.Owner.IsAlive) return;
         if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, 1, this.Applier, null);
         // 下次攻击对其他目标造成等量伤害
         await PowerCmd.Apply<ChainDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
     }

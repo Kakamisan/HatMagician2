@@ -18,4 +18,11 @@ public class BrandRainbowPower : BrandPower
         await HatMagician2Mgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
         await PlayerCmd.GainEnergy(this.FusionVal, this.Applier.Player);
     }
+
+    protected override async Task OnEvoke(HatMagician2Card? cardSource)
+    {
+        if (this.Applier?.Player == null) return;
+        await base.OnEvoke(cardSource);
+        await PlayerCmd.GainEnergy(this.EvokeVal, this.Applier.Player);
+    }
 }

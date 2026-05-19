@@ -286,7 +286,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             cardPlay.Card is HatMagician2Card { HasEndTurn: true })
         {
             this.NeedDream = true;
-            if (this is InversionOfRealityAndDream)
+            // 现世与梦境的逆转在抽牌堆时 塞到最下面
+            if (this is InversionOfRealityAndDream && this.Pile?.Type == PileType.Draw)
             {
                 await CardPileCmd.Add([this], PileType.Draw, CardPilePosition.Bottom, null, true);
             }

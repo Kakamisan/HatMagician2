@@ -16,15 +16,15 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class EmergencyGuard() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => BrandColor.Blue;
-    public override int BaseBrandColorCost => 2;
+    public override int BaseBrandColorCost => 1;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move), new Hat2Var(5)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
+        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicHat2Var.BaseValue, ValueProp.Move, play);
         await this.OnPlayNormal(choiceContext, play);
         await base.OnPlayWhenCostBrandColor(choiceContext, play);
     }
@@ -42,6 +42,7 @@ public class EmergencyGuard() : HatMagician2Card(1, CardType.Skill, CardRarity.C
     protected override void OnUpgrade()
     {
         this.DynamicVars.Block.UpgradeValueBy(2);
-        this.DynamicBrandCost.UpgradeValueBy(-1);
+        this.DynamicHat2Var.UpgradeValueBy(2);
+        //this.DynamicBrandCost.UpgradeValueBy(-1);
     }
 }
