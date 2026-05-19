@@ -54,5 +54,7 @@
   "HATMAGICIAN2-DREAM_BUTTERFLY.description": "卡牌通过[gold]睡衣时间[/gold]回到手牌时，耗能减少{energyPrefix:energyIcons(1)}。",
   "HATMAGICIAN2-DREAM_BUTTERFLY.title": "梦中之蝶",
   "HATMAGICIAN2-EMERGENCY_GUARD.description": "绘色:获得{Block:diff()}点格挡。\n获得{Block:diff()}点格挡。\n[gold]消耗[/gold]1张牌。",
-  "HATMAGICIAN2-EMERGENCY_GUARD.title": "紧急防护"
+  "HATMAGICIAN2-EMERGENCY_GUARD.title": "紧急防护",
+  "HATMAGICIAN2-INVERSION_OF_REALITY_AND_DREAM.description": "交换你的抽牌堆及弃牌堆。在此回合后进行一个额外回合。结束你的回合。",
+  "HATMAGICIAN2-INVERSION_OF_REALITY_AND_DREAM.title": "现世与梦境的逆转"
 }

@@ -25,8 +25,8 @@ public class HatMagician2Keywords
     public static CardKeyword Sleep;    // 睡衣
     [CustomEnum("ONLY_DREAM")]
     [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword OnlyDream;// 仅梦乡（无法通过手牌打出）
+    public static CardKeyword OnlyDream;// 仅梦境（无法通过手牌打出）
     [CustomEnum("DREAM")]
     [KeywordProperties(AutoKeywordPosition.Before)]
-    public static CardKeyword Dream;    // 梦乡
+    public static CardKeyword Dream;    // 梦境
 }

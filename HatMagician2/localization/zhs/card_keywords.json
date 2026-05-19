@@ -12,7 +12,7 @@
   "HATMAGICIAN2-SLEEP.description": "每回合首次手牌为空时，这张牌从[gold]弃牌堆/消耗堆[/gold]加入手牌。",
   "HATMAGICIAN2-SLEEP.title": "睡衣时间",
   "HATMAGICIAN2-DREAM.description": "使用[gold]睡衣时间[/gold]卡结束回合时，这张卡从抽牌堆自动打出。",
-  "HATMAGICIAN2-DREAM.title": "梦乡",
+  "HATMAGICIAN2-DREAM.title": "梦境",
   "HATMAGICIAN2-ONLY_DREAM.description": "这张牌无法从手牌中打出。",
   "HATMAGICIAN2-ONLY_DREAM.title": "无法从手牌打出"
 }

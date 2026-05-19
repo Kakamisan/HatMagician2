@@ -165,7 +165,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public bool IsSleepApplied; // 是否已触发睡衣
-    public bool NeedDream; // 是否触发梦乡自动从抽牌堆打出
+    public bool NeedDream; // 是否触发梦境自动从抽牌堆打出
 
     // 火焰印记临时设置倍率后修改伤害值 打出后倍率复原
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
@@ -271,7 +271,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return flag;
     }
 
-    // 回合结束后重置睡衣状态 梦乡状态
+    // 回合结束后重置睡衣状态 梦境状态
     public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
     {
         this.IsSleepApplied = false;
@@ -279,19 +279,23 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return base.AfterTurnEndLate(choiceContext, side);
     }
 
-    // 处理梦乡效果 使用睡衣卡结束回合时 打出抽牌堆的梦乡卡
-    public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    // 处理梦境效果 使用睡衣卡结束回合时 打出抽牌堆的梦境卡
+    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (this.Keywords.Contains(HatMagician2Keywords.Dream) && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep) &&
             cardPlay.Card is HatMagician2Card { HasEndTurn: true })
         {
             this.NeedDream = true;
+            if (this is InversionOfRealityAndDream)
+            {
+                await CardPileCmd.Add([this], PileType.Draw, CardPilePosition.Bottom, null, true);
+            }
         }
 
-        return base.AfterCardPlayedLate(choiceContext, cardPlay);
+        await base.AfterCardPlayedLate(choiceContext, cardPlay);
     }
 
-    // 回合结束出牌阶段自动打出梦乡卡
+    // 回合结束出牌阶段自动打出梦境卡
     public override async Task AfterAutoPostPlayPhaseEntered(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != this.Owner)

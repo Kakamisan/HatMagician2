@@ -31,5 +31,5 @@ public class DreamButterfly() : HatMagician2Card(1, CardType.Power, CardRarity.R
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Innate);
+    protected override void OnUpgrade() => this.EnergyCost.UpgradeBy(-1);
 }
