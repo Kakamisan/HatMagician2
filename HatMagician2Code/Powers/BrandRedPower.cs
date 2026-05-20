@@ -77,7 +77,7 @@ public class BrandRedPower : BrandPower
 
     private static bool WillTriggerMultiDamage(CardModel? cardSource)
     {
-        return cardSource is HatMagician2Card card && card.IsEvokeCard() && card is { Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false };
+        return cardSource is HatMagician2Card card && card.IsEvokeCard() && card is { Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false, IsAoeAttack: false };
     }
 
     // 即将触发的攻击倍数

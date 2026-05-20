@@ -41,10 +41,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 基础绘色消耗
     public virtual int BaseBrandColorCost => -1;
 
-    // 是否有不消耗绘色即可打出印记的效果
+    // 是否有不消耗绘色即可打出印记的效果 (这里指对主要目标)
     public virtual bool HasFreeBrandApply => false;
 
-    // 是否有打出印记的效果
+    // 是否有打出印记的效果 (这里指对主要目标)
     public virtual bool HasBrandApply => false;
 
     // 是否结束回合效果
@@ -163,6 +163,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public decimal NextPlayMulti = 1;
     public void SetNextPlayMulti(decimal value) => this.NextPlayMulti = value;
     public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
+    public virtual bool IsAoeAttack => false; // 是否Aoe攻击卡 （Aoe卡不需要计算预览火焰印记N倍伤害 由灼痕能力处理）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public bool IsSleepApplied; // 是否已触发睡衣
     public bool NeedDream; // 是否触发梦境自动从抽牌堆打出

@@ -12,14 +12,16 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class BlearyEyed() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
 {
-    public override BrandColor BaseBrandColor => BrandColor.Red;
+    public override BrandColor BaseBrandColor => BrandColor.Purple;
     public override int BaseBrandColorCost => 1;
+
     public override bool HasBrandApply => true;
+
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(19, ValueProp.Move)];
-    // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Unpowered | ValueProp.Unblockable | ValueProp.Move)];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -30,13 +32,9 @@ public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Unco
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
-            .FromCard(this) // 伤害来源于这张卡牌
-            .Targeting(play.Target!) // 伤害目标是玩家选择的目标
-            .WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
+        await CreatureCmd.Damage(choiceContext, play.Target!, this.DynamicVars.Damage, this);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(7);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(3);
 }

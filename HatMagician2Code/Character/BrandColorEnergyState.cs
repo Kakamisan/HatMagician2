@@ -116,4 +116,10 @@ public class BrandColorEnergyState(Player player)
     {
         return color is not (> BrandColor.None and < BrandColor.Rainbow) ? 0 : this.BrandColorEnergyMap[color];
     }
+
+    // 获取当前拥有的绘色种类
+    public int GetBrandColorTypeCnt()
+    {
+        return BrandColorEnergyMap.Values.Count(energy => energy > 0);
+    }
 }

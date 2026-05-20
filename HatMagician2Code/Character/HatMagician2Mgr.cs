@@ -113,4 +113,11 @@ public class HatMagician2Mgr : CustomSingletonModel
         if (eState == null) return false;
         return cost <= eState.BrandColorEnergyMap[color];
     }
+
+    public static int GetBrandColorTypeCnt(Player player)
+    {
+        if (Instance == null) return 0;
+        var state = Instance.InitState(player);
+        return state.GetBrandColorTypeCnt();
+    }
 }

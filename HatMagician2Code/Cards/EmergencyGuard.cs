@@ -18,7 +18,8 @@ public class EmergencyGuard() : HatMagician2Card(1, CardType.Skill, CardRarity.C
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 1;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move), new Hat2Var(5)];
+
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move), new Hat2Var(5, new BlockVar(5, ValueProp.Move))];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -43,6 +44,7 @@ public class EmergencyGuard() : HatMagician2Card(1, CardType.Skill, CardRarity.C
     {
         this.DynamicVars.Block.UpgradeValueBy(2);
         this.DynamicHat2Var.UpgradeValueBy(2);
+        this.DynamicHat2Var.CosVar?.UpgradeValueBy(2);
         //this.DynamicBrandCost.UpgradeValueBy(-1);
     }
 }

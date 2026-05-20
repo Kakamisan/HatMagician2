@@ -13,9 +13,9 @@ namespace HatMagician2.HatMagician2Code.Powers;
 public class BrandWhitePower : BrandPower
 {
     public override BrandColor BaseBrandColor => BrandColor.White;
-    protected override decimal BasePassiveVal => 1;
-    protected override decimal BaseEvokeVal => 2;
-    protected override decimal BaseFusionVal => 6;
+    protected override decimal BasePassiveVal => 2;
+    protected override decimal BaseEvokeVal => 3;
+    protected override decimal BaseFusionVal => 7;
 
     // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new BlockVar(5, ValueProp.Unpowered)); // 格挡数
 
