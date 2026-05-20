@@ -18,7 +18,7 @@ public class LightningStrike() : HatMagician2Card(1, CardType.Attack, CardRarity
     
     public override bool HasBrandApply => true;
 
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move)];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {

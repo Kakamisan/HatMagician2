@@ -17,6 +17,8 @@ public class InversionOfRealityAndDream() : HatMagician2Card(2, CardType.Skill, 
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
+    public override bool HasEndTurn => true;
+
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     // protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust, HatMagician2Keywords.Dream];
@@ -44,14 +46,14 @@ public class InversionOfRealityAndDream() : HatMagician2Card(2, CardType.Skill, 
         }
 
         this._needExtraTurn = true;
-        
-        PlayerCmd.EndTurn(this.Owner, false);
+
+        // PlayerCmd.EndTurn(this.Owner, false);
 
         await base.OnPlayNormal(choiceContext, play);
     }
 
     protected override void OnUpgrade() => this.EnergyCost.UpgradeBy(-1);
-    
+
     public override bool ShouldTakeExtraTurn(Player player)
     {
         if (player == this.Owner)

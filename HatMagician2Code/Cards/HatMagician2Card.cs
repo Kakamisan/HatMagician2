@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -135,7 +136,9 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         {
             if (this.SubTargetType != null)
             {
-                return this.HasEnoughEnergy() ? base.TargetType : (TargetType)this.SubTargetType;
+                // 目前HasEnoughEnergy有bug 不能在免费打出时返回true
+                // 一种是AutoPlay不走消耗资源逻辑 一种是飞溅之类的会设置免费
+                return this.HasEnoughEnergy() || this.Pile?.Type != PileType.Hand ? base.TargetType : (TargetType)this.SubTargetType;
             }
 
             return base.TargetType;
@@ -155,6 +158,18 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return pile is { IsCombatPile: true } && this.CombatState != null
             ? (int)HatMagician2Mgr.ModifyBrandColorCost(this.CombatState, this, this.BrandColorCost)
             : this.BrandColorCost;
+    }
+
+    protected LocString SelectionScreenPrompt2
+    {
+        get
+        {
+            LocString str = new LocString("cards", this.Id.Entry + ".selectionScreenPrompt2");
+            if (!str.Exists())
+                throw new InvalidOperationException($"No selection screen prompt 2 for {this.Id}.");
+            this.DynamicVars.AddTo(str);
+            return str;
+        }
     }
 
     // 战斗状态相关
@@ -228,6 +243,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 绘色不足时的普通效果
     protected virtual async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        if (this.HasEndTurn) PlayerCmd.EndTurn(this.Owner, false);
         await Task.CompletedTask;
     }
 
@@ -309,4 +325,6 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             return;
         await CardCmd.AutoPlay(choiceContext, this, null);
     }
+    
+    // 绘色免费消耗相关
 }
