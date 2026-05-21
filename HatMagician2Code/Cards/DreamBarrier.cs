@@ -17,7 +17,7 @@ public class DreamBarrier() : HatMagician2Card(0, CardType.Skill, CardRarity.Com
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(6, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(5, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

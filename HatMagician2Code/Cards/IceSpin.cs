@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class IceSpin() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+public class IceSpin() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 2;

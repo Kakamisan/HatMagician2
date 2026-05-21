@@ -73,7 +73,7 @@
   "HATMAGICIAN2-SIGH.description": "给予{Hat2Var:diff()}层[gold]阴郁[/gold]。\n收集2点[purple]紫幽[/purple]绘色。",
   "HATMAGICIAN2-SIGH.title": "叹气",
   "HATMAGICIAN2-STARTLE.description": "绘色:给予[color=#ff9a61]黄昏[/color]印记。\n给予{VulnerablePower:diff()}层[gold]易伤[/gold]。",
-  "HATMAGICIAN2-STARTLE.title": "惊吓",
+  "HATMAGICIAN2-STARTLE.title": "惊醒",
   "HATMAGICIAN2-BLEARY_EYED.description": "绘色:给予[purple]紫幽[/purple]印记。\n敌人失去{Damage:diff()}点生命。",
   "HATMAGICIAN2-BLEARY_EYED.title": "睡眼惺忪",
   "HATMAGICIAN2-INK_SLASH.description": "造成{CalculatedDamage:diff()}点伤害。\n每拥有一种绘色就额外造成{ExtraDamage:diff()}点伤害。",
@@ -89,5 +89,15 @@
   "HATMAGICIAN2-STUMBLE.description": "丢弃两张牌。\n从抽牌堆顶部{Cards:diff()}张牌中选一张打出。",
   "HATMAGICIAN2-STUMBLE.selectionScreenPrompt": "选择两张牌丢弃",
   "HATMAGICIAN2-STUMBLE.selectionScreenPrompt2": "选择一张牌打出",
-  "HATMAGICIAN2-STUMBLE.title": "酿跄"
+  "HATMAGICIAN2-STUMBLE.title": "酿跄",
+  "HATMAGICIAN2-BLOOM.description": "造成{Damage:diff()}点伤害。\n对拥有印记的目标额外命中一次。",
+  "HATMAGICIAN2-BLOOM.title": "绽开",
+  "HATMAGICIAN2-GLOOMY_STRIKE.description": "造成{Damage:diff()}点伤害。\n给予{Hat2Var:diff()}层[gold]阴郁[/gold]。",
+  "HATMAGICIAN2-GLOOMY_STRIKE.title": "致郁打击",
+  "HATMAGICIAN2-HOLY_STRIKE.description": "造成{Damage:diff()}点伤害。\n绘色:获得{Energy:energyIcons()}。",
+  "HATMAGICIAN2-HOLY_STRIKE.title": "神圣打击",
+  "HATMAGICIAN2-NIGHTGLOW.description": "收集{Hat2Var:diff()}点[color=#e8fcfb]光辉[/color]绘色。\n抽{Cards:diff()}张牌。",
+  "HATMAGICIAN2-NIGHTGLOW.title": "夜光",
+  "HATMAGICIAN2-SKETCH.description": "造成{Damage:diff()}点伤害。\n每拥有{Hat2Var:inverseDiff()}种绘色，抽{Cards:diff()}张牌。{InCombat:(抽{CalculatedCards:diff()}张牌)}",
+  "HATMAGICIAN2-SKETCH.title": "速写"
 }

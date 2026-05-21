@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using BaseLib.Extensions;
+using System.Runtime.CompilerServices;
 using Godot;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Cards;
@@ -9,12 +9,15 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Logging;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 
 namespace HatMagician2.HatMagician2Code.Patches;
 
+// [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateEnchantmentVisuals))]
+// public class UpdateEnchantmentVisualsPatch
+// {
+//     
+// }
 [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateVisuals))]
 public class NCardUpdateVisualsPatch
 {
@@ -32,28 +35,21 @@ public class NCardUpdateVisualsPatch
             {
                 PackedScene scene = GD.Load<PackedScene>("res://HatMagician2/scenes/brand_color_card_icon.tscn");
                 // Log.Info("[    Hat2    ]LoadScene");
-                if (scene != null)
+                // Log.Info("[    Hat2    ]Instantiate");
+                if (scene?.Instantiate() is Node2D newNode)
                 {
-                    Node2D? newNode = scene.Instantiate() as Node2D;
-                    // Log.Info("[    Hat2    ]Instantiate");
-                    if (newNode != null)
+                    newNode.Name = nodeName;
+                    // Log.Info("[    Hat2    ]getStar");
+                    if (typeof(NCard).GetField("_starIcon", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(__instance) is TextureRect star)
                     {
-                        newNode.Name = nodeName;
-                        TextureRect? star =
-                            typeof(NCard).GetField("_starIcon", BindingFlags.NonPublic | BindingFlags.Instance)
-                                ?.GetValue(__instance) as TextureRect;
-                        // Log.Info("[    Hat2    ]getStar");
-                        if (star != null)
-                        {
-                            // 位置和辉星一致
-                            newNode.Position = new Vector2(star.Position.X, star.Position.Y);
-                            __instance.Body.AddChild(newNode);
-                            var starIdx = star.GetIndex();
-                            __instance.Body.MoveChild(newNode, starIdx);
-                            node = newNode;
+                        // 位置和辉星一致
+                        newNode.Position = new Vector2(star.Position.X, star.Position.Y);
+                        __instance.Body.AddChild(newNode);
+                        var starIdx = star.GetIndex();
+                        __instance.Body.MoveChild(newNode, starIdx);
+                        node = newNode;
 
-                            // Log.Info("[    Hat2    ]AddChild");
-                        }
+                        // Log.Info("[    Hat2    ]AddChild");
                     }
                 }
             }
@@ -83,8 +79,7 @@ public class NCardUpdateVisualsPatch
         }
     }
 
-    public static void UpdateBrandColorCostVisuals(NCard instance, PileType pileType, Node2D node, MegaLabel label,
-        Control icon,
+    public static void UpdateBrandColorCostVisuals(NCard instance, PileType pileType, Node2D node, MegaLabel label, Control icon,
         TextureRect unplayable, HatMagician2Card card)
     {
         if (instance.Visibility != ModelVisibility.Visible)
@@ -123,11 +118,19 @@ public class NCardUpdateVisualsPatch
             }
 
             UpdateBrandColorCostColor(instance, pileType, label, card);
-            UnplayableReason reason;
-            if (pileType == PileType.Hand && !card.CanPlay(out reason, out _))
+            if (pileType == PileType.Hand && !card.CanPlay(out var reason, out _))
                 unplayable.Visible = !HasResourceCostReason(reason);
             else
                 unplayable.Visible = false;
+
+            // 附魔位置
+            if (icon.Visible)
+            {
+                ref Control tab = ref _enchantmentTab(instance);
+                ref Vector2 vec = ref _defaultEnchantmentPosition(instance);
+                tab.Position = vec;
+                //instance._enchantmentTab.Position = instance._defaultEnchantmentPosition;
+            }
         }
     }
 
@@ -137,12 +140,11 @@ public class NCardUpdateVisualsPatch
                reason.HasFlag(UnplayableReason.StarCostTooHigh);
     }
 
-    public static void UpdateBrandColorCostColor(NCard instance, PileType pileType, MegaLabel label,
-        HatMagician2Card card)
+    public static void UpdateBrandColorCostColor(NCard instance, PileType pileType, MegaLabel label, HatMagician2Card card)
     {
         Color color1 = StsColors.cream;
         Color color2 = StsColors.defaultStarCostOutline;
-        if (!card.HasBrandColorCostX && card.DynamicBrandCost.WasJustUpgraded)
+        if (card is { HasBrandColorCostX: false, DynamicBrandCost.WasJustUpgraded: true })
         {
             color1 = StsColors.green;
             color2 = StsColors.energyGreenOutline;
@@ -172,15 +174,14 @@ public class NCardUpdateVisualsPatch
             return CardCostColor.InsufficientResources;
         if (card.HasBrandColorCostX)
             return CardCostColor.Unmodified;
-        Decimal hookModifiedCost;
-        if (HatMagician2Mgr.TryModifyBrandColorCostWithHooks(card, state, out hookModifiedCost))
+        if (HatMagician2Mgr.TryModifyBrandColorCostWithHooks(card, state, out var hookModifiedCost))
             return GetColorForHookModifiedCost(hookModifiedCost, card.BaseBrandColorCost);
         // 看不懂这行，直接返回无变化
         // return card.TemporaryStarCost != null ? GetColorForLocalCost(card.TemporaryStarCost.Cost, card.BaseBrandColorCost) : CardCostColor.Unmodified;
         return CardCostColor.Unmodified;
     }
 
-    public static CardCostColor GetColorForHookModifiedCost(Decimal hookModifiedCost, int baseCost)
+    public static CardCostColor GetColorForHookModifiedCost(decimal hookModifiedCost, int baseCost)
     {
         if (hookModifiedCost > baseCost)
             return CardCostColor.Increased;
@@ -235,4 +236,10 @@ public class NCardUpdateVisualsPatch
                 throw new ArgumentOutOfRangeException(nameof(costColor), costColor, null);
         }
     }
+
+    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_enchantmentTab")]
+    private static extern ref Control _enchantmentTab(NCard target);
+
+    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_defaultEnchantmentPosition")]
+    private static extern ref Vector2 _defaultEnchantmentPosition(NCard target);
 }

@@ -20,7 +20,7 @@ public class Crouch() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, T
     public override bool HasBrandApply => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(8, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
     

@@ -20,15 +20,13 @@ public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Tar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.Owner.Creature.Player == null)
-            return;
         if (HatMagician2Mgr.Instance == null)
             return;
         List<BrandColor> list = [BrandColor.Red, BrandColor.Yellow, BrandColor.Blue];
         for (int i = 0; i < this.DynamicVars.Repeat.IntValue; i++)
         {
-            var color = list.OrderBy(c => HatMagician2Mgr.Instance.GetState(this.Owner.Creature.Player).GetEnergy(c)).First();
-            await HatMagician2Mgr.AddEnergy(this.Owner.Creature.Player, this.DynamicHat2Var.IntValue, color);
+            var color = list.OrderBy(c => HatMagician2Mgr.Instance.GetState(this.Owner).GetEnergy(c)).First();
+            await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicHat2Var.IntValue, color);
         }
     }
 

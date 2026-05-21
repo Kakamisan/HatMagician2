@@ -17,7 +17,8 @@ public class InkSlash() : HatMagician2Card(1, CardType.Attack, CardRarity.Common
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
-    // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color)];
+
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
         new CalculationBaseVar(1), new ExtraDamageVar(3), new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => HatMagician2Mgr.GetBrandColorTypeCnt(card.Owner))

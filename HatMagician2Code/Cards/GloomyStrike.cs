@@ -7,19 +7,20 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Sigh() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
+public class GloomyStrike() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    // public override BrandColor BaseBrandColor => BrandColor.None;
-    // public override int BaseBrandColorCost => -1;
-    // public override bool HasBrandApply => false;
+    public override BrandColor BaseBrandColor => BrandColor.None;
+    public override int BaseBrandColorCost => -1;
+    public override bool HasBrandApply => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<GloomyPower>()];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(6)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
-    // protected override HashSet<CardTag> Hat2CanonicalTags => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move), new Hat2Var(3)];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+    protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -28,12 +29,15 @@ public class Sigh() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, Tar
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (HatMagician2Mgr.Instance == null)
-            return;
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
+            .Execute(choiceContext);
         await PowerCmd.Apply<GloomyPower>(choiceContext, play.Target!, this.DynamicHat2Var.IntValue, this.Owner.Creature, this);
-        await HatMagician2Mgr.AddEnergy(this.Owner, 2, BrandColor.Purple);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(3);
+    protected override void OnUpgrade()
+    {
+        this.DynamicVars.Damage.UpgradeValueBy(2);
+        this.DynamicHat2Var.UpgradeValueBy(1);
+    }
 }

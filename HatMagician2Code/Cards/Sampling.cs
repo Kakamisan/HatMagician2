@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Sampling() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class Sampling() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
@@ -30,20 +30,16 @@ public class Sampling() : HatMagician2Card(1, CardType.Skill, CardRarity.Common,
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.Owner.Creature.Player == null)
-            return;
-        if (HatMagician2Mgr.Instance == null)
-            return;
         List<BrandColor> list = [BrandColor.Red, BrandColor.Yellow, BrandColor.Blue];
         foreach (var color in list)
         {
-            await HatMagician2Mgr.AddEnergy(this.Owner.Creature.Player, this.DynamicHat2Var.IntValue + this.AddValue, color);
+            await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicHat2Var.IntValue + this.AddValue, color);
         }
 
         List<BrandColor> list2 = [BrandColor.Orange, BrandColor.Purple, BrandColor.White];
         foreach (var color in list2)
         {
-            await HatMagician2Mgr.AddEnergy(this.Owner.Creature.Player, this.DynamicHat2Var.IntValue, color);
+            await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicHat2Var.IntValue, color);
         }
 
         await base.OnPlayNormal(choiceContext, play);

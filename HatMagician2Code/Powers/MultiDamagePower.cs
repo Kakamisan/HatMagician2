@@ -15,6 +15,7 @@ public class MultiDamagePower : HatMagician2Power
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     private decimal Multi => this.Amount;
+    private bool _ready2Remove;
 
     // protected override IEnumerable<DynamicVar> CanonicalVars => [new("Multi", this.Multi)];
 
@@ -36,10 +37,20 @@ public class MultiDamagePower : HatMagician2Power
         if (IsTriggerMulti(cardSource) && this.Owner == target)
         {
             // this.Flash();
-            PowerCmd.Remove(this);
+            this._ready2Remove = true;
+            // PowerCmd.Remove(this);
         }
 
         return base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+    }
+
+    public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (this.Owner == cardPlay.Target && this._ready2Remove)
+        {
+            PowerCmd.Remove(this);
+        }
+        return base.AfterCardPlayedLate(choiceContext, cardPlay);
     }
 
     // 是否触发倍伤 攻击牌即触发 （后续优化 伤害大于0才触发？暂时没思路）

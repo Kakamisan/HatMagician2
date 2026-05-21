@@ -4,10 +4,7 @@ namespace HatMagician2.HatMagician2Code.Character;
 
 public interface IHatMagician2AbstractModel
 {
-    public bool TryModifyBrandColorCost(
-        HatMagician2Card card,
-        Decimal originalCost,
-        out Decimal modifiedCost)
+    public bool TryModifyBrandColorCost(HatMagician2Card card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         return false;

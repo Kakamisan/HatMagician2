@@ -12,13 +12,13 @@ using MegaCrit.Sts2.Core.Models;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class MoodShift() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, TargetType.None)
+public class MoodShift() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new EnergyVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new EnergyVar(2)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

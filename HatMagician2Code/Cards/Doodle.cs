@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
@@ -21,7 +21,7 @@ public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
     public override bool HasFreeBrandApply => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7, ValueProp.Move)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

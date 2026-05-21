@@ -199,6 +199,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             this.IsBrandApplied = false;
             this.NextPlayMulti = 1;
             this.NextCannotCost = false;
+            this._tmpBrandColorCosts.RemoveAll(c => c.ClearsWhenCardIsPlayed);
         }
 
         return base.AfterCardPlayed(choiceContext, cardPlay);
@@ -293,6 +294,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         this.IsSleepApplied = false;
         this.NeedDream = false;
+        this._tmpBrandColorCosts.RemoveAll(c => c.ClearsWhenTurnEnds);
         return base.AfterTurnEndLate(choiceContext, side);
     }
 
@@ -327,4 +329,41 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     }
     
     // 绘色免费消耗相关
+    private List<TemporaryCardCost> _tmpBrandColorCosts = [];
+    public bool TryModifyBrandColorCost(HatMagician2Card card, decimal originalCost, out decimal modifiedCost)
+    {
+        if (card == this && !this.HasBrandColorCostX)
+        {
+            var cost = this._tmpBrandColorCosts.FirstOrDefault();
+            if (cost != null)
+            {
+                modifiedCost = Math.Min(cost.Cost, originalCost);
+                return originalCost != modifiedCost;
+            }
+        }
+        modifiedCost = originalCost;
+        return false;
+    }
+
+    public void SetToFreeThisTurnForBrandColor()
+    {
+        this._tmpBrandColorCosts.Add(TemporaryCardCost.ThisTurn(0));
+    }
+
+    public void SetToFreeThisCombatForBrandColor()
+    {
+        this._tmpBrandColorCosts.Add(TemporaryCardCost.ThisCombat(0));
+    }
+
+    public override Task BeforeCombatStartLate()
+    {
+        //this._tmpBrandColorCosts.Clear();
+        return base.BeforeCombatStartLate();
+    }
+
+    protected override void DeepCloneFields()
+    {
+        this._tmpBrandColorCosts = this._tmpBrandColorCosts.ToList();
+        base.DeepCloneFields();
+    }
 }

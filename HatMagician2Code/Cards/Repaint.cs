@@ -21,7 +21,7 @@ public class Repaint() : HatMagician2Card(2, CardType.Attack, CardRarity.Common,
     public override bool HasFreeBrandApply => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(15, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(16, ValueProp.Move)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -36,10 +36,7 @@ public class Repaint() : HatMagician2Card(2, CardType.Attack, CardRarity.Common,
         var power = play.Target!.Powers.FirstOrDefault(p => p is BrandPower) as BrandPower;
         var color = power?.BaseBrandColor ?? BrandColor.None;
         await BrandPower.ApplyBrandPower(this, choiceContext, play.Target!, color);
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
-            .FromCard(this) // 伤害来源于这张卡牌
-            .Targeting(play.Target!) // 伤害目标是玩家选择的目标
-            .WithHitFx("vfx/vfx_starry_impact")
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }
