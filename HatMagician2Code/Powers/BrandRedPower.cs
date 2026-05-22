@@ -81,9 +81,9 @@ public class BrandRedPower : BrandPower
     }
 
     // 即将触发的攻击倍数
-    private static decimal WillTriggerMulti(BrandRedPower power)
+    public static decimal WillTriggerMulti(BrandRedPower power)
     {
         // 灼痕已有倍数+本次刻印的增加1倍
-        return MultiDamagePower.GetNowMulti(power.Owner) + 1;
+        return MultiDamagePower.GetNowMulti(power.Owner) + power.EvokeVal - 1;
     }
 }

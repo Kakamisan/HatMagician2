@@ -1,5 +1,6 @@
 ﻿using BaseLib.Abstracts;
 using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
@@ -119,5 +120,35 @@ public class HatMagician2Mgr : CustomSingletonModel
         if (Instance == null) return 0;
         var state = Instance.InitState(player);
         return state.GetBrandColorTypeCnt();
+    }
+
+    // 印记激活动态数值
+    public static decimal ModifyEvokeVal(ICombatState combatState, BrandPower power, decimal originVal)
+    {
+        decimal modifiedVal = originVal;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyEvokeVal(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        return modifiedVal;
+    }
+
+    // 印记被动动态数值
+    public static decimal ModifyPassiveVal(ICombatState combatState, BrandPower power, decimal originVal)
+    {
+        decimal modifiedVal = originVal;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyPassiveVal(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        return modifiedVal;
     }
 }

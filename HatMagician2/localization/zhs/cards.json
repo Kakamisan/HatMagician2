@@ -101,5 +101,7 @@
   "HATMAGICIAN2-SKETCH.description": "造成{Damage:diff()}点伤害。\n每拥有{Hat2Var:inverseDiff()}种绘色，抽{CalculationExtra:diff()}张牌。{InCombat:(抽{CalculatedCards:diff()}张牌)}",
   "HATMAGICIAN2-SKETCH.title": "速写",
   "HATMAGICIAN2-PLUCK_A_STAR.description": "造成{Damage:diff()}点伤害。",
-  "HATMAGICIAN2-PLUCK_A_STAR.title": "摘星"
+  "HATMAGICIAN2-PLUCK_A_STAR.title": "摘星",
+  "HATMAGICIAN2-SOUL_PERMEATION.description": "所有印记牌获得[gold]侵蚀[/gold]，印记的效果变为{Hat2Var:diff()}倍。",
+  "HATMAGICIAN2-SOUL_PERMEATION.title": "浸入灵魂"
 }

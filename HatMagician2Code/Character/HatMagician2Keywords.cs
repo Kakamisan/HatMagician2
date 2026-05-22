@@ -29,4 +29,7 @@ public class HatMagician2Keywords
     [CustomEnum("DREAM")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Dream;    // 梦境
+    [CustomEnum("EROSION")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Erosion;  // 侵蚀
 }

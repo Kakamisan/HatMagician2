@@ -15,6 +15,7 @@ public class BrandYellowPower : BrandPower
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
     protected override decimal BasePassiveVal => 3;
     protected override decimal BaseEvokeVal => 8;
+    protected override decimal BaseEvokeVal2 => 1;
     protected override decimal BaseFusionVal => 0;
 
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
@@ -30,7 +31,7 @@ public class BrandYellowPower : BrandPower
         await base.OnEvoke(card);
         await BrandPower.ChainDamageCmd(this, this.EvokeVal);
         if (!this.Owner.IsAlive) return;
-        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, 1, this.Applier, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, this.Applier, null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

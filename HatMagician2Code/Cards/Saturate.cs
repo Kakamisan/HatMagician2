@@ -19,7 +19,7 @@ public class Saturate() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncomm
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust, HatMagician2Keywords.Erosion];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)

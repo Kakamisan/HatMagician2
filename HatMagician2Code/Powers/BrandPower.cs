@@ -1,4 +1,5 @@
-﻿using HatMagician2.HatMagician2Code.Cards;
+﻿using BaseLib.Extensions;
+using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.SceneControl;
 using MegaCrit.Sts2.Core.Combat;
@@ -21,12 +22,14 @@ public class BrandPower : HatMagician2Power
 
     public virtual BrandColor BaseBrandColor => BrandColor.None;
     protected virtual decimal BasePassiveVal => 0; // 基础被动值
-    protected virtual decimal BaseEvokeVal => 0; // 基础刻印值
+    protected virtual decimal BaseEvokeVal => 0; // 基础刻印值1
+    protected virtual decimal BaseEvokeVal2 => 0; // 基础刻印值2
     protected virtual decimal BaseFusionVal => 0; // 基础叠色值
 
-    public decimal PassiveVal => BasePassiveVal;
-    public decimal EvokeVal => BaseEvokeVal;
-    protected decimal FusionVal => BaseFusionVal;
+    public decimal PassiveVal => this.GetDynamicVar("Passive").BaseValue;
+    public decimal EvokeVal => this.GetDynamicVar("Evoke").BaseValue;
+    public decimal EvokeVal2 => this.GetDynamicVar("Evoke2").BaseValue;
+    public decimal FusionVal => this.GetDynamicVar("Fusion").BaseValue;
 
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
@@ -34,7 +37,7 @@ public class BrandPower : HatMagician2Power
     protected bool Evoked;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new("Passive", this.PassiveVal), new("Evoke", this.EvokeVal), new("Fusion", this.FusionVal)];
+        [new("Passive", this.BasePassiveVal), new("Evoke", this.BaseEvokeVal), new("Evoke2", this.BaseEvokeVal2), new("Fusion", this.BaseFusionVal)];
 
     private bool _thisTurnIsTriggeredPassive; // 用于辅助判断死亡时是否需要触发一次被动（触发连锁伤害）
 
@@ -122,7 +125,7 @@ public class BrandPower : HatMagician2Power
         var applyColor = color;
 
         // 叠色
-        if (oldPower != null && (oldPower.BaseBrandColor & color) == 0)
+        if (oldPower != null && (oldPower.BaseBrandColor & color) == 0 && (color & (color - 1)) == 0 && !card.Keywords.Contains(HatMagician2Keywords.Erosion))
         {
             applyColor = oldPower.BaseBrandColor | color;
         }
@@ -271,5 +274,61 @@ public class BrandPower : HatMagician2Power
         }
 
         await Task.CompletedTask;
+    }
+
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        this.GetDynamicVar("Passive").BaseValue = this.GetPassiveValWithModifiers();
+        this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
+        this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
+        this.GetDynamicVar("Fusion").BaseValue = this.FusionVal;
+        return base.AfterApplied(applier, cardSource);
+    }
+
+    // 更新各个Dynamic
+    public override Task AfterModifyingPowerAmountReceived(PowerModel power)
+    {
+        if (power is SoulPermeationPower)
+        {
+            // 更新Evoke
+            this.GetDynamicVar("Passive").BaseValue = this.GetPassiveValWithModifiers();
+            this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
+            this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
+            BrandPowerShow.OnUpdate(this.Owner);
+        }
+
+        return base.AfterModifyingPowerAmountReceived(power);
+    }
+
+    // 设置成接收事件
+    public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
+    {
+        modifiedAmount = amount;
+        if (canonicalPower is SoulPermeationPower)
+        {
+            return true;
+        }
+
+        // other ...
+        return false;
+    }
+
+    // 能力修改印记的数值
+    public decimal GetEvokeValWithModifiers()
+    {
+        var change = HatMagician2Mgr.ModifyEvokeVal(this.CombatState, this, this.BaseEvokeVal);
+        return change;
+    }
+
+    public decimal GetEvokeVal2WithModifiers()
+    {
+        var change = HatMagician2Mgr.ModifyEvokeVal(this.CombatState, this, this.BaseEvokeVal2);
+        return change;
+    }
+
+    public decimal GetPassiveValWithModifiers()
+    {
+        var change = HatMagician2Mgr.ModifyPassiveVal(this.CombatState, this, this.BasePassiveVal);
+        return change;
     }
 }

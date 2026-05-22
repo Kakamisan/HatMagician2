@@ -22,9 +22,11 @@ public partial class BrandPowerShow : NCreatureVisuals
     private BattleLabel? _evokeAmount;
 
     private bool _isHover;
-    private decimal _passiveVal;
-    private decimal _evokeVal;
+    private decimal PassiveVal => _brandPower?.PassiveVal ?? 0;
+    private decimal EvokeVal => _brandPower?.EvokeVal ?? 0;
     private BrandColor _brandColor;
+
+    private BrandPower? _brandPower;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -66,12 +68,22 @@ public partial class BrandPowerShow : NCreatureVisuals
 
         node?.SetIsHover(evoke);
     }
+    
+    // 更新数值
+    public static void OnUpdate(Creature? creature)
+    {
+        Log.Info("[   Hat2   ]Show OnUpdate");
+        BrandPowerShow? node = GetOrInitBrandPowerShow(creature);
+
+        node?.UpdateAmountShow();
+    }
 
     private void OnBrandApply(BrandPower power)
     {
         if (!this.IsNodeReady() || !CombatManager.Instance.IsInProgress)
             return;
         this.Visible = true;
+        this._brandPower = power;
         BrandColor color = power.BaseBrandColor;
         this._brandColor = color;
         this._red!.Visible = color == BrandColor.Red;
@@ -80,10 +92,6 @@ public partial class BrandPowerShow : NCreatureVisuals
         this._purple!.Visible = color == BrandColor.Purple;
         this._orange!.Visible = color == BrandColor.Orange;
         this._white!.Visible = color == BrandColor.White;
-        this._passiveVal = power.PassiveVal;
-        this._evokeVal = power.EvokeVal;
-        this._passiveAmount!.TrySetText(((int)power.PassiveVal).ToString());
-        this._evokeAmount!.TrySetText(this.GetEvokeValShow());
         this.UpdateAmountShow();
     }
 
@@ -91,10 +99,10 @@ public partial class BrandPowerShow : NCreatureVisuals
     {
         return this._brandColor switch
         {
-            BrandColor.Red => "×" + (int)this._evokeVal,
+            BrandColor.Red => "×" + (int)BrandRedPower.WillTriggerMulti((this._brandPower as BrandRedPower)!),
             BrandColor.Orange => "Aoe",
-            BrandColor.White => "Draw " + (int)this._evokeVal,
-            _ => ((int)this._evokeVal).ToString()
+            BrandColor.White => "Draw " + (int)this.EvokeVal,
+            _ => ((int)this.EvokeVal).ToString()
         };
     }
 
@@ -106,8 +114,10 @@ public partial class BrandPowerShow : NCreatureVisuals
 
     private void UpdateAmountShow()
     {
-        this._passiveAmount!.Visible = !this._isHover && this._passiveVal > 0;
-        this._evokeAmount!.Visible = this._isHover && this._evokeVal > 0;
+        this._passiveAmount!.TrySetText(((int)PassiveVal).ToString());
+        this._evokeAmount!.TrySetText(this.GetEvokeValShow());
+        this._passiveAmount!.Visible = !this._isHover && this.PassiveVal > 0;
+        this._evokeAmount!.Visible = this._isHover && this.EvokeVal > 0;
     }
 
     private void SetIsHover(bool evoke)

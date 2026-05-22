@@ -15,6 +15,7 @@ public class BrandOrangePower : BrandPower
     public override BrandColor BaseBrandColor => BrandColor.Orange;
     protected override decimal BasePassiveVal => 6;
     protected override decimal BaseEvokeVal => 1;
+    protected override decimal BaseEvokeVal2 => 1;
     protected override decimal BaseFusionVal => 8;
 
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
@@ -26,7 +27,7 @@ public class BrandOrangePower : BrandPower
         if (!this.Owner.IsAlive) return;
         if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
-        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, 1, this.Applier, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, this.Applier, null);
         // 下次攻击对其他目标造成等量伤害
         await PowerCmd.Apply<ChainDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
     }

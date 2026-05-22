@@ -299,6 +299,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     }
 
     // 处理梦境效果 使用睡衣卡结束回合时 打出抽牌堆的梦境卡
+    // 处理浸入灵魂 所有印记牌添加侵蚀
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (this.Keywords.Contains(HatMagician2Keywords.Dream) && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep) &&
@@ -312,7 +313,23 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             }
         }
 
+        if (this.HasBrandApply && cardPlay.Card is SoulPermeation && !this.Keywords.Contains(HatMagician2Keywords.Erosion))
+        {
+            this.AddKeyword(HatMagician2Keywords.Erosion);
+        }
+
         await base.AfterCardPlayedLate(choiceContext, cardPlay);
+    }
+
+    // 处理浸入灵魂 所有印记牌添加侵蚀
+    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    {
+        if (this.HasBrandApply && !this.Keywords.Contains(HatMagician2Keywords.Erosion) && card.Owner.HasPower<SoulPermeationPower>())
+        {
+            this.AddKeyword(HatMagician2Keywords.Erosion);
+        }
+
+        return base.AfterCardGeneratedForCombat(card, creator);
     }
 
     // 回合结束出牌阶段自动打出梦境卡
@@ -381,5 +398,17 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         if (this.CombatState == null) return;
         await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await Task.CompletedTask;
+    }
+
+    protected async Task CommonApplySelfMultiPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
+    {
+        if (this.Owner.Creature.HasPower<T>())
+        {
+            await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount - 1, this.Owner.Creature, this);
+        }
+        else
+        {
+            await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
+        }
     }
 }

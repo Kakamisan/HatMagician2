@@ -14,5 +14,7 @@
   "HATMAGICIAN2-DREAM.description": "使用[gold]睡衣时间[/gold]卡结束回合时，这张卡从抽牌堆自动打出。",
   "HATMAGICIAN2-DREAM.title": "梦境",
   "HATMAGICIAN2-ONLY_DREAM.description": "这张牌无法从手牌中打出。",
-  "HATMAGICIAN2-ONLY_DREAM.title": "无法从手牌打出"
+  "HATMAGICIAN2-ONLY_DREAM.title": "无法从手牌打出",
+  "HATMAGICIAN2-EROSION.description": "这张牌给予印记时不会叠色。",
+  "HATMAGICIAN2-EROSION.title": "侵蚀"
 }
