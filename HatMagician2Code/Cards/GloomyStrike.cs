@@ -29,8 +29,7 @@ public class GloomyStrike() : HatMagician2Card(1, CardType.Attack, CardRarity.Co
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
         await PowerCmd.Apply<GloomyPower>(choiceContext, play.Target!, this.DynamicHat2Var.IntValue, this.Owner.Creature, this);
         await base.OnPlayNormal(choiceContext, play);
     }

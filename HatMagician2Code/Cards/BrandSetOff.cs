@@ -19,13 +19,7 @@ public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Bas
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandEvoke(this, choiceContext, play);
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
-            // .WithHitCount(2)
-            .FromCard(this) // 伤害来源于这张卡牌
-            .Targeting(play.Target!) // 伤害目标是玩家选择的目标
-            // .WithHitFx("vfx/vfx_starry_impact", "blunt_attack.mp3")
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
     }
 
     protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);

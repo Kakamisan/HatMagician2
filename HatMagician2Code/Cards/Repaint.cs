@@ -36,8 +36,7 @@ public class Repaint() : HatMagician2Card(2, CardType.Attack, CardRarity.Common,
         var power = play.Target!.Powers.FirstOrDefault(p => p is BrandPower) as BrandPower;
         var color = power?.BaseBrandColor ?? BrandColor.None;
         await BrandPower.ApplyBrandPower(this, choiceContext, play.Target!, color);
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 

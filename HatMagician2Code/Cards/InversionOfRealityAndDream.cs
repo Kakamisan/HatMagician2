@@ -47,8 +47,6 @@ public class InversionOfRealityAndDream() : HatMagician2Card(2, CardType.Skill, 
 
         this._needExtraTurn = true;
 
-        // PlayerCmd.EndTurn(this.Owner, false);
-
         await base.OnPlayNormal(choiceContext, play);
     }
 

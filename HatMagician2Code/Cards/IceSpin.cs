@@ -39,8 +39,7 @@ public class IceSpin() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommo
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.CombatState == null) return;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await this.CommonAoeAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 

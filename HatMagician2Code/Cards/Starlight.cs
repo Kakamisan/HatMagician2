@@ -37,7 +37,6 @@ public class Starlight() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncomm
         CardSelectorPrefs prefs2 = new CardSelectorPrefs(this.SelectionScreenPrompt2, 0, this.DynamicVars.Cards.IntValue);
         var list2 = (await CardSelectCmd.FromHand(choiceContext, this.Owner, prefs2, RetainFilter, this)).ToList();
         foreach (CardModel cardModel in list2) cardModel.GiveSingleTurnRetain();
-        // PlayerCmd.EndTurn(this.Owner, false);
         await base.OnPlayNormal(choiceContext, play);
     }
 

@@ -17,7 +17,7 @@ public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
     }
 
     protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(3); // 升级后增加4点伤害

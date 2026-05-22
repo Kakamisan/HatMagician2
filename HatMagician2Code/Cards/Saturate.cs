@@ -32,13 +32,9 @@ public class Saturate() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncomm
         if (this.CombatState == null) return;
         var power = play.Target!.Powers.FirstOrDefault(p => p is BrandPower) as BrandPower;
         var color = power?.BaseBrandColor ?? BrandColor.None;
-        var enemys = this.CombatState.GetTeammatesOf(play.Target).Where(e => e.IsAlive && e != play.Target).ToList();
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
-            .FromCard(this) // 伤害来源于这张卡牌
-            .Targeting(play.Target!) // 伤害目标是玩家选择的目标
-            .WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
-        foreach (var enemy in enemys)
+        var enemies = this.CombatState.GetTeammatesOf(play.Target).Where(e => e.IsAlive && e != play.Target).ToList();
+        await this.CommonSingleAttack(choiceContext, play);
+        foreach (var enemy in enemies)
         {
             await BrandPower.ApplyBrandPower(this, choiceContext, enemy, color);
         }

@@ -35,8 +35,7 @@ public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon
         BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple, BrandColor.Rainbow];
         var color = this.Owner.RunState.Rng.CombatTargets.NextItem(list);
         await BrandPower.ApplyBrandPower(this, choiceContext, play, color);
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 

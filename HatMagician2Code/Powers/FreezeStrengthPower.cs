@@ -19,7 +19,7 @@ public class FreezeStrengthPower : HatMagician2Power
         return this.Owner != dealer || !props.IsPoweredAttack() ? 0M : -this.Amount;
     }
     
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != this.Owner.Side)
             return;

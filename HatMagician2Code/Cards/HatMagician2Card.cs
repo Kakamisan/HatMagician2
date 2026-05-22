@@ -290,12 +290,12 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     }
 
     // 回合结束后重置睡衣状态 梦境状态
-    public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         this.IsSleepApplied = false;
         this.NeedDream = false;
         this._tmpBrandColorCosts.RemoveAll(c => c.ClearsWhenTurnEnds);
-        return base.AfterTurnEndLate(choiceContext, side);
+        return base.AfterSideTurnEndLate(choiceContext, side, participants);
     }
 
     // 处理梦境效果 使用睡衣卡结束回合时 打出抽牌堆的梦境卡
@@ -327,9 +327,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             return;
         await CardCmd.AutoPlay(choiceContext, this, null);
     }
-    
+
     // 绘色免费消耗相关
     private List<TemporaryCardCost> _tmpBrandColorCosts = [];
+
     public bool TryModifyBrandColorCost(HatMagician2Card card, decimal originalCost, out decimal modifiedCost)
     {
         if (card == this && !this.HasBrandColorCostX)
@@ -341,6 +342,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
                 return originalCost != modifiedCost;
             }
         }
+
         modifiedCost = originalCost;
         return false;
     }
@@ -355,15 +357,29 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         this._tmpBrandColorCosts.Add(TemporaryCardCost.ThisCombat(0));
     }
 
-    public override Task BeforeCombatStartLate()
-    {
-        //this._tmpBrandColorCosts.Clear();
-        return base.BeforeCombatStartLate();
-    }
+    // public override Task BeforeCombatStartLate()
+    // {
+    //     //this._tmpBrandColorCosts.Clear();
+    //     return base.BeforeCombatStartLate();
+    // }
 
     protected override void DeepCloneFields()
     {
         this._tmpBrandColorCosts = this._tmpBrandColorCosts.ToList();
         base.DeepCloneFields();
+    }
+
+    // 通用造成单体伤害调用
+    protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await Task.CompletedTask;
+    }
+
+    protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        if (this.CombatState == null) return;
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await Task.CompletedTask;
     }
 }

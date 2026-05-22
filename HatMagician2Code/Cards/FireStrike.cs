@@ -30,11 +30,7 @@ public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Unco
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue) // 造成伤害，数值来源于卡牌的基础伤害属性
-            .FromCard(this) // 伤害来源于这张卡牌
-            .Targeting(play.Target!) // 伤害目标是玩家选择的目标
-            .WithHitFx("vfx/vfx_starry_impact")
-            .Execute(choiceContext);
+        await this.CommonSingleAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 

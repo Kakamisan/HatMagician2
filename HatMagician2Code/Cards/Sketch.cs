@@ -1,4 +1,5 @@
-﻿using BaseLib.Utils;
+﻿using BaseLib.Extensions;
+using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,7 +21,7 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
-        new DamageVar(9, ValueProp.Move), new Hat2Var(3), new CardsVar(1),
+        new DamageVar(9, ValueProp.Move), new Hat2Var(3),
         new CalculationBaseVar(0), new CalculationExtraVar(1), new CalculatedVar("CalculatedCards").WithMultiplier((card, _) => ((Sketch)card).CalcDrawNum())
     ];
 
@@ -34,8 +35,8 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
-        var draw = this.CalcDrawNum();
+        await this.CommonSingleAttack(choiceContext, play);
+        var draw = this.GetDynamicVar("CalculatedCards").PreviewValue;
         if (draw > 0)
         {
             await CardPileCmd.Draw(choiceContext, draw, this.Owner);
@@ -54,6 +55,6 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
     {
         int cnt = HatMagician2Mgr.GetBrandColorTypeCnt(this.Owner);
         int draw = (int)Math.Floor(cnt / this.DynamicHat2Var.BaseValue);
-        return draw * this.DynamicVars.Cards.IntValue;
+        return draw;
     }
 }

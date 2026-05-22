@@ -35,11 +35,11 @@ public class BrandRedPower : BrandPower
         }
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != this.Owner.Side) return;
         await this.OnPassive();
-        await base.AfterSideTurnStart(side, combatState);
+        await base.AfterSideTurnStart(side, participants, combatState);
     }
 
     protected override async Task OnPassive(bool setFlag = true)

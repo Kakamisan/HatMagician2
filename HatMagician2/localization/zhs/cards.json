@@ -98,6 +98,8 @@
   "HATMAGICIAN2-HOLY_STRIKE.title": "神圣打击",
   "HATMAGICIAN2-NIGHTGLOW.description": "收集{Hat2Var:diff()}点[color=#e8fcfb]光辉[/color]绘色。\n抽{Cards:diff()}张牌。",
   "HATMAGICIAN2-NIGHTGLOW.title": "夜光",
-  "HATMAGICIAN2-SKETCH.description": "造成{Damage:diff()}点伤害。\n每拥有{Hat2Var:inverseDiff()}种绘色，抽{Cards:diff()}张牌。{InCombat:(抽{CalculatedCards:diff()}张牌)}",
-  "HATMAGICIAN2-SKETCH.title": "速写"
+  "HATMAGICIAN2-SKETCH.description": "造成{Damage:diff()}点伤害。\n每拥有{Hat2Var:inverseDiff()}种绘色，抽{CalculationExtra:diff()}张牌。{InCombat:(抽{CalculatedCards:diff()}张牌)}",
+  "HATMAGICIAN2-SKETCH.title": "速写",
+  "HATMAGICIAN2-PLUCK_A_STAR.description": "造成{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-PLUCK_A_STAR.title": "摘星"
 }

@@ -34,9 +34,7 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.CombatState == null) return;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
-        // await PowerCmd.Apply<WeakPower>(choiceContext, this.CombatState.HittableEnemies, this.DynamicVars.Weak.BaseValue, this.Owner.Creature, this);
+        await this.CommonAoeAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 
@@ -63,9 +61,9 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
     }
 
     // 回合结束重置伤害加成
-    public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         this.IncreaseDamage = 0;
-        return base.AfterTurnEndLate(choiceContext, side);
+        return base.AfterSideTurnEndLate(choiceContext, side, participants);
     }
 }

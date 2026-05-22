@@ -38,14 +38,14 @@ public class BrandPower : HatMagician2Power
 
     private bool _thisTurnIsTriggeredPassive; // 用于辅助判断死亡时是否需要触发一次被动（触发连锁伤害）
 
-    public override Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == this.Owner.Side)
         {
             this._thisTurnIsTriggeredPassive = false;
         }
 
-        return base.AfterTurnEndLate(choiceContext, side);
+        return base.AfterSideTurnEndLate(choiceContext, side, participants);
     }
 
     // 刻印效果
