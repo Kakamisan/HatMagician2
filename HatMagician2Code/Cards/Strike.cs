@@ -1,5 +1,6 @@
 ﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
+using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,6 +18,8 @@ public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
+        // test
+        // await this.CommonApplySelfMultiPower<CollectLightPower>(choiceContext, play, 4);
         await this.CommonSingleAttack(choiceContext, play);
     }
 

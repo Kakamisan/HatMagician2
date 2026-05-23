@@ -17,7 +17,7 @@ public class Crouch() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, T
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 1;
 
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(7, ValueProp.Move)];

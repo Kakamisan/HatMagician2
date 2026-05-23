@@ -43,10 +43,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public virtual int BaseBrandColorCost => -1;
 
     // 是否有不消耗绘色即可打出印记的效果 (这里指对主要目标)
-    public virtual bool HasFreeBrandApply => false;
+    public virtual bool HasFreeBrandApplyTarget => false;
 
     // 是否有打出印记的效果 (这里指对主要目标)
-    public virtual bool HasBrandApply => false;
+    public virtual bool HasBrandApplyTarget => false;
+
+    // 是否有打出印记的效果
+    public virtual bool HasBrandApply => this.HasBrandApplyTarget;
 
     // 是否结束回合效果
     public virtual bool HasEndTurn => false;
@@ -136,8 +139,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         {
             if (this.SubTargetType != null)
             {
-                // 目前HasEnoughEnergy有bug 不能在免费打出时返回true
-                // 一种是AutoPlay不走消耗资源逻辑 一种是飞溅之类的会设置免费
+                // 无法使用绘色效果时 目标类型改成子类型
                 return this.HasEnoughEnergy() || this.Pile?.Type != PileType.Hand ? base.TargetType : (TargetType)this.SubTargetType;
             }
 
@@ -208,8 +210,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 是否可触发刻印的卡
     public bool IsEvokeCard()
     {
-        return this.HasFreeBrandApply
-               || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, HasBrandApply: true } && this.HasEnoughEnergy()
+        return this.HasFreeBrandApplyTarget
+               || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, HasBrandApplyTarget: true } && this.HasEnoughEnergy()
                || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
     }
 
@@ -257,7 +259,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await base.OnPlay(choiceContext, cardPlay);
     }
 
-    // 处理睡衣效果 每回合首次手牌为空时 这张卡从弃牌/消耗堆加入手牌
+    // 处理睡衣效果 每回合首次手牌为空时 这张卡从弃牌加入手牌
     public override async Task AfterHandEmptied(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != this.Owner || !IsValidPhase(player.PlayerCombatState))
@@ -265,7 +267,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         if (this.CanonicalKeywords.Contains(HatMagician2Keywords.Sleep) && !this.IsSleepApplied)
         {
             this.IsSleepApplied = true;
-            if (this.Pile is { Type: PileType.Discard or PileType.Exhaust })
+            // if (this.Pile is { Type: PileType.Discard or PileType.Exhaust })
+            if (this.Pile is { Type: PileType.Discard })
             {
                 this.EnergyCost.AddThisTurn(DreamButterflyPower.AddCostThisTurn(this.Owner));
                 await CardPileCmd.Add(this, PileType.Hand);
@@ -302,6 +305,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 处理浸入灵魂 所有印记牌添加侵蚀
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        // 打出结束回合的睡衣时间卡并且此卡为梦境卡 则设置成回合结束自动出牌
         if (this.Keywords.Contains(HatMagician2Keywords.Dream) && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep) &&
             cardPlay.Card is HatMagician2Card { HasEndTurn: true })
         {
@@ -313,6 +317,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             }
         }
 
+        // 打出浸入灵魂时若这张卡是印记卡 则附加侵蚀
         if (this.HasBrandApply && cardPlay.Card is SoulPermeation && !this.Keywords.Contains(HatMagician2Keywords.Erosion))
         {
             this.AddKeyword(HatMagician2Keywords.Erosion);
@@ -321,7 +326,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await base.AfterCardPlayedLate(choiceContext, cardPlay);
     }
 
-    // 处理浸入灵魂 所有印记牌添加侵蚀
+    // 处理浸入灵魂 战斗中生成印记牌时添加侵蚀
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
         if (this.HasBrandApply && !this.Keywords.Contains(HatMagician2Keywords.Erosion) && card.Owner.HasPower<SoulPermeationPower>())
@@ -364,11 +369,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return false;
     }
 
+    // patch 本回合绘色免费
     public void SetToFreeThisTurnForBrandColor()
     {
         this._tmpBrandColorCosts.Add(TemporaryCardCost.ThisTurn(0));
     }
 
+    // patch 本场战斗绘色免费
     public void SetToFreeThisCombatForBrandColor()
     {
         this._tmpBrandColorCosts.Add(TemporaryCardCost.ThisCombat(0));
@@ -380,6 +387,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     //     return base.BeforeCombatStartLate();
     // }
 
+    // 深拷贝obj
     protected override void DeepCloneFields()
     {
         this._tmpBrandColorCosts = this._tmpBrandColorCosts.ToList();
@@ -393,6 +401,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await Task.CompletedTask;
     }
 
+    // 通用aoe伤害
     protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
@@ -400,6 +409,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await Task.CompletedTask;
     }
 
+    // 通用应用倍数类能力 叠加时基础-1
     protected async Task CommonApplySelfMultiPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
         if (this.Owner.Creature.HasPower<T>())
@@ -410,5 +420,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         {
             await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
         }
+    }
+
+    // 通用应用常规能力
+    protected async Task CommonApplySelfPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
+    {
+        await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
     }
 }

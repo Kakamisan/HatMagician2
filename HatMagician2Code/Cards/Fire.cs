@@ -14,7 +14,7 @@ public class Fire() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targ
 
     public override BrandColor BaseBrandColor => BrandColor.Red;
 
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 

@@ -246,7 +246,7 @@ public class BrandPower : HatMagician2Power
             // 怪物在他的回合死亡 且未触发过被动 则触发一次被动
             if (!this._thisTurnIsTriggeredPassive && this.CombatState.CurrentSide == this.Owner.Side)
                 await this.OnPassive();
-            await PowerCmd.Remove(this);
+            //await PowerCmd.Remove(this);
         }
 
         await base.BeforeDeath(creature);
@@ -288,7 +288,7 @@ public class BrandPower : HatMagician2Power
     // 更新各个Dynamic
     public override Task AfterModifyingPowerAmountReceived(PowerModel power)
     {
-        if (power is SoulPermeationPower)
+        if (power is HatMagician2Power { HasChangeBrandValEffect: true })
         {
             // 更新Evoke
             this.GetDynamicVar("Passive").BaseValue = this.GetPassiveValWithModifiers();
@@ -304,7 +304,7 @@ public class BrandPower : HatMagician2Power
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         modifiedAmount = amount;
-        if (canonicalPower is SoulPermeationPower)
+        if (canonicalPower is HatMagician2Power { HasChangeBrandValEffect: true })
         {
             return true;
         }

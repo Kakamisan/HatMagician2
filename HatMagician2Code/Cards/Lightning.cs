@@ -14,7 +14,7 @@ public class Lightning() : HatMagician2Card(0, CardType.Skill, CardRarity.Token,
 
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
     
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 

@@ -18,7 +18,7 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(4)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(5)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep, CardKeyword.Exhaust];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -37,7 +37,7 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
         await CardPileCmd.Add(card2, PileType.Hand);
         foreach (var otherCard in cards)
         {
-            if (otherCard != card2)
+            if (otherCard != card2 && otherCard.Keywords.Contains(HatMagician2Keywords.Sleep))
             {
                 await CardCmd.Discard(choiceContext, otherCard);
             }
@@ -51,5 +51,5 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Cards.UpgradeValueBy(2);
+    protected override void OnUpgrade() => this.DynamicVars.Cards.UpgradeValueBy(3);
 }

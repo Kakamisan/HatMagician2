@@ -17,7 +17,7 @@ public class Sigh() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, Tar
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<GloomyPower>()];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(6)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(6), new EnergyVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -31,9 +31,13 @@ public class Sigh() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, Tar
         if (HatMagician2Mgr.Instance == null)
             return;
         await PowerCmd.Apply<GloomyPower>(choiceContext, play.Target!, this.DynamicHat2Var.IntValue, this.Owner.Creature, this);
-        await HatMagician2Mgr.AddEnergy(this.Owner, 2, BrandColor.Purple);
+        await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicVars.Energy.IntValue, BrandColor.Purple);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(3);
+    protected override void OnUpgrade()
+    {
+        this.DynamicHat2Var.UpgradeValueBy(3);
+        this.DynamicVars.Energy.UpgradeValueBy(1);
+    }
 }

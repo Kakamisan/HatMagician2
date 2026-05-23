@@ -13,6 +13,7 @@ public class BrandPurplePower : BrandPower
     public override BrandColor BaseBrandColor => BrandColor.Purple;
     protected override decimal BasePassiveVal => 4;
     protected override decimal BaseEvokeVal => 6;
+    protected override decimal BaseEvokeVal2 => 2;
     protected override decimal BaseFusionVal => 6;
 
     // protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Append(new PowerVar<StrengthPower>(4)); // 本回合失去力量
@@ -26,6 +27,8 @@ public class BrandPurplePower : BrandPower
         await base.OnEvoke(card);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
         await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
+        if (this.Applier == null) return;
+        await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), this.Applier, this.EvokeVal2, this.Applier, null);
     }
 
     protected override async Task OnFusion(HatMagician2Card? cardSource)

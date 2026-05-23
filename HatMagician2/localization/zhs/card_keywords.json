@@ -9,7 +9,7 @@
   "HATMAGICIAN2-COLOR.title": "绘色",
   "HATMAGICIAN2-BASE_COLOR.description": "基础绘色包含[red]火焰[/red]绘色、[color=#e7ea31]闪电[/color]绘色、[color=#31b0eb]冰霜[/color]绘色。",
   "HATMAGICIAN2-BASE_COLOR.title": "基础绘色",
-  "HATMAGICIAN2-SLEEP.description": "每回合首次手牌为空时，这张牌从[gold]弃牌堆/消耗堆[/gold]加入手牌。",
+  "HATMAGICIAN2-SLEEP.description": "每回合首次手牌为空时，这张牌从[gold]弃牌堆[/gold]加入手牌。",
   "HATMAGICIAN2-SLEEP.title": "睡衣时间",
   "HATMAGICIAN2-DREAM.description": "使用[gold]睡衣时间[/gold]卡结束回合时，这张卡从抽牌堆自动打出。",
   "HATMAGICIAN2-DREAM.title": "梦境",

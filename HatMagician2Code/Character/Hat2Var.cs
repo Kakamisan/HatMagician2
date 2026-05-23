@@ -13,7 +13,8 @@ public class Hat2Var(decimal value, DynamicVar? cosVar = null) : DynamicVar(Defa
     public const string DefaultName = "Hat2Var";
 
     // 设置cos原版Var 功能等于原版
-    public DynamicVar? CosVar => cosVar;
+    // 没找到在哪deep clone 所以用的时候每次都new一个新的
+    public DynamicVar? CosVar { get; set; } = cosVar;
 
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target, bool runGlobalHooks)
     {

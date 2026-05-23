@@ -8,6 +8,7 @@ public class SoulPermeationPower : HatMagician2Power, IHatMagician2AbstractModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+    public override bool HasChangeBrandValEffect => true;
 
     public bool TryModifyEvokeVal(BrandPower power, decimal originVal, out decimal modifiedVal)
     {

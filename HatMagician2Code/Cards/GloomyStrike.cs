@@ -16,7 +16,7 @@ public class GloomyStrike() : HatMagician2Card(1, CardType.Attack, CardRarity.Co
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApply => false;
+    public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<GloomyPower>()];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move), new Hat2Var(3)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];

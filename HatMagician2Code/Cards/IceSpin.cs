@@ -18,7 +18,7 @@ public class IceSpin() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommo
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     public override int BaseBrandColorCost => 2;
 
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7, ValueProp.Move)];

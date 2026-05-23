@@ -16,7 +16,7 @@ public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Unco
 {
     public override BrandColor BaseBrandColor => BrandColor.Red;
     public override int BaseBrandColorCost => 1;
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(19, ValueProp.Move)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];

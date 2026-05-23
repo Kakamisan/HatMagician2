@@ -15,9 +15,9 @@ public class HolyStrike() : HatMagician2Card(3, CardType.Attack, CardRarity.Unco
 {
     public override BrandColor BaseBrandColor => BrandColor.White;
     public override int BaseBrandColorCost => 3;
-    public override bool HasBrandApply => false;
+    public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(29, ValueProp.Move), new EnergyVar(3)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(30, ValueProp.Move), new EnergyVar(3)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 

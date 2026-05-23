@@ -16,7 +16,7 @@ public class Nightmare() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare, 
     public override BrandColor BaseBrandColor => BrandColor.Orange;
     public override int BaseBrandColorCost => 0;
 
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];

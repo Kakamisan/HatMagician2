@@ -19,16 +19,16 @@
   "HATMAGICIAN2-BRAND_ORANGE_POWER.smartDescription": "由[red]火焰[/red]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[orange]黄昏绘色[/orange]，产生[blue]{Fusion}[/blue]点[gold]连锁[/gold]伤害。\n被动:每回合[blue]{Passive}[/blue]点[gold]连锁[/gold]伤害。\n刻印:给予[blue]{Evoke2}[/blue]层[gold]易伤[/gold]，下[blue]{Evoke}[/blue]次受击时，该阵营所有单位受到等量伤害。",
   "HATMAGICIAN2-BRAND_ORANGE_POWER.title": "黄昏印记",
   
-  "HATMAGICIAN2-BRAND_PURPLE_POWER.description": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]6[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]4[/blue]点。\n刻印:给予[blue]6[/blue]层[gold]冰霜[/gold]。",
-  "HATMAGICIAN2-BRAND_PURPLE_POWER.smartDescription": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]{Fusion}[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]{Passive}[/blue]点。\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]。",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.description": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]6[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]4[/blue]点。\n刻印:给予[blue]6[/blue]层[gold]冰霜[/gold]，获得[blue]2[/blue]层[gold]幽暗[/gold]。",
+  "HATMAGICIAN2-BRAND_PURPLE_POWER.smartDescription": "由[red]火焰[/red]+[color=#31b0eb]冰霜[/color]叠色:收集[blue]1[/blue]点[purple]紫幽绘色[/purple]，给予[blue]{Fusion}[/blue]层[gold]阴郁[/gold]。\n被动:攻击伤害减少[blue]{Passive}[/blue]点。\n刻印:给予[blue]{Evoke}[/blue]层[gold]冰霜[/gold]，获得[blue]{Evoke2}[/blue]层[gold]幽暗[/gold]。",
   "HATMAGICIAN2-BRAND_PURPLE_POWER.title": "紫幽印记",
   
   "HATMAGICIAN2-BRAND_WHITE_POWER.description": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]6[/blue]点格挡。\n被动:每回合收集[blue]1[/blue]点随机[gold]绘色[/gold]。\n刻印:抽[blue]2[/blue]张牌。",
   "HATMAGICIAN2-BRAND_WHITE_POWER.smartDescription": "由[color=#31b0eb]冰霜[/color]+[color=#e7ea31]闪电[/color]叠色:收集[blue]1[/blue]点[color=#e8fcfb]光辉绘色[/color]，获得[blue]{Fusion}[/blue]点格挡。\n被动:每回合收集[blue]{Passive}[/blue]点随机[gold]绘色[/gold]。\n刻印:抽[blue]{Evoke}[/blue]张牌。",
   "HATMAGICIAN2-BRAND_WHITE_POWER.title": "光辉印记",
   
-  "HATMAGICIAN2-BRAND_RAINBOW_POWER.description": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}。\n刻印:获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}。",
-  "HATMAGICIAN2-BRAND_RAINBOW_POWER.smartDescription": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]{Fusion}[/blue]点{energyPrefix:energyIcons(1)}。\n刻印:获得[blue]{Evoke}[/blue]点{energyPrefix:energyIcons(1)}。",
+  "HATMAGICIAN2-BRAND_RAINBOW_POWER.description": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}。\n刻印:获得[blue]1[/blue]点{energyPrefix:energyIcons(1)}，获得[blue]3[/blue]层[gold]虹光[/gold]。",
+  "HATMAGICIAN2-BRAND_RAINBOW_POWER.smartDescription": "叠色:收集[blue]1[/blue]点所有[gold]绘色[/gold]，获得[blue]{Fusion}[/blue]点{energyPrefix:energyIcons(1)}。\n刻印:获得[blue]{Evoke}[/blue]点{energyPrefix:energyIcons(1)}，获得[blue]{Evoke2}[/blue]层[gold]虹光[/gold]。",
   "HATMAGICIAN2-BRAND_RAINBOW_POWER.title": "虹色印记",
   
   "HATMAGICIAN2-FREEZE_STRENGTH_POWER.description": "冰霜会降低本回合攻击造成的伤害。",
@@ -58,5 +58,29 @@
   
   "HATMAGICIAN2-SOUL_PERMEATION_POWER.description": "所有印记牌获得[gold]侵蚀[/gold]，印记的效果变为2倍。",
   "HATMAGICIAN2-SOUL_PERMEATION_POWER.smartDescription": "所有印记牌获得[gold]侵蚀[/gold]，印记的效果变为{Amount}倍。",
-  "HATMAGICIAN2-SOUL_PERMEATION_POWER.title": "浸入灵魂"
+  "HATMAGICIAN2-SOUL_PERMEATION_POWER.title": "浸入灵魂",
+  
+  "HATMAGICIAN2-COLORFUL_POWER.description": "卡牌的绘色消耗减少[blue]1[/blue]。",
+  "HATMAGICIAN2-COLORFUL_POWER.smartDescription": "卡牌的绘色消耗减少[blue]{Amount}[/blue]。",
+  "HATMAGICIAN2-COLORFUL_POWER.title": "虹彩",
+  
+  "HATMAGICIAN2-COLORLESS_POWER.description": "卡牌的耗能消耗减少{energyPrefix:energyIcons(1)}。",
+  "HATMAGICIAN2-COLORLESS_POWER.smartDescription": "卡牌的耗能减少{Amount:energyIcons()}。",
+  "HATMAGICIAN2-COLORLESS_POWER.title": "幽寂",
+  
+  "HATMAGICIAN2-COLLECT_POWER.description": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_POWER.smartDescription": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_POWER.title": "",
+  
+  "HATMAGICIAN2-COLLECT_LIGHT_POWER.description": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_LIGHT_POWER.smartDescription": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_LIGHT_POWER.title": "虹光",
+  
+  "HATMAGICIAN2-COLLECT_DARK_POWER.description": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_DARK_POWER.smartDescription": "当你收集[gold]虹光[/gold]或[gold]幽暗[/gold]共[blue]7[/blue]层时，进入[gold]虹彩[/gold]或[gold]幽寂[/gold]。",
+  "HATMAGICIAN2-COLLECT_DARK_POWER.title": "幽暗",
+
+  "HATMAGICIAN2-DUSK_POWER.description": "回合结束时，给予所有敌人[gold]阴郁[/gold]。",
+  "HATMAGICIAN2-DUSK_POWER.smartDescription": "回合结束时，给予所有敌人[blue]{Amount}[/blue]层[gold]阴郁[/gold]。",
+  "HATMAGICIAN2-DUSK_POWER.title": "暮色降临"
 }

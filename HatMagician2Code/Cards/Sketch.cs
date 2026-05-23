@@ -16,7 +16,7 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApply => false;
+    public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color)];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>

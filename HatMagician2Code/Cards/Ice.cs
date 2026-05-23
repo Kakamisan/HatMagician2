@@ -14,7 +14,7 @@ public class Ice() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targe
 
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     
-    public override bool HasBrandApply => true;
+    public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
 
