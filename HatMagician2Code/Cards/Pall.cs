@@ -16,11 +16,11 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class Pall() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
 {
     public override BrandColor BaseBrandColor => BrandColor.Purple;
-    public override int BaseBrandColorCost => 2;
+    public override int BaseBrandColorCost => 3;
     public override bool HasBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new PowerVar<WeakPower>(1)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -45,5 +45,5 @@ public class Pall() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, T
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.RemoveKeyword(CardKeyword.Exhaust);
+    protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
 }

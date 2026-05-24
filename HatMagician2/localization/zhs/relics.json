@@ -1,5 +1,8 @@
 {
   "HATMAGICIAN2-PALETTE_BOTTLE.description": "战斗开始时，收集3点所有基础绘色。",
   "HATMAGICIAN2-PALETTE_BOTTLE.flavor": "在市场上被当作装饰品售卖，即使不会绘画也没关系吧……",
-  "HATMAGICIAN2-PALETTE_BOTTLE.title": "绘色瓶"
+  "HATMAGICIAN2-PALETTE_BOTTLE.title": "绘色瓶",
+  "HATMAGICIAN2-PALETTE_BOX.description": "战斗开始时，收集2点所有绘色，基础绘色再额外收集2点。",
+  "HATMAGICIAN2-PALETTE_BOX.flavor": "装满了大大小小的绘色瓶。",
+  "HATMAGICIAN2-PALETTE_BOX.title": "绘色箱"
 }
