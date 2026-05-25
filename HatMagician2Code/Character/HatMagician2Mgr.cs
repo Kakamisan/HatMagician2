@@ -57,7 +57,7 @@ public class HatMagician2Mgr : CustomSingletonModel
         if (applyColor == BrandColor.Any)
         {
             applyColor = (BrandColor)player.RunState.Rng.CombatEnergyCosts.NextInt((int)BrandColor.Red, (int)BrandColor.White);
-            state.AddEnergy(applyColor, amount);
+            await state.AddEnergy(applyColor, amount);
             return;
         }
 
@@ -66,14 +66,14 @@ public class HatMagician2Mgr : CustomSingletonModel
             var c = BrandColor.Red;
             while (c < BrandColor.Rainbow)
             {
-                state.AddEnergy(c, amount);
+                await state.AddEnergy(c, amount);
                 c++;
             }
 
             return;
         }
 
-        state.AddEnergy(applyColor, amount);
+        await state.AddEnergy(applyColor, amount);
         await Task.CompletedTask;
     }
 
@@ -150,5 +150,31 @@ public class HatMagician2Mgr : CustomSingletonModel
         }
 
         return modifiedVal;
+    }
+    
+    // 获得绘色派发
+    public static async Task AfterAddEnergy(Player player, int amount, BrandColor color)
+    {
+        if (player.Creature.CombatState == null) return;
+        foreach (AbstractModel iterateHookListener in player.Creature.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                await iterate.AfterAddEnergy(player, amount, color);
+            }
+        }
+    }
+    
+    // 消耗绘色派发
+    public static async Task AfterSpendEnergy(Player player, int amount, BrandColor color)
+    {
+        if (player.Creature.CombatState == null) return;
+        foreach (AbstractModel iterateHookListener in player.Creature.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                await iterate.AfterSpendEnergy(player, amount, color);
+            }
+        }
     }
 }

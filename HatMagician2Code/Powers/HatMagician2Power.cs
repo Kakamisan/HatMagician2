@@ -17,6 +17,7 @@ public abstract class HatMagician2Power : CustomPowerModel, IHatMagician2Abstrac
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    // 是否有修改印记数值的实现
     public virtual bool HasChangeBrandValEffect => false;
     
     // 在死亡动画前移除

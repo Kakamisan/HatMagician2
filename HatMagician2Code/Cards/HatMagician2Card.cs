@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -234,7 +235,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
 
         BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner);
-        state?.SpendEnergy(this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+        if (state != null)
+        {
+            _ = state.SpendEnergy(this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+        }
     }
 
     // 完整效果
@@ -426,5 +430,15 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected async Task CommonApplySelfPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
         await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
+    }
+    
+    // X药处理
+    public int ResolveBrandColorCostXValue()
+    {
+        if (!this.HasBrandColorCostX)
+            throw new InvalidOperationException("This card does not have an X-cost.");
+        if (this.CombatState == null) return 0;
+        // todo 捕捉上次消耗绘色数量 应该是重放要用
+        return Hook.ModifyXValue(this.CombatState, this, this.LastStarsSpent);
     }
 }

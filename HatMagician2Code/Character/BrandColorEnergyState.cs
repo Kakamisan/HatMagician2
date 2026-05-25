@@ -75,13 +75,15 @@ public class BrandColorEnergyState(Player player)
     // }
     
     // 消耗绘色能量
-    public void SpendEnergy(BrandColor color, int cost)
+    public async Task SpendEnergy(BrandColor color, int cost)
     {
         if (color == BrandColor.None || cost <= 0)
             return;
 
         int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
         this.BrandColorEnergyMap[color] = Math.Max(0, current - cost);
+
+        await HatMagician2Mgr.AfterSpendEnergy(player, cost, color);
 
         // 更新对应颜色的宠物显示
         if (this._petVisuals.TryGetValue(color, out var pet) && pet != null)
@@ -91,7 +93,7 @@ public class BrandColorEnergyState(Player player)
     }
 
     // 增加绘色能量
-    public void AddEnergy(BrandColor color, int amount)
+    public async Task AddEnergy(BrandColor color, int amount)
     {
         if (color == BrandColor.None || amount <= 0)
             return;
@@ -102,6 +104,8 @@ public class BrandColorEnergyState(Player player)
 
         int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
         this.BrandColorEnergyMap[color] = current + amount;
+
+        await HatMagician2Mgr.AfterAddEnergy(player, amount, color);
 
         // 更新对应颜色的宠物显示
         if (this._petVisuals.TryGetValue(color, out var pet) && pet != null)
