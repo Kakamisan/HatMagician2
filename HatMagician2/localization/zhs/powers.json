@@ -88,7 +88,11 @@
   "HATMAGICIAN2-SACRED_SHIELD_POWER.smartDescription": "每当花费或收集[color=#e8fcfb]光辉绘色[/color]时，获得[blue]{Amount}[/blue]点格挡。",
   "HATMAGICIAN2-SACRED_SHIELD_POWER.title": "圣洁护盾",
   
-  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.description": "回合结束时，给予所有敌人[color=#31b0eb]冰霜[/color]印记。",
-  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.smartDescription": "回合结束时，给予所有敌人[color=#31b0eb]冰霜[/color]印记{Amount:cond:>1?{Amount}次|}。",
-  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.title": "晚安，世界"
+  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.description": "回合结束时，消耗1点[color=#31b0eb]冰霜绘色[/color]，获得5点格挡。",
+  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.smartDescription": "回合结束时，消耗1点[color=#31b0eb]冰霜绘色[/color]，获得{Amount}点格挡。",
+  "HATMAGICIAN2-GOOD_NIGHT_WORLD_POWER.title": "晚安，世界",
+  
+  "HATMAGICIAN2-FROZEN_WORLD_POWER.description": "回合结束时，给予所有敌人[color=#31b0eb]冰霜[/color]印记。",
+  "HATMAGICIAN2-FROZEN_WORLD_POWER.smartDescription": "回合结束时，给予所有敌人[color=#31b0eb]冰霜[/color]印记{Amount:cond:>1?{Amount}次|}。",
+  "HATMAGICIAN2-FROZEN_WORLD_POWER.title": "冰封世界"
 }

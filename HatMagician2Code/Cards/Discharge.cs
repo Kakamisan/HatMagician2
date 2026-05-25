@@ -14,20 +14,23 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class Discharge() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.RandomEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
-    public override int BaseBrandColorCost => 2;
+    public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => true;
 
-    public override bool HasFreeBrandApplyTarget => true;
+    public override bool HasFreeBrandApplyTarget => this.IsUpgraded;
+
+    public override bool HasBrandColorCostX => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new RepeatVar(2)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new RepeatVar(0)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        for (int i = 0; i < this.DynamicVars.Repeat.IntValue; i++)
+        var cnt = this.ResolveBrandColorCostXValue() + this.DynamicVars.Repeat.IntValue;
+        for (int i = 0; i < cnt; i++)
         {
             Creature? enemy = this.Owner.RunState.Rng.CombatTargets.NextItem(this.CombatState.HittableEnemies);
             if (enemy != null)
@@ -36,18 +39,11 @@ public class Discharge() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncomm
             }
         }
 
-        await base.OnPlayWhenCostBrandColor(choiceContext, play);
+        await this.OnPlayNormal(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.CombatState == null) return;
-        Creature? enemy = this.Owner.RunState.Rng.CombatTargets.NextItem(this.CombatState.HittableEnemies);
-        if (enemy != null)
-        {
-            await BrandPower.ApplyBrandPower(this, choiceContext, enemy, this.BaseBrandColor);
-        }
-
         await base.OnPlayNormal(choiceContext, play);
     }
 

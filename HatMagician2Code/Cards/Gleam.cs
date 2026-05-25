@@ -5,39 +5,32 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Dispersion() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public class Gleam() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
     public override BrandColor BaseBrandColor => BrandColor.White;
-    public override int BaseBrandColorCost => -1;
-    public override bool HasBrandColorCostX => true;
-    public override bool HasBrandApply => false;
+    public override int BaseBrandColorCost => 1;
+    public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(2)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new RepeatVar(2), new DamageVar(7, ValueProp.Move)];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // 获得2X绘色
-        var add = this.ResolveBrandColorCostXValue() * this.DynamicHat2Var.IntValue;
-        if (add > 0)
-        {
-            await HatMagician2Mgr.AddEnergy(this.Owner, add, BrandColor.Yellow);
-            await HatMagician2Mgr.AddEnergy(this.Owner, add, BrandColor.Blue);
-        }
-
+        await this.CommonAoeAttack(choiceContext, play, this.DynamicVars.Repeat.IntValue);
         await this.OnPlayNormal(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        
+        await this.CommonAoeAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() => this.DynamicVars.Repeat.UpgradeValueBy(1);
 }

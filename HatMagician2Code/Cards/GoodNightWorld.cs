@@ -10,13 +10,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class GoodNightWorld() : HatMagician2Card(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class GoodNightWorld() : HatMagician2Card(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApply => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(5)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -27,9 +27,9 @@ public class GoodNightWorld() : HatMagician2Card(1, CardType.Power, CardRarity.R
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await this.CommonApplySelfPower<GoodNightWorldPower>(choiceContext, play, 1);
+        await this.CommonApplySelfPower<GoodNightWorldPower>(choiceContext, play, this.DynamicHat2Var.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Innate);
+    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(2);
 }

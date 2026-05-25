@@ -237,7 +237,9 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner);
         if (state != null)
         {
-            _ = state.SpendEnergy(this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
+            var cost = this.GetBrandColorCostWithModifiers();
+            _ = state.SpendEnergy(this.BaseBrandColor, cost);
+            this.LastBrandColorCost = cost;
         }
     }
 
@@ -413,6 +415,14 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await Task.CompletedTask;
     }
 
+    protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play, int cnt)
+    {
+        if (this.CombatState == null) return;
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(cnt).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact")
+            .Execute(choiceContext);
+        await Task.CompletedTask;
+    }
+
     // 通用应用倍数类能力 叠加时基础-1
     protected async Task CommonApplySelfMultiPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
@@ -431,14 +441,16 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
     }
-    
+
     // X药处理
+    public int LastBrandColorCost;
+
     public int ResolveBrandColorCostXValue()
     {
         if (!this.HasBrandColorCostX)
             throw new InvalidOperationException("This card does not have an X-cost.");
         if (this.CombatState == null) return 0;
-        // todo 捕捉上次消耗绘色数量 应该是重放要用
-        return Hook.ModifyXValue(this.CombatState, this, this.LastStarsSpent);
+        // 捕捉上次消耗绘色数量 应该是重放要用
+        return Hook.ModifyXValue(this.CombatState, this, this.LastBrandColorCost);
     }
 }
