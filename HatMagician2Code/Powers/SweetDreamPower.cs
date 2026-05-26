@@ -10,9 +10,6 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class SweetDreamPower : HatMagician2Power
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    
     public override decimal ModifyHandDraw(Player player, decimal count)
     {
         return player != this.Owner.Player ? count : count + this.Amount;

@@ -20,7 +20,7 @@ public class Defend() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Ta
     {
         // test
         // await this.CommonApplySelfMultiPower<CollectDarkPower>(choiceContext, play, 4);
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
+        await this.CommonBlock(play);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3M);

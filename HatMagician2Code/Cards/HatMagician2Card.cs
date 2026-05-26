@@ -47,7 +47,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public virtual bool HasFreeBrandApplyTarget => false;
 
     // 是否有打出印记的效果 (这里指对主要目标)
-    public virtual bool HasBrandApplyTarget => false;
+    public virtual bool HasBrandApplyTarget => this.HasFreeBrandApplyTarget;
 
     // 是否有打出印记的效果
     public virtual bool HasBrandApply => this.HasBrandApplyTarget;
@@ -407,6 +407,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await Task.CompletedTask;
     }
 
+    protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play, int cnt)
+    {
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(cnt).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
+            .Execute(choiceContext);
+        await Task.CompletedTask;
+    }
+
     // 通用aoe伤害
     protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -440,6 +447,12 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected async Task CommonApplySelfPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
         await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
+    }
+
+    // 通用获得格挡
+    protected async Task CommonBlock(CardPlay play)
+    {
+        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
     }
 
     // X药处理

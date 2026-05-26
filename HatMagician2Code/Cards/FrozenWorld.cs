@@ -14,7 +14,7 @@ public class FrozenWorld() : HatMagician2Card(1, CardType.Power, CardRarity.Rare
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApply => false;
+    // public override bool HasBrandApply => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<BrandBluePower>()];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];

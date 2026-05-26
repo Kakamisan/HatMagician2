@@ -16,7 +16,7 @@ public class Gleam() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon,
     public override int BaseBrandColorCost => 1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new RepeatVar(2), new DamageVar(7, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new RepeatVar(1), new DamageVar(7, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

@@ -16,8 +16,7 @@ public class Repaint() : HatMagician2Card(2, CardType.Attack, CardRarity.Common,
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApplyTarget => true;
-
+    // public override bool HasBrandApplyTarget => true;
     public override bool HasFreeBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];

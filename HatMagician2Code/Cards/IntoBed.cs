@@ -30,7 +30,7 @@ public class IntoBed() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
+        await this.CommonBlock(play);
         await base.OnPlayNormal(choiceContext, play);
     }
 

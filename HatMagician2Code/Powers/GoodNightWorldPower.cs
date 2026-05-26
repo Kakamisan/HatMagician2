@@ -11,7 +11,7 @@ public class GoodNightWorldPower : HatMagician2Power
 {
     private static BrandColor CostColor => BrandColor.Blue;
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == this.Owner.Side && this.Owner.Player != null)
         {
@@ -23,6 +23,6 @@ public class GoodNightWorldPower : HatMagician2Power
             }
         }
 
-        await base.AfterSideTurnEnd(choiceContext, side, participants);
+        await base.BeforeSideTurnEndEarly(choiceContext, side, participants);
     }
 }

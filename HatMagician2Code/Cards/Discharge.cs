@@ -15,10 +15,9 @@ public class Discharge() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncomm
 {
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
     public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApplyTarget => true;
-
+    public override bool HasBrandApplyTarget => this.ResolveBrandColorCostXValue() > 0;
     public override bool HasFreeBrandApplyTarget => this.IsUpgraded;
-
+    public override bool HasBrandApply => true;
     public override bool HasBrandColorCostX => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];

@@ -19,6 +19,7 @@ public class Inferno() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon
     public override BrandColor BaseBrandColor => BrandColor.Red;
     public override int BaseBrandColorCost => 3;
     public override bool HasBrandApplyTarget => true;
+    public override TargetType? SubTargetType => TargetType.None;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Burn>()];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];

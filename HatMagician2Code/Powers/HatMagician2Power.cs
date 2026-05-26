@@ -13,17 +13,20 @@ public abstract class HatMagician2Power : CustomPowerModel, IHatMagician2Abstrac
     //Loads from TestMTS2Char/images/powers/your_power.png
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();
-    
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     // 是否有修改印记数值的实现
     public virtual bool HasChangeBrandValEffect => false;
-    
+
+    // 是否设置成Buff时也应该清除（视为Debuff）
+    public virtual bool FakeDebuff => false;
+
     // 在死亡动画前移除
     public override async Task BeforeDeath(Creature creature)
     {
-        if (this.Owner == creature && this.Type == PowerType.Buff)
+        if (this.Owner == creature && this.FakeDebuff)
         {
             // 怪物在他的回合死亡时移除这个能力
             await PowerCmd.Remove(this);

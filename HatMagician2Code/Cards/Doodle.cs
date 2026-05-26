@@ -16,7 +16,7 @@ public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
-    public override bool HasBrandApplyTarget => true;
+    // public override bool HasBrandApplyTarget => true;
 
     public override bool HasFreeBrandApplyTarget => true;
 

@@ -2,8 +2,10 @@
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
@@ -130,7 +132,38 @@ public class HatMagician2Mgr : CustomSingletonModel
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyEvokeVal(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyEvokeValMulti(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyEvokeValAdditive(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        return modifiedVal;
+    }
+
+    // 印记激活动态数值2
+    public static decimal ModifyEvokeVal2(ICombatState combatState, BrandPower power, decimal originVal)
+    {
+        decimal modifiedVal = originVal;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyEvokeVal2Multi(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyEvokeVal2Additive(power, modifiedVal, out modifiedVal);
             }
         }
 
@@ -145,13 +178,21 @@ public class HatMagician2Mgr : CustomSingletonModel
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyPassiveVal(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyPassiveValMulti(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyPassiveValAdditive(power, modifiedVal, out modifiedVal);
             }
         }
 
         return modifiedVal;
     }
-    
+
     // 获得绘色派发
     public static async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
@@ -164,7 +205,7 @@ public class HatMagician2Mgr : CustomSingletonModel
             }
         }
     }
-    
+
     // 消耗绘色派发
     public static async Task AfterSpendEnergy(Player player, int amount, BrandColor color)
     {
@@ -176,5 +217,20 @@ public class HatMagician2Mgr : CustomSingletonModel
                 await iterate.AfterSpendEnergy(player, amount, color);
             }
         }
+    }
+
+    // 影响连锁伤害数值
+    public static decimal ModifyChainDamage(Creature target, decimal damage, ValueProp props, Creature? applier, CardModel? card, ICombatState combatState)
+    {
+        decimal modifiedVal = damage;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyChainDamageAdditive(target, modifiedVal, props, applier, card, out modifiedVal);
+            }
+        }
+
+        return modifiedVal;
     }
 }

@@ -11,8 +11,7 @@ namespace HatMagician2.HatMagician2Code.Powers;
 // 冰霜 - 本回合减少伤害 等效于负力量
 public class FreezeStrengthPower : HatMagician2Power
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerType Type => PowerType.Debuff;
     
     public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {

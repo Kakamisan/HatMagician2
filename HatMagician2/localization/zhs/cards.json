@@ -122,6 +122,20 @@
   "HATMAGICIAN2-INFERNO.title": "火山",
   "HATMAGICIAN2-INCINERATE.description": "绘色:[gold]消耗[/gold]所有的状态牌。每消耗一张，就给予敌人[red]火焰[/red]印记1次。{InCombat:\n（给予{CalculatedHits:diff()}次）|}",
   "HATMAGICIAN2-INCINERATE.title": "焚烬",
-  "HATMAGICIAN2-GLEAM.description": "对所有敌人造成{Damage:diff()}点伤害。\n绘色:攻击{Repeat:diff()}次。",
-  "HATMAGICIAN2-GLEAM.title": "闪耀"
+  "HATMAGICIAN2-GLEAM.description": "对所有敌人造成{Damage:diff()}点伤害。\n绘色:额外攻击{Repeat:diff()}次。",
+  "HATMAGICIAN2-GLEAM.title": "闪耀",
+  "HATMAGICIAN2-INVERTED_FROST.description": "绘色:若敌人拥有[color=#31b0eb]冰霜[/color]印记，则给予[color=#e7ea31]闪电[/color]印记，否则给予[color=#31b0eb]冰霜[/color]印记。\n造成{Damage:diff()}点伤害{Repeat:diff()}次。",
+  "HATMAGICIAN2-INVERTED_FROST.title": "交错",
+  "HATMAGICIAN2-PLASMA_SHIELD.description": "绘色:接下来{Hat2Var:diff()}次受击时，给予对方[color=#e7ea31]闪电[/color]印记。\n获得{Block:diff()}点格挡。",
+  "HATMAGICIAN2-PLASMA_SHIELD.title": "等离子护盾",
+  "HATMAGICIAN2-IRIDESCENCE.description": "给予[red]火焰[/red]、[color=#e7ea31]闪电[/color]、[color=#31b0eb]冰霜[/color]印记。顺序由绘色数量多到少依次决定。{InCombat:\n（给予{SortState:choose(1|2|3|4|5):[red]火焰[/red]、[color=#e7ea31]闪电[/color]、[color=#31b0eb]冰霜[/color]|[red]火焰[/red]、[color=#31b0eb]冰霜[/color]、[color=#e7ea31]闪电[/color]|[color=#e7ea31]闪电[/color]、[red]火焰[/red]、[color=#31b0eb]冰霜[/color]|[color=#e7ea31]闪电[/color]、[color=#31b0eb]冰霜[/color]、[red]火焰[/red]|[color=#31b0eb]冰霜[/color]、[red]火焰[/red]、[color=#e7ea31]闪电[/color]|[color=#31b0eb]冰霜[/color]、[color=#e7ea31]闪电[/color]、[red]火焰[/red]}印记）|}",
+  "HATMAGICIAN2-IRIDESCENCE.title": "流光溢彩",
+  "HATMAGICIAN2-AGITATION.description": "造成的[gold]连锁[/gold]伤害增加{Hat2Var:diff()}点。\n绘色:额外增加{AgitationExtra:diff()}点。",
+  "HATMAGICIAN2-AGITATION.title": "心烦意乱",
+  "HATMAGICIAN2-INSOMNIA.description": "",
+  "HATMAGICIAN2-INSOMNIA.title": "失眠",
+  "HATMAGICIAN2-FLUORESCENCE.description": "收集{Hat2Var:diff()}点[color=#e8fcfb]光辉绘色[/color]，这张牌在手上时，每回合增加1。\n获得{Energy:energyIcons()}。",
+  "HATMAGICIAN2-FLUORESCENCE.title": "荧光",
+  "HATMAGICIAN2-PURIFYING_LIGHT.description": "绘色:清除所有生物的负面效果。每清除一个效果，自身获得{PurifyingLightExtra:diff()}点格挡。{InCombat:\n（获得{PurifyingLight}点格挡）|}",
+  "HATMAGICIAN2-PURIFYING_LIGHT.title": "洁净光芒"
 }

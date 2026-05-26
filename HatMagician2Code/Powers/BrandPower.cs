@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -19,6 +20,7 @@ public class BrandPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
+    public override bool FakeDebuff => true;
 
     public virtual BrandColor BaseBrandColor => BrandColor.None;
     protected virtual decimal BasePassiveVal => 0; // 基础被动值
@@ -201,18 +203,6 @@ public class BrandPower : HatMagician2Power
     // 连锁伤害
     public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true, int cnt = 1)
     {
-        // if (!power.Owner.IsAlive)
-        //     return;
-        // if (power.Owner.CombatState == null)
-        //     return;
-        // var enemies = power.Owner.CombatState.HittableEnemies.Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
-        // if (withDefaultVfx)
-        // {
-        //     foreach (var target1 in (IEnumerable<Creature>)enemies)
-        //         VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
-        //     SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
-        // }
-        // await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies, damage, ValueProp.Unpowered, power.Applier, null);
         await ChainDamageCmd(power.Owner, damage, power.Applier, null, withDefaultVfx, cnt);
     }
 
@@ -220,6 +210,7 @@ public class BrandPower : HatMagician2Power
     {
         if (target.CombatState == null) return;
         var enemies = target.CombatState.GetTeammatesOf(target).Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        // var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(target, damage, ValueProp.Unpowered, applier, card, target.CombatState);
         for (int i = 0; i < cnt; i++)
         {
             var enemies2 = enemies.Where(c => c.IsAlive).ToList();
@@ -326,7 +317,7 @@ public class BrandPower : HatMagician2Power
 
     public decimal GetEvokeVal2WithModifiers()
     {
-        var change = HatMagician2Mgr.ModifyEvokeVal(this.CombatState, this, this.BaseEvokeVal2);
+        var change = HatMagician2Mgr.ModifyEvokeVal2(this.CombatState, this, this.BaseEvokeVal2);
         return change;
     }
 

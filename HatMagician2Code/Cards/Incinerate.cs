@@ -19,8 +19,10 @@ public class Incinerate() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare,
 {
     public override BrandColor BaseBrandColor => BrandColor.Red;
     public override int BaseBrandColorCost => 2;
-    public override bool HasBrandApplyTarget => true;
+    public override bool HasBrandApplyTarget => this.GetCount() > 0;
+    public override bool HasBrandApply => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
+    public override TargetType? SubTargetType => TargetType.None;
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
@@ -41,6 +43,7 @@ public class Incinerate() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare,
         {
             await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
         }
+
         await this.OnPlayNormal(choiceContext, play);
     }
 
@@ -55,5 +58,10 @@ public class Incinerate() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare,
     {
         if (owner.PlayerCombatState == null) return [];
         return owner.PlayerCombatState.AllCards.Where(c => c is { Type: CardType.Status, Pile: not null } && c.Pile.Type != PileType.Exhaust);
+    }
+
+    private int GetCount()
+    {
+        return this.CombatState != null ? GetStatuses(this.Owner).Count() : 0;
     }
 }

@@ -1,6 +1,9 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Powers;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
@@ -12,13 +15,37 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
-    public bool TryModifyEvokeVal(BrandPower power, decimal originVal, out decimal modifiedVal)
+    public bool TryModifyEvokeValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;
     }
 
-    public bool TryModifyPassiveVal(BrandPower power, decimal originVal, out decimal modifiedVal)
+    public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyEvokeVal2Multi(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyEvokeVal2Additive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyPassiveValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyPassiveValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;
@@ -32,5 +59,11 @@ public interface IHatMagician2AbstractModel
     public Task AfterSpendEnergy(Player player, int amount, BrandColor color)
     {
         return Task.CompletedTask;
+    }
+
+    public bool TryModifyChainDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, out decimal modifiedDamage)
+    {
+        modifiedDamage = amount;
+        return false;
     }
 }

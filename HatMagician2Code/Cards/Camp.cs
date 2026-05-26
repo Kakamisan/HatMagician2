@@ -30,7 +30,7 @@ public class Camp() : HatMagician2Card(2, CardType.Skill, CardRarity.Common, Tar
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
+        await this.CommonBlock(play);
         CardSelectorPrefs prefs = new CardSelectorPrefs(this.SelectionScreenPrompt, this.DynamicHat2Var.IntValue);
         CardModel[] array = (await CardSelectCmd.FromHand(choiceContext, this.Owner, prefs, null, this)).ToArray();
         if (array.Length == 0) return;
