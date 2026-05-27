@@ -34,6 +34,7 @@ public class BrandPurplePower : BrandPower
 
     protected override async Task OnFusion(HatMagician2Card? cardSource)
     {
+        if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
         await base.OnFusion(cardSource);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");

@@ -36,12 +36,22 @@ public class BrandPower : HatMagician2Power
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
     protected virtual string ChannelSfx => "";
-    protected bool Evoked;
+    protected bool IsOnEvoked;
+    protected bool IsOnFusionEd;
+    protected bool IsOnApplied;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new("Passive", this.BasePassiveVal), new("Evoke", this.BaseEvokeVal), new("Evoke2", this.BaseEvokeVal2), new("Fusion", this.BaseFusionVal)];
 
     private bool _thisTurnIsTriggeredPassive; // 用于辅助判断死亡时是否需要触发一次被动（触发连锁伤害）
+
+    protected override void DeepCloneFields()
+    {
+        this.IsOnEvoked = false;
+        this.IsOnFusionEd = false;
+        this.IsOnApplied = false;
+        base.DeepCloneFields();
+    }
 
     public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
@@ -57,8 +67,13 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnEvoke(HatMagician2Card? cardSource)
     {
         Log.Info("[   Hat2   ]OnEvoke:" + this.BaseBrandColor);
-        this.Evoked = true;
+        this.IsOnEvoked = true;
         await Task.CompletedTask;
+    }
+
+    public async Task OnEvokePublic(HatMagician2Card? cardSource)
+    {
+        await this.OnEvoke(cardSource);
     }
 
     // 被动效果
@@ -76,22 +91,33 @@ public class BrandPower : HatMagician2Power
     // 叠色效果
     protected virtual async Task OnFusion(HatMagician2Card? cardSource)
     {
+        if (this.IsOnFusionEd) return;
         Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
+        this.IsOnFusionEd = true;
         await Task.CompletedTask;
     }
 
     // 赋予效果 
     protected virtual async Task OnApply(HatMagician2Card? cardSource, bool isFusion = false)
     {
-        Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
-        this.OnSfx(this.ChannelSfx);
         if (isFusion)
         {
             await this.OnFusion(cardSource);
         }
 
+        if (this.IsOnApplied) return;
+        this.IsOnApplied = true;
+        
+        Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
+        this.OnSfx(this.ChannelSfx);
+
         BrandPowerShow.OnBrandApply(this.Owner, this);
         await Task.CompletedTask;
+    }
+
+    public async Task OnApplyPublic(HatMagician2Card? cardSource, bool isFusion = false)
+    {
+        await this.OnApply(cardSource, isFusion);
     }
 
     // 移除之后的处理
@@ -112,35 +138,35 @@ public class BrandPower : HatMagician2Power
     }
 
     // 应用印记的逻辑
-    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color) =>
+    public static async Task ApplyBrandPower(CardModel card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color) =>
         await ApplyBrandPower(card, card.Owner.Creature, choiceContext, play.Target!, color);
 
-    public static async Task ApplyBrandPower(HatMagician2Card card, PlayerChoiceContext choiceContext, Creature target, BrandColor color) =>
+    public static async Task ApplyBrandPower(CardModel card, PlayerChoiceContext choiceContext, Creature target, BrandColor color) =>
         await ApplyBrandPower(card, card.Owner.Creature, choiceContext, target, color);
 
-    public static async Task ApplyBrandPower(HatMagician2Card? card, Creature applier, PlayerChoiceContext choiceContext, Creature target, BrandColor color)
+    public static async Task ApplyBrandPower(CardModel? card, Creature? applier, PlayerChoiceContext choiceContext, Creature target, BrandColor color)
     {
         // 检查
-        if (color is BrandColor.None or > BrandColor.Rainbow)
-            return;
-
-        var oldPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
+        if (color is BrandColor.None or > BrandColor.Rainbow) return;
 
         // 实际应用的印记颜色
         var applyColor = color;
 
-        // 叠色
-        if (oldPower != null && (oldPower.BaseBrandColor & color) == 0 && (color & (color - 1)) == 0 && (card == null || !card.Keywords.Contains(HatMagician2Keywords.Erosion)))
-        {
-            applyColor = oldPower.BaseBrandColor | color;
-        }
+        // 以下部分放到了patch中
+        // var oldPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
 
+        // 叠色
+        // if (oldPower != null && (oldPower.BaseBrandColor & color) == 0 && (color & (color - 1)) == 0 && (card == null || !card.Keywords.Contains(HatMagician2Keywords.Erosion)))
+        // {
+        //     applyColor = oldPower.BaseBrandColor | color;
+        // }
+        
         // 触发刻印效果
-        if (oldPower != null)
-        {
-            await oldPower.OnEvoke(card);
-            await PowerCmd.Remove(oldPower);
-        }
+        // if (oldPower != null)
+        // {
+        //     await oldPower.OnEvoke(card);
+        //     await PowerCmd.Remove(oldPower);
+        // }
 
         // 应用新印记
         switch (applyColor)
@@ -173,18 +199,19 @@ public class BrandPower : HatMagician2Power
                 throw new ArgumentOutOfRangeException();
         }
 
+        // 以下部分放到了patch中
         // 是否触发叠色效果
-        var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
-        var isFusion = newPower != null && color != applyColor;
-
-        if (newPower != null)
-        {
-            await newPower.OnApply(card, isFusion);
-        }
+        // var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
+        // var isFusion = newPower != null && color != applyColor;
+        //
+        // if (newPower != null)
+        // {
+        //     await newPower.OnApply(card, isFusion);
+        // }
 
         // 其他杂项
-        if (card != null)
-            card.IsBrandApplied = true;
+        // if (card != null)
+        //     card.IsBrandApplied = true;
     }
 
     // 应用刻印效果

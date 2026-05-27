@@ -47,7 +47,7 @@
   "HATMAGICIAN2-SOUL_PERMEATION_POWER.title": "浸入灵魂",
   "HATMAGICIAN2-COLORFUL_POWER.description": "卡牌的绘色消耗减少[blue]1[/blue]。",
   "HATMAGICIAN2-COLORFUL_POWER.smartDescription": "卡牌的绘色消耗减少[blue]{Amount}[/blue]。",
-  "HATMAGICIAN2-COLORFUL_POWER.title": "神气",
+  "HATMAGICIAN2-COLORFUL_POWER.title": "神采",
   "HATMAGICIAN2-COLORLESS_POWER.description": "卡牌的耗能消耗减少{energyPrefix:energyIcons(1)}。",
   "HATMAGICIAN2-COLORLESS_POWER.smartDescription": "卡牌的耗能减少{Amount:energyIcons()}。",
   "HATMAGICIAN2-COLORLESS_POWER.title": "幽寂",

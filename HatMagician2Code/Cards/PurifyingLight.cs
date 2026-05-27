@@ -59,7 +59,7 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.U
             List<PowerModel> list = [];
             foreach (var creature in this.CombatState.Creatures)
             {
-                list.AddRange(creature.Powers.Where(p => p.GetTypeForAmount(p.Amount) == PowerType.Debuff && p.IsVisible));
+                list.AddRange(creature.Powers.Where(p => p is { TypeForCurrentAmount: PowerType.Debuff, IsVisible: true }));
             }
 
             return list;

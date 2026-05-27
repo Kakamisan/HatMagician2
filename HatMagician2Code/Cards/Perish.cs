@@ -19,7 +19,7 @@ public class Perish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, Ta
     public override bool HasBrandColorCostX => true;
     protected override bool HasEnergyCostX => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(10, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -36,5 +36,5 @@ public class Perish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, Ta
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(3);
 }
