@@ -225,7 +225,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     }
 
     // 打出时尝试消耗绘色
-    public void SpendEnergy()
+    public async Task SpendEnergy()
     {
         if (!this.HasEnoughEnergy())
         {
@@ -238,7 +238,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         if (state != null)
         {
             var cost = this.GetBrandColorCostWithModifiers();
-            _ = state.SpendEnergy(this.BaseBrandColor, cost);
+            await state.SpendEnergy(this.BaseBrandColor, cost);
             this.LastBrandColorCost = cost;
         }
     }

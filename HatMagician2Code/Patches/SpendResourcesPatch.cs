@@ -10,13 +10,19 @@ namespace HatMagician2.HatMagician2Code.Patches;
 public class SpendResourcesPatch
 {
     [HarmonyPostfix]
-    public static void Postfix(CardModel __instance)
+    public static void Postfix(ref Task<(int, int)> __result, CardModel __instance)
     {
         if (__instance is HatMagician2Card card)
         {
-            // BrandColorEnergyState state = BrandColorEnergyMgr.Instance.GetState(card.Owner);
-            // state.SpendEnergy(card.BaseBrandColor, card.GetBrandColorCostWithModifiers());
-            card.SpendEnergy();
+            // card.SpendEnergy();
+            __result = PostfixSub(__result, card);
         }
+    }
+
+    private static async Task<(int, int)> PostfixSub(Task<(int, int)> originTask, HatMagician2Card card)
+    {
+        var result = await originTask;
+        await card.SpendEnergy();
+        return result;
     }
 }

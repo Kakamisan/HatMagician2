@@ -18,7 +18,7 @@ public class GoodNightWorldPower : HatMagician2Power
             BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner.Player);
             if (state != null && state.GetEnergy(CostColor) > 0)
             {
-                _ = state.SpendEnergy(CostColor, 1);
+                await state.SpendEnergy(CostColor, 1);
                 await CreatureCmd.GainBlock(this.Owner, this.Amount, ValueProp.Unpowered, null);
             }
         }

@@ -23,67 +23,36 @@ public class PowerCmdApplyPatch
         {
             // 实际应用的印记颜色
             var color = power2.BaseBrandColor;
-            HatMagician2Card? card = cardSource as HatMagician2Card;
+            var card = cardSource as HatMagician2Card;
             var applyColor = color;
             // 叠色
             if ((oldPower.BaseBrandColor & color) == 0 && (color & (color - 1)) == 0 && (card == null || !card.Keywords.Contains(HatMagician2Keywords.Erosion)))
-            {
                 applyColor = oldPower.BaseBrandColor | color;
-            }
-            
+
             __result = PrefixSub(applyColor, cardSource, oldPower, choiceContext, target, applier);
+
             __state = (color, applyColor);
             return false;
         }
 
         // 应用新印记 直接原逻辑
         if (power is BrandPower power3)
-        {
             __state = (power3.BaseBrandColor, power3.BaseBrandColor);
-            return true;
-        }
-
-        __state = (BrandColor.None, BrandColor.None);
+        else
+            __state = (BrandColor.None, BrandColor.None);
         return true;
     }
 
     private static async Task PrefixSub(BrandColor applyColor, CardModel? cardSource, BrandPower oldPower, PlayerChoiceContext choiceContext, Creature target, Creature? applier)
     {
+        var card = cardSource as HatMagician2Card;
+
         // 触发刻印效果
-        HatMagician2Card? card = cardSource as HatMagician2Card;
         await oldPower.OnEvokePublic(card);
         await PowerCmd.Remove(oldPower);
 
         // 应用新印记
-        switch (applyColor)
-        {
-            case BrandColor.Red:
-                await PowerCmd.Apply<BrandRedPower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.Yellow:
-                await PowerCmd.Apply<BrandYellowPower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.Blue:
-                await PowerCmd.Apply<BrandBluePower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.Purple:
-                await PowerCmd.Apply<BrandPurplePower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.Orange:
-                await PowerCmd.Apply<BrandOrangePower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.White:
-                await PowerCmd.Apply<BrandWhitePower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.Rainbow:
-                await PowerCmd.Apply<BrandRainbowPower>(choiceContext, target, 1, applier, cardSource, true);
-                break;
-            case BrandColor.None:
-            case BrandColor.Any:
-            case BrandColor.All:
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        await BrandPower.ApplyBrandPower(cardSource, applier, choiceContext, target, applyColor);
     }
 
     [HarmonyPostfix]
