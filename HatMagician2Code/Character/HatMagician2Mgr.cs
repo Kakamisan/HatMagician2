@@ -233,4 +233,17 @@ public class HatMagician2Mgr : CustomSingletonModel
 
         return modifiedVal;
     }
+
+    // 阴郁伤害派发
+    public static async Task AfterGloomyDamage(Creature target, decimal damage, Creature? dealer)
+    {
+        if (target.CombatState == null) return;
+        foreach (AbstractModel iterateHookListener in target.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                await iterate.AfterGloomyDamage(target, damage, dealer);
+            }
+        }
+    }
 }

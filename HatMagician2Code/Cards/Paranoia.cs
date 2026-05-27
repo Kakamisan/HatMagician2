@@ -1,5 +1,4 @@
-﻿using BaseLib.Extensions;
-using BaseLib.Utils;
+﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
@@ -11,14 +10,14 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Iridescence() : HatMagician2Card(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
+public class Paranoia() : HatMagician2Card(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
-    public override bool HasFreeBrandApplyTarget => true;
-    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new SortStateVar()];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    public override bool HasBrandApplyTarget => false;
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<GloomyPower>()];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -28,12 +27,7 @@ public class Iridescence() : HatMagician2Card(2, CardType.Skill, CardRarity.Rare
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var colors = ((SortStateVar)this.GetDynamicVar(SortStateVar.DefaultName)).Value2Colors();
-        foreach (var color in colors)
-        {
-            await BrandPower.ApplyBrandPower(this, choiceContext, play, color);
-        }
-
+        await this.CommonApplySelfPower<ParanoiaPower>(choiceContext, play, 1);
         await base.OnPlayNormal(choiceContext, play);
     }
 

@@ -26,7 +26,7 @@ public class ColorlessPower : HatMagician2Power, IHatMagician2AbstractModel
         await PowerCmd.Remove(this);
     }
 
-    // 拥有虹彩时不能继续获得虹光/幽暗
+    // 拥有幽寂时不能继续获得虹光/幽暗
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
         if (target == this.Owner && canonicalPower is CollectPower)

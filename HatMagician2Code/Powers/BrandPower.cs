@@ -18,7 +18,7 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class BrandPower : HatMagician2Power
 {
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool FakeDebuff => true;
 

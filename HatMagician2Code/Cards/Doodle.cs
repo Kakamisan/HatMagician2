@@ -21,7 +21,7 @@ public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon
     public override bool HasFreeBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(8, ValueProp.Move)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -32,7 +32,7 @@ public class Doodle() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple, BrandColor.Rainbow];
+        BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple];
         var color = this.Owner.RunState.Rng.CombatTargets.NextItem(list);
         await BrandPower.ApplyBrandPower(this, choiceContext, play, color);
         await this.CommonSingleAttack(choiceContext, play);

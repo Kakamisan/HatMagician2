@@ -66,4 +66,9 @@ public interface IHatMagician2AbstractModel
         modifiedDamage = amount;
         return false;
     }
+
+    public Task AfterGloomyDamage(Creature target, decimal damage, Creature? dealer)
+    {
+        return Task.CompletedTask;
+    }
 }

@@ -36,7 +36,7 @@ public class CollectPower : HatMagician2Power
         await base.AfterModifyingPowerAmountReceived(power);
     }
 
-    // 进入虹彩/幽寂
+    // 进入神气/幽寂
     private async Task TryTransTo()
     {
         if (this.LightAmount + this.DarkAmount >= 7)

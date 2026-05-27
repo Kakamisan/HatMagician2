@@ -18,7 +18,7 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class Incinerate() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.Red;
-    public override int BaseBrandColorCost => 2;
+    public override int BaseBrandColorCost => 1;
     public override bool HasBrandApplyTarget => this.GetCount() > 0;
     public override bool HasBrandApply => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
@@ -52,7 +52,7 @@ public class Incinerate() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare,
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
+    protected override void OnUpgrade() => this.RemoveKeyword(CardKeyword.Exhaust);
 
     private static IEnumerable<CardModel> GetStatuses(Player owner)
     {

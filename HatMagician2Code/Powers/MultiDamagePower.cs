@@ -12,7 +12,9 @@ namespace HatMagician2.HatMagician2Code.Powers;
 // 灼痕 - 下次受到伤害*N 火焰印记附属能力
 public class MultiDamagePower : HatMagician2Power
 {
+    public override PowerType Type => PowerType.Debuff;
     public override bool FakeDebuff => true;
+    
     private decimal Multi => this.Amount;
     private bool _ready2Remove;
 
@@ -45,8 +47,9 @@ public class MultiDamagePower : HatMagician2Power
 
     public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (this.Owner == cardPlay.Target && this._ready2Remove)
+        if (this._ready2Remove)
         {
+            this.Flash();
             PowerCmd.Remove(this);
         }
 

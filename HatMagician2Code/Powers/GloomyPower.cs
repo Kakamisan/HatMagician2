@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -12,13 +13,21 @@ public class GloomyPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Debuff;
 
-    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer,
+        CardModel? cardSource)
     {
         if (dealer == this.Owner)
         {
-            _ = CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.Owner, this.Amount, ValueProp.Unpowered | ValueProp.Unblockable, null, null);
+            await DealGloomyDamage(this.Owner, this.Amount, this.Applier);
         }
 
-        return base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+    }
+
+    // 造成来源于阴郁的伤害
+    public static async Task DealGloomyDamage(Creature target, decimal damage, Creature? dealer)
+    {
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target, damage, ValueProp.Unpowered | ValueProp.Unblockable, dealer, null);
+        await HatMagician2Mgr.AfterGloomyDamage(target, damage, dealer);
     }
 }

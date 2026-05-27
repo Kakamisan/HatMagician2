@@ -1,43 +1,40 @@
 ﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Dispersion() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public class Perish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy)
 {
-    public override BrandColor BaseBrandColor => BrandColor.White;
+    public override BrandColor BaseBrandColor => BrandColor.Purple;
     public override int BaseBrandColorCost => -1;
+    public override bool HasBrandApplyTarget => false;
     public override bool HasBrandColorCostX => true;
-    // public override bool HasBrandApply => false;
+    protected override bool HasEnergyCostX => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(2)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move)];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // 获得2X绘色
-        var add = this.ResolveBrandColorCostXValue() * this.DynamicHat2Var.IntValue;
-        if (add > 0)
-        {
-            await HatMagician2Mgr.AddEnergy(this.Owner, add, BrandColor.Yellow);
-            await HatMagician2Mgr.AddEnergy(this.Owner, add, BrandColor.Blue);
-        }
-
         await this.OnPlayNormal(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        
+        if (this.CombatState == null) return;
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(this.ResolveEnergyXValue() + this.ResolveBrandColorCostXValue()).FromCard(this)
+            .TargetingRandomOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(1);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);
 }

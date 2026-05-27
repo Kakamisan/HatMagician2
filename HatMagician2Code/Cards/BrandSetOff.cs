@@ -26,5 +26,5 @@ public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Bas
 
     protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);
 
-    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<BrandSetOff>();
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<FlourishingStroke>();
 }

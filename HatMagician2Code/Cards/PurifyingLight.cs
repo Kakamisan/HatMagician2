@@ -26,11 +26,11 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.U
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
-        new("PurifyingLightBase", 0), new("PurifyingLightExtra", 4),
-        new CustomCalculatedBlockVar("PurifyingLight", ValueProp.Unpowered).WithMultiplier((card, _) => ((PurifyingLight)card).GetPowers().Count)
+        new("PurifyingLightBase", 0), new("PurifyingLightExtra", 1), new BlockVar(5, ValueProp.Move),
+        new CustomCalculatedVar("PurifyingLight").WithMultiplier((card, _) => ((PurifyingLight)card).GetPowers().Count)
     ];
 
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -39,7 +39,7 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.U
         foreach (var power in powers)
         {
             await PowerCmd.Remove(power);
-            await CreatureCmd.GainBlock(this.Owner.Creature, this.GetDynamicVar("PurifyingLightExtra").IntValue, ValueProp.Unpowered, play);
+            await this.CommonBlock(play);
         }
 
         await this.OnPlayNormal(choiceContext, play);
@@ -50,7 +50,7 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.U
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.GetDynamicVar("PurifyingLightExtra").UpgradeValueBy(2);
+    protected override void OnUpgrade() => this.DynamicVars.Block.UpgradeValueBy(2);
 
     private List<PowerModel> GetPowers()
     {
@@ -59,7 +59,7 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.U
             List<PowerModel> list = [];
             foreach (var creature in this.CombatState.Creatures)
             {
-                list.AddRange(creature.Powers.Where(p => p.Type == PowerType.Debuff || p is HatMagician2Power { FakeDebuff: true }));
+                list.AddRange(creature.Powers.Where(p => p.GetTypeForAmount(p.Amount) == PowerType.Debuff && p.IsVisible));
             }
 
             return list;

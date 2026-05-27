@@ -20,13 +20,13 @@ public abstract class HatMagician2Power : CustomPowerModel, IHatMagician2Abstrac
     // 是否有修改印记数值的实现
     public virtual bool HasChangeBrandValEffect => false;
 
-    // 是否设置成Buff时也应该清除（视为Debuff）
+    // 是否可以穿透人工制品
     public virtual bool FakeDebuff => false;
 
     // 在死亡动画前移除
     public override async Task BeforeDeath(Creature creature)
     {
-        if (this.Owner == creature && this.FakeDebuff)
+        if (this.Owner == creature && this is BrandPower)
         {
             // 怪物在他的回合死亡时移除这个能力
             await PowerCmd.Remove(this);

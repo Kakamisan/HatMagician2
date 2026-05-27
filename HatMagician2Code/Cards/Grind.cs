@@ -16,7 +16,7 @@ public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Tar
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips =>
         [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color), HoverTipFactory.FromKeyword(HatMagician2Keywords.BaseColor)];
 
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(2), new RepeatVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(3), new RepeatVar(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

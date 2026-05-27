@@ -46,6 +46,6 @@ public class Saturate() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncomm
     protected override void OnUpgrade()
     {
         this.DynamicVars.Damage.UpgradeValueBy(3);
-        this.RemoveKeyword(CardKeyword.Exhaust);
+        this.EnergyCost.UpgradeBy(-1);
     }
 }
