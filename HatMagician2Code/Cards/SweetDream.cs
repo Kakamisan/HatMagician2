@@ -28,7 +28,7 @@ public class SweetDream() : HatMagician2Card(1, CardType.Power, CardRarity.Rare,
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<SweetDreamPower>(choiceContext, this.Owner.Creature, this.DynamicVars.Cards.IntValue, this.Owner.Creature, this);
+        await this.CommonApplySelfPower<SweetDreamPower>(choiceContext, play, this.DynamicVars.Cards.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 

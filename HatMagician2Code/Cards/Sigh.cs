@@ -30,7 +30,7 @@ public class Sigh() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, Tar
     {
         if (HatMagician2Mgr.Instance == null)
             return;
-        await PowerCmd.Apply<GloomyPower>(choiceContext, play.Target!, this.DynamicHat2Var.IntValue, this.Owner.Creature, this);
+        await this.CommonApplyTargetPower<GloomyPower>(choiceContext, play, this.DynamicHat2Var.IntValue);
         await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicVars.Energy.IntValue, BrandColor.Purple);
         await base.OnPlayNormal(choiceContext, play);
     }

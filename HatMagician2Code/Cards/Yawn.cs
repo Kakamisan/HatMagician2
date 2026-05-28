@@ -29,7 +29,7 @@ public class Yawn() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, Tar
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target!, this.DynamicVars.Weak.IntValue, this.Owner.Creature, this);
+        await this.CommonApplyTargetPower<WeakPower>(choiceContext, play, this.DynamicVars.Weak.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 

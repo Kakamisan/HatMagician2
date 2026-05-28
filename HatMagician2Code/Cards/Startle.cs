@@ -32,7 +32,7 @@ public class Startle() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target!, this.DynamicVars.Vulnerable.IntValue, this.Owner.Creature, this);
+        await this.CommonApplyTargetPower<VulnerablePower>(choiceContext, play, this.DynamicVars.Vulnerable.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 

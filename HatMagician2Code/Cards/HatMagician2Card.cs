@@ -1,4 +1,5 @@
 ﻿using BaseLib.Abstracts;
+using BaseLib.Cards.Variables;
 using BaseLib.Extensions;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
@@ -277,6 +278,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             if (this.Pile is { Type: PileType.Discard })
             {
                 this.EnergyCost.AddThisTurn(DreamButterflyPower.AddCostThisTurn(this.Owner));
+                this.AddBrandColorCostThisTurn = DreamButterflyPower.AddBrandColorCostThisTurn(this.Owner);
                 await CardPileCmd.Add(this, PileType.Hand);
             }
         }
@@ -304,6 +306,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         this.IsSleepApplied = false;
         this.NeedDream = false;
         this._tmpBrandColorCosts.RemoveAll(c => c.ClearsWhenTurnEnds);
+        this.ResetAddBrandColorCostThisTurn();
         return base.AfterSideTurnEndLate(choiceContext, side, participants);
     }
 
@@ -358,6 +361,15 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 绘色免费消耗相关
     private List<TemporaryCardCost> _tmpBrandColorCosts = [];
+    private int _addBrandColorCostThisTurn;
+
+    private int AddBrandColorCostThisTurn
+    {
+        get => this._addBrandColorCostThisTurn;
+        set => this._addBrandColorCostThisTurn += value;
+    }
+
+    private void ResetAddBrandColorCostThisTurn() => this._addBrandColorCostThisTurn = 0;
 
     public bool TryModifyBrandColorCost(HatMagician2Card card, decimal originalCost, out decimal modifiedCost)
     {
@@ -366,9 +378,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             var cost = this._tmpBrandColorCosts.FirstOrDefault();
             if (cost != null)
             {
+                // 现在这个只有免费打出用到 所以不用比较哪个消耗更低 直接返回
                 modifiedCost = Math.Min(cost.Cost, originalCost);
                 return originalCost != modifiedCost;
             }
+
+            modifiedCost = Math.Max(0, this.AddBrandColorCostThisTurn + originalCost);
+            return originalCost != modifiedCost;
         }
 
         modifiedCost = originalCost;
@@ -449,10 +465,31 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
     }
 
+    // 通用Debuff
+    protected async Task CommonApplyTargetPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal amount) where T : PowerModel
+    {
+        await PowerCmd.Apply<T>(choiceContext, play.Target!, amount, this.Owner.Creature, this);
+    }
+
+    // 通用Aoe Debuff
+    protected async Task CommonAoeApplyTargetPower<T>(PlayerChoiceContext choiceContext, decimal amount) where T : PowerModel
+    {
+        if (this.CombatState == null) return;
+        foreach (var e in this.CombatState.HittableEnemies)
+        {
+            await PowerCmd.Apply<T>(choiceContext, e, amount, this.Owner.Creature, this);
+        }
+    }
+
     // 通用获得格挡
     protected async Task CommonBlock(CardPlay play)
     {
         await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, play);
+    }
+
+    protected async Task CommonBlock(CardPlay play, decimal amount)
+    {
+        await CreatureCmd.GainBlock(this.Owner.Creature, amount, ValueProp.Move, play);
     }
 
     // X药处理

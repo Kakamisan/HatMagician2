@@ -27,17 +27,13 @@ public class GoodSleep() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncomm
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var cardSource = this;
-        await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, cardSource.Owner.Creature, cardSource.DynamicVars.Cards.BaseValue, cardSource.Owner.Creature, cardSource);
+        await this.CommonApplySelfPower<DrawCardsNextTurnPower>(choiceContext, play, this.DynamicVars.Cards.IntValue);
         await this.OnPlayNormal(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
-        // Decimal num = await CreatureCmd.GainBlock(cardSource.Owner.Creature, cardSource.DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, this.Owner.Creature, this.DynamicVars.Energy.BaseValue, this.Owner.Creature, this);
-
+        await this.CommonApplySelfPower<EnergyNextTurnPower>(choiceContext, play, this.DynamicVars.Energy.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 

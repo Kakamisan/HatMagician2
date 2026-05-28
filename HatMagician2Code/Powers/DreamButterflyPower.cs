@@ -13,4 +13,9 @@ public class DreamButterflyPower : HatMagician2Power
             return -power.Amount;
         return 0;
     }
+
+    public static int AddBrandColorCostThisTurn(Player player)
+    {
+        return AddCostThisTurn(player);
+    }
 }

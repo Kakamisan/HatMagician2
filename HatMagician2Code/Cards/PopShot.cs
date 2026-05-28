@@ -11,13 +11,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class PluckAStar() : HatMagician2Card(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class PopShot() : HatMagician2Card(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
-    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(11, ValueProp.Move), new CardsVar(2), new EnergyVar(1)];
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Insomnia>()];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -29,15 +29,8 @@ public class PluckAStar() : HatMagician2Card(2, CardType.Attack, CardRarity.Comm
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await this.CommonSingleAttack(choiceContext, play);
-        var result = await CardPileCmd.Draw(choiceContext, this.DynamicVars.Cards.IntValue, this.Owner);
-        foreach (var card in result)
-        {
-            if (card.Keywords.Contains(HatMagician2Keywords.Sleep))
-            {
-                this.EnergyCost.AddThisCombat(-this.DynamicVars.Energy.IntValue);
-            }
-        }
-
+        if (this.CombatState == null) return;
+        await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(this.Owner), PileType.Hand, this.Owner);
         await base.OnPlayNormal(choiceContext, play);
     }
 

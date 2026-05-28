@@ -27,7 +27,7 @@ public class DreamButterfly() : HatMagician2Card(1, CardType.Power, CardRarity.R
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<DreamButterflyPower>(choiceContext, this.Owner.Creature, 1, this.Owner.Creature, this);
+        await this.CommonApplySelfPower<DreamButterflyPower>(choiceContext, play, 1);
         await base.OnPlayNormal(choiceContext, play);
     }
 

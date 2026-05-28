@@ -13,8 +13,7 @@ public class DuskPower : HatMagician2Power
     {
         if (side == this.Owner.Side)
         {
-            var enemies = this.CombatState.HittableEnemies.ToList();
-            foreach (var e in enemies)
+            foreach (var e in this.CombatState.HittableEnemies)
             {
                 await PowerCmd.Apply<GloomyPower>(choiceContext, e, this.Amount, this.Owner, null);
             }

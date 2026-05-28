@@ -36,12 +36,7 @@ public class Pall() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, T
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (this.CombatState == null) return;
-        foreach (Creature enemy in this.CombatState.HittableEnemies)
-        {
-            await PowerCmd.Apply<WeakPower>(choiceContext, enemy, this.DynamicVars.Weak.IntValue, this.Owner.Creature, this);
-        }
-
+        await this.CommonAoeApplyTargetPower<WeakPower>(choiceContext, this.DynamicVars.Weak.IntValue);
         await base.OnPlayNormal(choiceContext, play);
     }
 
