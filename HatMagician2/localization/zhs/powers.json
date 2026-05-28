@@ -83,5 +83,8 @@
   "HATMAGICIAN2-PARANOIA_POWER.title": "偏执幻境",
   "HATMAGICIAN2-COLOR_BLEED_POWER.description": "每当你给予印记时，对所有敌人造成伤害。",
   "HATMAGICIAN2-COLOR_BLEED_POWER.smartDescription": "每当你给予印记时，对所有敌人造成[blue]{Amount}[/blue]点伤害。",
-  "HATMAGICIAN2-COLOR_BLEED_POWER.title": "晕染"
+  "HATMAGICIAN2-COLOR_BLEED_POWER.title": "晕染",
+  "HATMAGICIAN2-TOSSING_AND_TURNING_POWER.description": "每当有一张牌被消耗时，随机给予敌人[color=#e7ea31]闪电[/color]印记。",
+  "HATMAGICIAN2-TOSSING_AND_TURNING_POWER.smartDescription": "每当有一张牌被消耗时，随机给予敌人[color=#e7ea31]闪电[/color]印记{Amount:cond:>1?[blue]{Amount}[/blue]次|}。",
+  "HATMAGICIAN2-TOSSING_AND_TURNING_POWER.title": "彻夜难眠"
 }

@@ -33,9 +33,7 @@ public class Discharge() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncomm
         {
             Creature? enemy = this.Owner.RunState.Rng.CombatTargets.NextItem(this.CombatState.HittableEnemies);
             if (enemy != null)
-            {
                 await BrandPower.ApplyBrandPower(this, choiceContext, enemy, this.BaseBrandColor);
-            }
         }
 
         await this.OnPlayNormal(choiceContext, play);

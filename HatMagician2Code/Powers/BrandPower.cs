@@ -107,7 +107,7 @@ public class BrandPower : HatMagician2Power
 
         if (this.IsOnApplied) return;
         this.IsOnApplied = true;
-        
+
         Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
         this.OnSfx(this.ChannelSfx);
 
@@ -160,7 +160,7 @@ public class BrandPower : HatMagician2Power
         // {
         //     applyColor = oldPower.BaseBrandColor | color;
         // }
-        
+
         // 触发刻印效果
         // if (oldPower != null)
         // {
@@ -228,10 +228,8 @@ public class BrandPower : HatMagician2Power
     }
 
     // 连锁伤害
-    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true, int cnt = 1)
-    {
+    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true, int cnt = 1) =>
         await ChainDamageCmd(power.Owner, damage, power.Applier, null, withDefaultVfx, cnt);
-    }
 
     public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
@@ -241,6 +239,7 @@ public class BrandPower : HatMagician2Power
         for (int i = 0; i < cnt; i++)
         {
             var enemies2 = enemies.Where(c => c.IsAlive).ToList();
+            if (enemies2.Count == 0) break;
             if (withDefaultVfx)
             {
                 foreach (var target1 in (IEnumerable<Creature>)enemies2)
@@ -252,6 +251,14 @@ public class BrandPower : HatMagician2Power
         }
 
         await Task.CompletedTask;
+    }
+
+    public static async Task ChainDamageCmdFromCard(ICombatState combatState, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    {
+        var enemy = combatState.HittableEnemies.Count > 0 ? combatState.HittableEnemies[0] : null;
+        if (enemy == null) return;
+        var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(null, damage, ValueProp.Unpowered, applier, card, combatState);
+        await ChainDamageCmd(enemy, modifyChainDamage, applier, card, withDefaultVfx, cnt);
     }
 
     // 是否即将触发刻印
@@ -303,7 +310,7 @@ public class BrandPower : HatMagician2Power
         this.GetDynamicVar("Passive").BaseValue = this.GetPassiveValWithModifiers();
         this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
         this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
-        this.GetDynamicVar("Fusion").BaseValue = this.FusionVal;
+        this.GetDynamicVar("Fusion").BaseValue = this.GetFusionValWithModifiers();
         return base.AfterApplied(applier, cardSource);
     }
 
@@ -316,6 +323,7 @@ public class BrandPower : HatMagician2Power
             this.GetDynamicVar("Passive").BaseValue = this.GetPassiveValWithModifiers();
             this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
             this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
+            this.GetDynamicVar("Fusion").BaseValue = this.GetFusionValWithModifiers();
             BrandPowerShow.OnUpdate(this.Owner);
         }
 
@@ -351,6 +359,12 @@ public class BrandPower : HatMagician2Power
     public decimal GetPassiveValWithModifiers()
     {
         var change = HatMagician2Mgr.ModifyPassiveVal(this.CombatState, this, this.BasePassiveVal);
+        return change;
+    }
+
+    public decimal GetFusionValWithModifiers()
+    {
+        var change = HatMagician2Mgr.ModifyFusionVal(this.CombatState, this, this.BaseFusionVal);
         return change;
     }
 }

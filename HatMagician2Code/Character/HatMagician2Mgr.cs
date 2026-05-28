@@ -193,6 +193,29 @@ public class HatMagician2Mgr : CustomSingletonModel
         return modifiedVal;
     }
 
+    // 印记叠色动态数值
+    public static decimal ModifyFusionVal(ICombatState combatState, BrandPower power, decimal originVal)
+    {
+        decimal modifiedVal = originVal;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyFusionValMulti(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                iterate.TryModifyFusionValAdditive(power, modifiedVal, out modifiedVal);
+            }
+        }
+
+        return modifiedVal;
+    }
+
     // 获得绘色派发
     public static async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
@@ -220,7 +243,7 @@ public class HatMagician2Mgr : CustomSingletonModel
     }
 
     // 影响连锁伤害数值
-    public static decimal ModifyChainDamage(Creature target, decimal damage, ValueProp props, Creature? applier, CardModel? card, ICombatState combatState)
+    public static decimal ModifyChainDamage(Creature? target, decimal damage, ValueProp props, Creature? applier, CardModel? card, ICombatState combatState)
     {
         decimal modifiedVal = damage;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())

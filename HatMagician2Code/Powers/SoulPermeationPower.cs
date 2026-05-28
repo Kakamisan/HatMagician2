@@ -34,4 +34,11 @@ public class SoulPermeationPower : HatMagician2Power, IHatMagician2AbstractModel
 
         return true;
     }
+
+    public bool TryModifyFusionValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal * this.Amount;
+
+        return true;
+    }
 }

@@ -23,7 +23,7 @@ public class AgitationPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandYellowPower or BrandOrangePower)
+        if (power is BrandYellowPower)
         {
             modifiedVal = originVal + this.Amount;
             return true;
@@ -36,6 +36,18 @@ public class AgitationPower : HatMagician2Power, IHatMagician2AbstractModel
     public bool TryModifyPassiveValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         if (power is BrandYellowPower or BrandOrangePower)
+        {
+            modifiedVal = originVal + this.Amount;
+            return true;
+        }
+
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyFusionValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        if (power is BrandOrangePower)
         {
             modifiedVal = originVal + this.Amount;
             return true;

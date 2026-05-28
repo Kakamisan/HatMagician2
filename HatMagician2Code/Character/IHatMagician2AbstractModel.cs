@@ -51,6 +51,18 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
+    public bool TryModifyFusionValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
+    public bool TryModifyFusionValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal;
+        return false;
+    }
+
     public Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
         return Task.CompletedTask;

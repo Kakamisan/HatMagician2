@@ -23,7 +23,9 @@ public class Submergence() : HatMagician2Card(1, CardType.Skill, CardRarity.Unco
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
         new CustomCalculatedVar("Submergence").WithMultiplier((card, target) => ((Submergence)card).GetGloomyCnt(target)),
-        new("SubmergenceBase", 0), new("SubmergenceExtra", 1), new Hat2Var(1)
+        new("SubmergenceBase", 0), new("SubmergenceExtra", 1), new Hat2Var(1),
+        new CustomCalculatedVar("SubmergenceShow").WithMultiplier((card, target) => ((Submergence)card).GetGloomyCntShow(target)),
+        new("SubmergenceShowBase", 0), new("SubmergenceShowExtra", 1)
     ];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
@@ -49,6 +51,17 @@ public class Submergence() : HatMagician2Card(1, CardType.Skill, CardRarity.Unco
         if (target?.Powers.FirstOrDefault(p => p is GloomyPower) is GloomyPower power)
         {
             return (int)Math.Floor((double)power.Amount / 3);
+        }
+
+        return 0;
+    }
+
+    private int GetGloomyCntShow(Creature? target)
+    {
+        var multi = this.HasEnoughEnergy() ? this.DynamicHat2Var.IntValue : 0;
+        if (target?.Powers.FirstOrDefault(p => p is GloomyPower) is GloomyPower power)
+        {
+            return (int)Math.Floor((double)power.Amount / 3 * (1 + multi));
         }
 
         return 0;

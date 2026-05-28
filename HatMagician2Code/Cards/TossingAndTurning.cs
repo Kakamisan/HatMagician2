@@ -10,19 +10,19 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class FrozenWorld() : HatMagician2Card(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class TossingAndTurning() : HatMagician2Card(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    public override BrandColor BaseBrandColor => BrandColor.Blue;
-    public override int BaseBrandColorCost => 2;
-    // public override bool HasBrandApply => false;
-    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<BrandBluePower>()];
+    public override BrandColor BaseBrandColor => BrandColor.Yellow;
+    public override int BaseBrandColorCost => 3;
+    public override bool HasBrandApplyTarget => false;
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await this.CommonApplySelfPower<FrozenWorldPower>(choiceContext, play, 1);
+        await this.CommonApplySelfPower<TossingAndTurningPower>(choiceContext, play, 1);
         await this.OnPlayNormal(choiceContext, play);
     }
 
@@ -31,5 +31,5 @@ public class FrozenWorld() : HatMagician2Card(1, CardType.Power, CardRarity.Rare
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Innate);
+    protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
 }
