@@ -16,7 +16,12 @@ public class Defend() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Ta
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(5, ValueProp.Move)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await this.OnPlayNormal(choiceContext, play);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         // test
         // await this.CommonApplySelfMultiPower<CollectDarkPower>(choiceContext, play, 4);

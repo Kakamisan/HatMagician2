@@ -37,6 +37,7 @@ public class PhantasmalFlame() : HatMagician2Card(2, CardType.Attack, CardRarity
     protected override void OnUpgrade()
     {
         // this.DynamicBrandCost.UpgradeValueBy(-1);
-        this.DynamicVars.Repeat.UpgradeValueBy(1);
+        // this.DynamicVars.Repeat.UpgradeValueBy(1);
+        this.DynamicVars.Damage.UpgradeValueBy(4);
     }
 }

@@ -28,10 +28,9 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var card1 = this;
         await CardPileCmd.ShuffleIfNecessary(choiceContext, this.Owner);
-        IReadOnlyList<CardModel> cards = PileType.Draw.GetPile(card1.Owner).Cards.ToList().Take(card1.DynamicVars.Cards.IntValue).ToList();
-        CardModel? card2 = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards, card1.Owner, new CardSelectorPrefs(card1.SelectionScreenPrompt, 1))).FirstOrDefault();
+        IReadOnlyList<CardModel> cards = PileType.Draw.GetPile(this.Owner).Cards.ToList().Take(this.DynamicVars.Cards.IntValue).ToList();
+        CardModel? card2 = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards, this.Owner, new CardSelectorPrefs(this.SelectionScreenPrompt, 1))).FirstOrDefault();
         if (card2 == null)
             return;
         await CardPileCmd.Add(card2, PileType.Hand);
@@ -43,7 +42,7 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
             }
         }
 
-        await base.OnPlayWhenCostBrandColor(choiceContext, play);
+        await this.OnPlayNormal(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)

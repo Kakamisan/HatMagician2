@@ -18,7 +18,12 @@ public class Grind() : HatMagician2Card(1, CardType.Skill, CardRarity.Basic, Tar
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new Hat2Var(3), new RepeatVar(1)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await this.OnPlayNormal(choiceContext, play);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (HatMagician2Mgr.Instance == null)
             return;

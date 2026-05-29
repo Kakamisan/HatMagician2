@@ -180,5 +180,21 @@
   "HATMAGICIAN2-DARK_MOON.description": "抽{Cards:diff()}张牌。\n绘色:额外抽{Hat2Var:diff()}张牌。",
   "HATMAGICIAN2-DARK_MOON.title": "暗月之引",
   "HATMAGICIAN2-COFFEE.description": "每回合你第一次抽到[gold]生成牌[/gold]时，获得{Energy:energyIcons()}。",
-  "HATMAGICIAN2-COFFEE.title": "咖啡制品"
+  "HATMAGICIAN2-COFFEE.title": "咖啡制品",
+  "HATMAGICIAN2-FROST_BRAND.description": "绘色:给予[color=#31b0eb]冰霜[/color]印记{Repeat:diff()}次。\n造成{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-FROST_BRAND.title": "刺骨寒霜",
+  "HATMAGICIAN2-STAR_SCRIBE.description": "造成{Damage:diff()}点伤害。你在本场战斗中每收集{Hat2Var:diff()}点绘色，此牌就额外造成{StarScribeExtra:diff()}点伤害。{InCombat:\n（造成{StarScribe:diff()}点伤害）|}",
+  "HATMAGICIAN2-STAR_SCRIBE.title": "绘星",
+  "HATMAGICIAN2-MUTUAL_RADIANCE.description": "绘色:给予敌人和随机另一名敌人[color=#ff9a61]黄昏[/color]印记。\n对敌人和随机另一名敌人造成{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-MUTUAL_RADIANCE.title": "交相辉映",
+  "HATMAGICIAN2-DREAM_FALL.description": "将抽牌堆中的最多{Cards:diff()}张牌添加[gold]梦境[/gold]。",
+  "HATMAGICIAN2-DREAM_FALL.selectionScreenPrompt": "选择最多{Cards:diff()}张牌获得梦境",
+  "HATMAGICIAN2-DREAM_FALL.selectionScreenPrompt2": "选择最多2张牌获得梦境",
+  "HATMAGICIAN2-DREAM_FALL.title": "陷入梦境",
+  "HATMAGICIAN2-FEEBLE_MIND.description": "每当敌人获得[gold]阴郁[/gold]，给予相同层数的[gold]冰霜[/gold]。",
+  "HATMAGICIAN2-FEEBLE_MIND.title": "软弱心灵",
+  "HATMAGICIAN2-BRANDED_OPENING.description": "绘色:给予所有敌人[red]火焰[/red]印记，并造成{Damage:diff()}点伤害。\n本场战斗中每给予1个印记，此牌的耗能就减少{Energy:energyIcons()}，绘色消耗减少{Energy:diff()}。",
+  "HATMAGICIAN2-BRANDED_OPENING.title": "烙印开幕",
+  "HATMAGICIAN2-SLUMBER.description": "绘色:添加{Cards:diff()}张[color=#e7ea31]闪电[/color][gold]{IfUpgraded:show:瞌睡+|瞌睡}[/gold]到你的[gold]手牌[/gold]。",
+  "HATMAGICIAN2-SLUMBER.title": "微睡电流"
 }

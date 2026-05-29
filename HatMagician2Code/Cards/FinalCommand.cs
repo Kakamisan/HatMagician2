@@ -17,7 +17,7 @@ public class FinalCommand() : HatMagician2Card(2, CardType.Attack, CardRarity.Un
     public override int BaseBrandColorCost => 1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Doze>(true)];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(13, ValueProp.Move), new Hat2Var(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(15, ValueProp.Move), new Hat2Var(1)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -44,5 +44,5 @@ public class FinalCommand() : HatMagician2Card(2, CardType.Attack, CardRarity.Un
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(5);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(6);
 }

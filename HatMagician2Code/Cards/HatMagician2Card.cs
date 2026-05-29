@@ -258,6 +258,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        if (this.PreEnchantmentFunc != null)
+        {
+            await this.PreEnchantmentFunc(choiceContext, cardPlay);
+        }
         if (!this.NextCannotCost)
             await this.OnPlayWhenCostBrandColor(choiceContext, cardPlay);
         else
@@ -361,11 +365,18 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 绘色免费消耗相关
     private List<TemporaryCardCost> _tmpBrandColorCosts = [];
     private int _addBrandColorCostThisTurn;
+    private int _addBrandColorCostThisCombat;
 
     private int AddBrandColorCostThisTurn
     {
         get => this._addBrandColorCostThisTurn;
         set => this._addBrandColorCostThisTurn += value;
+    }
+
+    protected int AddBrandColorCostThisCombat
+    {
+        get => this._addBrandColorCostThisCombat;
+        set => this._addBrandColorCostThisCombat += value;
     }
 
     private void ResetAddBrandColorCostThisTurn() => this._addBrandColorCostThisTurn = 0;
@@ -382,7 +393,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
                 return originalCost != modifiedCost;
             }
 
-            modifiedCost = Math.Max(0, this.AddBrandColorCostThisTurn + originalCost);
+            // 其他减费
+            modifiedCost = Math.Max(0, this.AddBrandColorCostThisTurn + this.AddBrandColorCostThisCombat + originalCost);
             return originalCost != modifiedCost;
         }
 
@@ -426,6 +438,12 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(cnt).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
+        await Task.CompletedTask;
+    }
+
+    protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play, CalculatedDamageVar var)
+    {
+        await DamageCmd.Attack(var).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await Task.CompletedTask;
     }
 
@@ -502,4 +520,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         // 捕捉上次消耗绘色数量 应该是重放要用
         return Hook.ModifyXValue(this.CombatState, this, this.LastBrandColorCost);
     }
+
+    // 附魔前置
+    public Func<PlayerChoiceContext, CardPlay, Task>? PreEnchantmentFunc;
 }

@@ -21,7 +21,12 @@ public class ColorfulPen() : HatMagician2Card(1, CardType.Skill, CardRarity.Basi
         HoverTipFactory.FromCard<Fire>(this.IsUpgraded), HoverTipFactory.FromCard<Lightning>(this.IsUpgraded), HoverTipFactory.FromCard<Ice>(this.IsUpgraded)
     ];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await this.OnPlayNormal(choiceContext, play);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         CardModel? card;
         var player = this.Owner;

@@ -16,7 +16,12 @@ public class Strike() : HatMagician2Card(1, CardType.Attack, CardRarity.Basic, T
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(6, ValueProp.Move)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await this.OnPlayNormal(choiceContext, play);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         // test
         // await this.CommonApplySelfMultiPower<CollectLightPower>(choiceContext, play, 4);

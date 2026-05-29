@@ -18,7 +18,12 @@ public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Bas
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Evoke];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await this.OnPlayNormal(choiceContext, play);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandEvoke(this, choiceContext, play);
         await this.CommonSingleAttack(choiceContext, play);

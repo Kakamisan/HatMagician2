@@ -19,7 +19,7 @@ public class Doze() : HatMagician2Card(0, CardType.Attack, CardRarity.Token, Tar
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move), new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(7, ValueProp.Move), new CardsVar(1)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep, HatMagician2Keywords.Dream, CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

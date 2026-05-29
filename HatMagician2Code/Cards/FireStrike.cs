@@ -34,5 +34,5 @@ public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Unco
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(7);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(6);
 }

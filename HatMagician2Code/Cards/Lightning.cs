@@ -23,6 +23,11 @@ public class Lightning() : HatMagician2Card(0, CardType.Skill, CardRarity.Token,
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
     }
 
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await base.OnPlayNormal(choiceContext, play);
+    }
+
     // protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Retain);
     protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
 }

@@ -13,7 +13,7 @@ public class Ice() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targe
     public override int BaseBrandColorCost => 2;
 
     public override BrandColor BaseBrandColor => BrandColor.Blue;
-    
+
     public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
@@ -21,6 +21,11 @@ public class Ice() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, Targe
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.BaseBrandColor);
+    }
+
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        await base.OnPlayNormal(choiceContext, play);
     }
 
     // protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Retain);
