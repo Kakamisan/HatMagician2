@@ -16,8 +16,8 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class GoodSleep() : HatMagician2Card(1, CardType.Skill, CardRarity.Uncommon, TargetType.None)
 {
     public override BrandColor BaseBrandColor => BrandColor.White;
-
     public override int BaseBrandColorCost => 1;
+    public override bool HasEndTurn => true;
 
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];

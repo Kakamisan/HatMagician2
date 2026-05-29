@@ -19,7 +19,7 @@ public class AllNighter() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncom
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Insomnia>()];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new EnergyVar(2), new PowerVar<StrengthPower>(2), new PowerVar<DexterityPower>(2)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep, CardKeyword.Exhaust];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
@@ -40,8 +40,9 @@ public class AllNighter() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncom
 
     protected override void OnUpgrade()
     {
-        this.DynamicVars.Energy.UpgradeValueBy(1);
-        this.DynamicVars.Strength.UpgradeValueBy(1);
-        this.DynamicVars.Dexterity.UpgradeValueBy(1);
+        // this.DynamicVars.Energy.UpgradeValueBy(1);
+        // this.DynamicVars.Strength.UpgradeValueBy(1);
+        // this.DynamicVars.Dexterity.UpgradeValueBy(1);
+        this.RemoveKeyword(CardKeyword.Exhaust);
     }
 }

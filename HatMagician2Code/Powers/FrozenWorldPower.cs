@@ -31,6 +31,7 @@ public class FrozenWorldPower : HatMagician2Power
         if (side == this.Owner.Side)
         {
             var enemies = this.CombatState.HittableEnemies.ToList();
+            this.Flash();
             for (int i = 0; i < this.Amount; i++)
             {
                 foreach (var e in enemies)

@@ -39,5 +39,5 @@ public class InkSlash() : HatMagician2Card(1, CardType.Attack, CardRarity.Common
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.ExtraDamage.UpgradeValueBy(2);
+    protected override void OnUpgrade() => this.DynamicVars.ExtraDamage.UpgradeValueBy(1);
 }

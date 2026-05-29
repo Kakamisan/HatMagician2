@@ -12,13 +12,13 @@ using MegaCrit.Sts2.Core.Models;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class Stumble() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon, TargetType.None)
+public class Stumble() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare, TargetType.None)
 {
     // public override BrandColor BaseBrandColor => BrandColor.None;
     // public override int BaseBrandColorCost => -1;
     // public override bool HasBrandApply => false;
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(3)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(4)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

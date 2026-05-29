@@ -51,5 +51,9 @@ public class WashUp() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommon,
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Cards.UpgradeValueBy(3);
+    protected override void OnUpgrade()
+    {
+        this.DynamicVars.Cards.UpgradeValueBy(2);
+        this.RemoveKeyword(CardKeyword.Exhaust);
+    }
 }

@@ -53,6 +53,9 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 是否有打出印记的效果
     public virtual bool HasBrandApply => this.HasBrandApplyTarget;
 
+    // 是否添加印记说明
+    public virtual bool IsAddBrandTips => this.HasBrandApply;
+
     // 是否结束回合效果
     public virtual bool HasEndTurn => false;
 
@@ -92,28 +95,24 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         get
         {
-            var hasExtra = false;
             IEnumerable<IHoverTip> baseTips = [];
-
-            if (this.HasBrandApply)
+            if (this.IsAddBrandTips)
             {
                 if (Hat2ModConfig.ShowBaseBrandColorTips)
                     baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPower>());
-                hasExtra = true;
+                baseTips = this.BaseBrandColor switch
+                {
+                    BrandColor.Red => baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>()),
+                    BrandColor.Blue => baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>()),
+                    BrandColor.Yellow => baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>()),
+                    BrandColor.Orange => baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>()),
+                    BrandColor.Purple => baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>()),
+                    BrandColor.White => baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>()),
+                    _ => baseTips
+                };
             }
 
-            baseTips = this.BaseBrandColor switch
-            {
-                BrandColor.Red => baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>()),
-                BrandColor.Blue => baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>()),
-                BrandColor.Yellow => baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>()),
-                BrandColor.Orange => baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>()),
-                BrandColor.Purple => baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>()),
-                BrandColor.White => baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>()),
-                _ => baseTips
-            };
-
-            return (hasExtra ? baseTips : []).Concat(this.Hat2ExtraHoverTips);
+            return baseTips.Concat(this.Hat2ExtraHoverTips);
         }
     }
 
@@ -244,13 +243,13 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
     }
 
-    // 完整效果
+    // 绘色充足时的完整效果
     protected virtual async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await Task.CompletedTask;
     }
 
-    // 绘色不足时的普通效果
+    // 绘色不足时的普通效果 一般先执行绘色效果再执行普通效果 也可以分开两个单独写
     protected virtual async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (this.HasEndTurn) PlayerCmd.EndTurn(this.Owner, false);

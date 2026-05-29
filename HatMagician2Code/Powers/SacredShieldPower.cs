@@ -11,6 +11,7 @@ public class SacredShieldPower : HatMagician2Power, IHatMagician2AbstractModel
     {
         if (color == BrandColor.White && amount > 0)
         {
+            this.Flash();
             await CreatureCmd.GainBlock(this.Owner, this.Amount * amount, ValueProp.Unpowered, null);
         }
     }
@@ -19,6 +20,7 @@ public class SacredShieldPower : HatMagician2Power, IHatMagician2AbstractModel
     {
         if (color == BrandColor.White && amount > 0)
         {
+            this.Flash();
             await CreatureCmd.GainBlock(this.Owner, this.Amount * amount, ValueProp.Unpowered, null);
         }
     }

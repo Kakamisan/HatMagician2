@@ -1,5 +1,6 @@
 ﻿using BaseLib.Patches.Content;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
@@ -32,4 +33,7 @@ public class HatMagician2Keywords
     [CustomEnum("EROSION")]
     [KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Erosion;  // 侵蚀
+    [CustomEnum("TEMP_CARD")]
+    [KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword TempCard; // 生成牌（没找到怎么添加StaticTips 用这个代替）
 }

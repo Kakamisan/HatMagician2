@@ -15,6 +15,7 @@ public class PlasmaShieldPower : HatMagician2Power
     {
         if (target != this.Owner || dealer == null || !props.IsPoweredAttack())
             return;
+        this.Flash();
         await BrandPower.ApplyBrandPower(null, this.Owner, new ThrowingPlayerChoiceContext(), dealer, BrandColor.Yellow);
         await PowerCmd.Decrement(this);
         await base.AfterDamageReceivedLate(choiceContext, target, result, props, dealer, cardSource);
