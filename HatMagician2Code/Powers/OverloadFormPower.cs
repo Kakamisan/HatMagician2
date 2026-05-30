@@ -1,7 +1,11 @@
-﻿using HatMagician2.HatMagician2Code.Character;
+﻿using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
@@ -24,13 +28,19 @@ public class OverloadFormPower : HatMagician2Power, IHatMagician2AbstractModel
     public async Task AfterBrandPowerEvoke(BrandPower power)
     {
         if (power is BrandRedPower) return;
-        if (power.Owner.HasPower<MultiDamagePower>())
+        await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount, power.Applier, null);
+    }
+
+    // 如果敌人已有灼痕 那么增加倍数=Amount 如果敌人没灼痕 那么增加倍数=Amount-1
+    // 这里和火焰印记一样 只是预览时增加倍数
+    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
+    {
+        if (cardSource is HatMagician2Card card && card.IsEvokeCard() && !card.IsBrandAppliedBeforeAttack &&
+            target?.Powers.FirstOrDefault(p => p is BrandPower and not BrandRedPower) is BrandPower)
         {
-            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount, power.Applier, null);
+            return MultiDamagePower.GetAmount(target) > 0 ? this.Amount : this.Amount - 1;
         }
-        else
-        {
-            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount + 1, power.Applier, null);
-        }
+
+        return 0;
     }
 }

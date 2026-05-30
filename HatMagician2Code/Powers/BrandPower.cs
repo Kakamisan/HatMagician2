@@ -139,8 +139,11 @@ public class BrandPower : HatMagician2Power
     }
 
     // 应用印记的逻辑
-    public static async Task ApplyBrandPower(CardModel card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color) =>
-        await ApplyBrandPower(card, card.Owner.Creature, choiceContext, play.Target!, color);
+    public static async Task ApplyBrandPower(CardModel card, PlayerChoiceContext choiceContext, CardPlay play, BrandColor color)
+    {
+        if (play.Target == null) return;
+        await ApplyBrandPower(card, card.Owner.Creature, choiceContext, play.Target, color);
+    }
 
     public static async Task ApplyBrandPower(CardModel card, PlayerChoiceContext choiceContext, Creature target, BrandColor color) =>
         await ApplyBrandPower(card, card.Owner.Creature, choiceContext, target, color);

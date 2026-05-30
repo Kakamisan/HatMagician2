@@ -281,4 +281,21 @@ public class HatMagician2Mgr : CustomSingletonModel
             }
         }
     }
+
+    // 攻击倍率 加法叠加
+    public static int GetMultiDamageTotalAmount(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
+    {
+        if (cardSource.CombatState == null) 
+            return 0;
+        var multi = 0;
+        foreach (AbstractModel iterateHookListener in cardSource.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                multi += iterate.TryModifyMultiDamageAdditive(target, amount, props, dealer, cardSource);
+            }
+        }
+
+        return multi;
+    }
 }

@@ -68,7 +68,7 @@ public partial class BrandPowerShow : NCreatureVisuals
 
         node?.SetIsHover(evoke);
     }
-    
+
     // 更新数值
     public static void OnUpdate(Creature? creature)
     {
@@ -99,11 +99,18 @@ public partial class BrandPowerShow : NCreatureVisuals
     {
         return this._brandColor switch
         {
-            BrandColor.Red => "×" + (int)BrandRedPower.WillTriggerMulti((this._brandPower as BrandRedPower)!),
+            BrandColor.Red => "×" + this.GetRedMulti(),
             BrandColor.Orange => "Aoe",
             BrandColor.White => "Draw " + (int)this.EvokeVal,
             _ => ((int)this.EvokeVal).ToString()
         };
+    }
+    
+    private int GetRedMulti()
+    {
+        var multi = MultiDamagePower.GetAmount(this._brandPower?.Owner);
+        multi = multi > 0 ? multi - 1 : 0;
+        return (int)this.EvokeVal + multi;
     }
 
     private void OnBrandRemove()

@@ -11,6 +11,8 @@ public class LightningEnchantment : Hat2Enchantment
 {
     public override bool ShowAmount => false;
 
+    public override bool IsEvoke => true;
+
     public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
     {
         if (this.Card is HatMagician2Card) return;

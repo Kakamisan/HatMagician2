@@ -77,7 +77,7 @@ public class PowerCmdApplyPatch
         if (newPower != null) await newPower.OnApplyPublic(card, isFusion);
 
         // 其他杂项
-        if (card != null) card.IsBrandApplied = true;
+        if (card != null) card.IsBrandAppliedBeforeAttack = true;
     }
 }
 

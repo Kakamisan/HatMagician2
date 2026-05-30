@@ -16,4 +16,6 @@ public class Hat2Enchantment : CustomEnchantmentModel
 
     // 是否会添加额外的卡牌描述文本
     public override bool HasExtraCardText => true;
+
+    public virtual bool IsEvoke => false;
 }

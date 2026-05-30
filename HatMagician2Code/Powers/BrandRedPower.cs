@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
-public class BrandRedPower : BrandPower
+public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
 {
     public override BrandColor BaseBrandColor => BrandColor.Red;
     protected override decimal BasePassiveVal => 6;
@@ -24,9 +24,10 @@ public class BrandRedPower : BrandPower
         await base.OnEvoke(card);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
         // 如果是攻击牌则直接触发N倍伤害效果 否则添加灼痕
-        if (WillTriggerMultiDamage(card))
+        // Aoe不要设置倍率 除非只剩一只怪了
+        if (MultiDamagePower.IsTriggerMulti(card) && (!card!.IsAoeAttack || card.CombatState!.GetTeammatesOf(this.Owner).Count == 1))
         {
-            card!.SetNextPlayMulti(WillTriggerMulti(this));
+            card.SetNextPlayMultiAdd(this.EvokeVal - 1);
         }
         else
         {
@@ -54,36 +55,16 @@ public class BrandRedPower : BrandPower
         for (int i = 0; i < cnt; i++)
         {
             VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card != null ? card.Owner.Creature : power.Applier, card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card != null ? card.Owner.Creature : power.Applier,
+                card);
         }
 
         await Task.CompletedTask;
     }
 
-    // 只用于预览计算伤害 实际倍率在card.NextPlayMulti
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // 仅预览时生效倍数
+    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        return WillTriggerMultiDamage(cardSource) && target == this.Owner
-            ? WillTriggerMulti(this)
-            : base.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource);
-    }
-
-    // 是否即将刻印火焰印记并造成伤害
-    // 只用于预览计算伤害 实际倍率在card.NextPlayMulti 若实际倍率已设置 则不触发本模块的加伤
-    public static bool WillTriggerMultiDamage(CardModel? cardSource, Creature? target)
-    {
-        return WillTriggerMultiDamage(cardSource) && target?.HasPower<BrandRedPower>() == true;
-    }
-
-    private static bool WillTriggerMultiDamage(CardModel? cardSource)
-    {
-        return cardSource is HatMagician2Card card && card.IsEvokeCard() && card is { Type: CardType.Attack, NextPlayMulti: 1, IsBrandApplied: false, IsAoeAttack: false };
-    }
-
-    // 即将触发的攻击倍数
-    public static decimal WillTriggerMulti(BrandRedPower power)
-    {
-        // 灼痕已有倍数+本次刻印的增加1倍
-        return MultiDamagePower.GetNowMulti(power.Owner) + power.EvokeVal - 1;
+        return target == this.Owner && cardSource is HatMagician2Card card && card.IsEvokeCard() && !card.IsBrandAppliedBeforeAttack ? (int)this.EvokeVal - 1 : 0;
     }
 }

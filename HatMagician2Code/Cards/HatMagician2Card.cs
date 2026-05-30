@@ -3,6 +3,7 @@ using BaseLib.Cards.Variables;
 using BaseLib.Extensions;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
+using HatMagician2.HatMagician2Code.Enchantment;
 using HatMagician2.HatMagician2Code.Extensions;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -175,32 +176,39 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
     }
 
-    // 战斗状态相关
+    // 战斗状态相关（火焰印记）
     // 下次攻击伤害变为N倍 只在火焰印记被刻印 且刻印时打出的是攻击牌时设置此值
     // 打出后复原此值
-    public decimal NextPlayMulti = 1;
-    public void SetNextPlayMulti(decimal value) => this.NextPlayMulti = value;
-    public bool IsBrandApplied; // 是否已应用印记效果（判断是否要触发火焰印记N倍伤害 用于预览计算伤害）
-    public virtual bool IsAoeAttack => false; // 是否Aoe攻击卡 （Aoe卡不需要计算预览火焰印记N倍伤害 由灼痕能力处理）
+    public decimal NextPlayMultiAdd;
+    public void SetNextPlayMultiAdd(decimal value) => this.NextPlayMultiAdd = value;
+    public bool IsBrandAppliedBeforeAttack; // 火焰印记只在预览时生效倍率加成 打出后设置为true 避免火焰印记攻击卡单卡打出后续直接给自己加倍伤害
+    public virtual bool IsAoeAttack => false; // 是否Aoe攻击卡 （Aoe卡不要直接设置N倍伤害 改成由灼痕能力处理）
+    
+    // 战斗状态相关（其他）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public bool IsSleepApplied; // 是否已触发睡衣
     public bool NeedDream; // 是否触发梦境自动从抽牌堆打出
 
-    // 火焰印记临时设置倍率后修改伤害值 打出后倍率复原
+    // 火焰印记和灼痕的倍率是加法叠加 在这里统一处理
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        return cardSource == this && MultiDamagePower.IsTriggerMulti(cardSource)
-            ? this.NextPlayMulti
-            : base.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource);
+        if (cardSource != this) 
+            return base.ModifyDamageMultiplicative(target, amount, props, dealer, null);
+        return 1 + HatMagician2Mgr.GetMultiDamageTotalAmount(target, amount, props, dealer, cardSource);
     }
 
-    // 打出后倍率复原 临时状态重置
+    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
+    {
+        return (int)this.NextPlayMultiAdd;
+    }
+
+    // 打出后倍率复原 以及其他临时状态重置
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card == this)
         {
-            this.IsBrandApplied = false;
-            this.NextPlayMulti = 1;
+            this.IsBrandAppliedBeforeAttack = false;
+            this.NextPlayMultiAdd = 0;
             this.NextCannotCost = false;
             this._tmpBrandColorCosts.RemoveAll(c => c.ClearsWhenCardIsPlayed);
         }
@@ -213,7 +221,8 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     {
         return this.HasFreeBrandApplyTarget
                || this is { BaseBrandColor: not BrandColor.None and < BrandColor.Rainbow, HasBrandApplyTarget: true } && this.HasEnoughEnergy()
-               || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke);
+               || this.CanonicalKeywords.Contains(HatMagician2Keywords.Evoke)
+               || this.IsEnchantmentEvoke();
     }
 
     // 是否有足够的绘色
@@ -262,6 +271,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         {
             await this.PreEnchantmentFunc(choiceContext, cardPlay);
         }
+
         if (!this.NextCannotCost)
             await this.OnPlayWhenCostBrandColor(choiceContext, cardPlay);
         else
@@ -523,4 +533,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 附魔前置
     public Func<PlayerChoiceContext, CardPlay, Task>? PreEnchantmentFunc;
+    
+    // 附魔是否有印记/刻印
+    private bool IsEnchantmentEvoke()
+    {
+        bool flag = this.Enchantment is Hat2Enchantment { IsEvoke: true };
+        return flag;
+    }
 }

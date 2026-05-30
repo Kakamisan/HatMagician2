@@ -26,8 +26,8 @@
   "HATMAGICIAN2-FREEZE_STRENGTH_POWER.description": "冰霜会降低本回合攻击造成的伤害。",
   "HATMAGICIAN2-FREEZE_STRENGTH_POWER.smartDescription": "本回合攻击伤害减少[blue]{Amount}[/blue]点。",
   "HATMAGICIAN2-FREEZE_STRENGTH_POWER.title": "冰霜",
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下次受击时，伤害变为[blue]2[/blue]倍。（被赋予时初始层数自动+1）",
-  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下次受击时，伤害变为[blue]{Amount}[/blue]倍。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.description": "下次受击时，伤害值将乘以灼痕的层数（与火焰印记的倍数为相加）。",
+  "HATMAGICIAN2-MULTI_DAMAGE_POWER.smartDescription": "下次受击时，伤害变为[blue]{Amount}[/blue]倍（与火焰印记的倍数为相加）。",
   "HATMAGICIAN2-MULTI_DAMAGE_POWER.title": "灼痕",
   "HATMAGICIAN2-CHAIN_DAMAGE_POWER.description": "下[blue]1[/blue]次受击时，该阵营其他单位受到等量[gold]连锁[/gold]伤害。",
   "HATMAGICIAN2-CHAIN_DAMAGE_POWER.smartDescription": "下[blue]{Amount}[/blue]次受击时，该阵营其他单位受到等量[gold]连锁[/gold]伤害。",
@@ -101,5 +101,8 @@
   "HATMAGICIAN2-FEEBLE_MIND_POWER.title": "软弱心灵",
   "HATMAGICIAN2-OVERLOAD_FORM_POWER.description": "你的印记刻印时额外附加[blue]1[/blue]层[gold]灼痕[/gold]。",
   "HATMAGICIAN2-OVERLOAD_FORM_POWER.smartDescription": "你的印记刻印时额外附加[blue]{Amount}[/blue]层[gold]灼痕[/gold]。",
-  "HATMAGICIAN2-OVERLOAD_FORM_POWER.title": "超载形态"
+  "HATMAGICIAN2-OVERLOAD_FORM_POWER.title": "天火形态",
+  "HATMAGICIAN2-VIBRANT_PALETTE_POWER.description": "每回合你第一次消耗绘色时，收集对应的绘色。",
+  "HATMAGICIAN2-VIBRANT_PALETTE_POWER.smartDescription": "每回合你第一次消耗绘色时，收集[blue]{Amount}[/blue]点对应的绘色。",
+  "HATMAGICIAN2-VIBRANT_PALETTE_POWER.title": "斑斓色彩"
 }

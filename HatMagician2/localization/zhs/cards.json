@@ -198,5 +198,7 @@
   "HATMAGICIAN2-SLUMBER.description": "绘色:添加{Cards:diff()}张[color=#e7ea31]闪电[/color][gold]{IfUpgraded:show:瞌睡+|瞌睡}[/gold]到你的[gold]手牌[/gold]。",
   "HATMAGICIAN2-SLUMBER.title": "微睡电流",
   "HATMAGICIAN2-OVERLOAD_FORM.description": "你的印记刻印时额外附加1层[gold]灼痕[/gold]。",
-  "HATMAGICIAN2-OVERLOAD_FORM.title": "超载形态"
+  "HATMAGICIAN2-OVERLOAD_FORM.title": "天火形态",
+  "HATMAGICIAN2-VIBRANT_PALETTE.description": "每回合你第一次消耗绘色时，收集{Hat2Var:diff()}点对应的绘色。",
+  "HATMAGICIAN2-VIBRANT_PALETTE.title": "斑斓色彩"
 }

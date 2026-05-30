@@ -88,4 +88,10 @@ public interface IHatMagician2AbstractModel
     {
         return Task.CompletedTask;
     }
+
+    // 攻击倍率 加法叠加
+    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
+    {
+        return 0;
+    }
 }
