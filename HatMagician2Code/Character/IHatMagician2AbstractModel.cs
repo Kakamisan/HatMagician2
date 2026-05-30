@@ -83,4 +83,9 @@ public interface IHatMagician2AbstractModel
     {
         return Task.CompletedTask;
     }
+
+    public Task AfterBrandPowerEvoke(BrandPower power)
+    {
+        return Task.CompletedTask;
+    }
 }

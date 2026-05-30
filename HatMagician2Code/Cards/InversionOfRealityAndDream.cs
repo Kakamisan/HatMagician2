@@ -63,4 +63,10 @@ public class InversionOfRealityAndDream() : HatMagician2Card(2, CardType.Skill, 
 
         return false;
     }
+
+    protected override void DeepCloneFields()
+    {
+        this._needExtraTurn = false;
+        base.DeepCloneFields();
+    }
 }

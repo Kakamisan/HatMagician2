@@ -269,4 +269,16 @@ public class HatMagician2Mgr : CustomSingletonModel
             }
         }
     }
+
+    // 印记刻印派发
+    public static async Task AfterBrandPowerEvoke(BrandPower power)
+    {
+        foreach (AbstractModel iterateHookListener in power.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                await iterate.AfterBrandPowerEvoke(power);
+            }
+        }
+    }
 }

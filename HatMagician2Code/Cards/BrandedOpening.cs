@@ -19,7 +19,7 @@ public class BrandedOpening() : HatMagician2Card(13, CardType.Attack, CardRarity
     public override int BaseBrandColorCost => 13;
     public override bool HasBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(33, ValueProp.Move), new EnergyVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(33, ValueProp.Move), new EnergyVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Erosion];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

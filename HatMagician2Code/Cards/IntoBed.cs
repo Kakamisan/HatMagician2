@@ -19,7 +19,7 @@ public class IntoBed() : HatMagician2Card(1, CardType.Skill, CardRarity.Common, 
     public override bool HasEndTurn => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(9, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new BlockVar(8, ValueProp.Move)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

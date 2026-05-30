@@ -68,6 +68,7 @@ public class BrandPower : HatMagician2Power
     {
         Log.Info("[   Hat2   ]OnEvoke:" + this.BaseBrandColor);
         this.IsOnEvoked = true;
+        await HatMagician2Mgr.AfterBrandPowerEvoke(this);
         await Task.CompletedTask;
     }
 
