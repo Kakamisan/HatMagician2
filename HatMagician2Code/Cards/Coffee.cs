@@ -16,7 +16,7 @@ public class Coffee() : HatMagician2Card(2, CardType.Power, CardRarity.Uncommon,
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.TempCard)];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new EnergyVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new EnergyVar(1), new CardsVar(1)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

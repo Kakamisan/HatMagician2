@@ -19,6 +19,7 @@ public class CoffeePower : HatMagician2Power
         this._trigger = true;
         this.Flash();
         await PlayerCmd.GainEnergy(this.Amount, this.Owner.Player);
+        await CardPileCmd.Draw(choiceContext, this.Amount, this.Owner.Player);
         await base.AfterCardDrawn(choiceContext, card, fromHandDraw);
     }
 
