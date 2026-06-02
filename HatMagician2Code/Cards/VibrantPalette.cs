@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace HatMagician2.HatMagician2Code.Cards;
 
 [Pool(typeof(HatMagician2CardPool))]
-public class VibrantPalette() : HatMagician2Card(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class VibrantPalette() : HatMagician2Card(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => BrandColor.None;
     public override int BaseBrandColorCost => -1;

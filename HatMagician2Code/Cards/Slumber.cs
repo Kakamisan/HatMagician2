@@ -17,8 +17,7 @@ public class Slumber() : HatMagician2Card(1, CardType.Skill, CardRarity.Rare, Ta
     public override int BaseBrandColorCost => 2;
     public override bool HasBrandApplyTarget => false;
 
-    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips =>
-        HoverTipFactory.FromEnchantment<LightningEnchantment>().Concat([HoverTipFactory.FromCard<Doze>(this.IsUpgraded)]);
+    protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [..HoverTipFactory.FromEnchantment<LightningEnchantment>(), HoverTipFactory.FromCard<Doze>(this.IsUpgraded)];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];

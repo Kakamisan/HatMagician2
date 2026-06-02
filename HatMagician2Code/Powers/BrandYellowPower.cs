@@ -16,7 +16,6 @@ public class BrandYellowPower : BrandPower
     protected override decimal BasePassiveVal => 3;
     protected override decimal BaseEvokeVal => 8;
     protected override decimal BaseEvokeVal2 => 1;
-    protected override decimal BaseFusionVal => 0;
 
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
     protected override string EvokeSfx => "event:/sfx/characters/defect/defect_lightning_evoke";

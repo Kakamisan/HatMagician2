@@ -14,7 +14,6 @@ public class BrandBluePower : BrandPower
     public override BrandColor BaseBrandColor => BrandColor.Blue;
     protected override decimal BasePassiveVal => 2;
     protected override decimal BaseEvokeVal => 3;
-    protected override decimal BaseFusionVal => 0;
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_frost_channel";
 

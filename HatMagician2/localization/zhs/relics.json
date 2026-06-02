@@ -4,5 +4,14 @@
   "HATMAGICIAN2-PALETTE_BOTTLE.title": "绘色瓶",
   "HATMAGICIAN2-PALETTE_BOX.description": "战斗开始时，收集2点所有绘色，基础绘色再额外收集2点。",
   "HATMAGICIAN2-PALETTE_BOX.flavor": "装满了大大小小的绘色瓶。",
-  "HATMAGICIAN2-PALETTE_BOX.title": "绘色箱"
+  "HATMAGICIAN2-PALETTE_BOX.title": "绘色箱",
+  "HATMAGICIAN2-BLUE_PAINTING.description": "冰霜印记效果增加[blue]1[/blue]，紫幽印记和光辉印记的叠色效果增加[blue]1[/blue]。",
+  "HATMAGICIAN2-BLUE_PAINTING.flavor": "不知从何而来的画作，蕴含着冰冷的魔力。",
+  "HATMAGICIAN2-BLUE_PAINTING.title": "蓝色画作",
+  "HATMAGICIAN2-YELLOW_PAINTING.description": "战斗开始时，在本场战斗中将随机[blue]{Cards}[/blue]张指向敌人的卡附魔[gold]闪电[/gold]。",
+  "HATMAGICIAN2-YELLOW_PAINTING.flavor": "被施加了诅咒的笔，它的笔划带有闪电魔力。",
+  "HATMAGICIAN2-YELLOW_PAINTING.title": "带电的笔",
+  "HATMAGICIAN2-RED_PAINTING.description": "战斗开始时，随机给予敌人[red]火焰[/red]印记。",
+  "HATMAGICIAN2-RED_PAINTING.flavor": "居住着火精灵的墨水瓶，沾上一滴就会燃烧一整天。",
+  "HATMAGICIAN2-RED_PAINTING.title": "燃烧的墨"
 }

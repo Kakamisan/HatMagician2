@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 namespace HatMagician2.HatMagician2Code.Relics;
 
 [Pool(typeof(HatMagician2RelicPool))]
-public class PaletteBox() : HatMagician2Relic
+public class PaletteBox : HatMagician2Relic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
 

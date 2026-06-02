@@ -27,11 +27,13 @@ public class BrandPower : HatMagician2Power
     protected virtual decimal BaseEvokeVal => 0; // 基础刻印值1
     protected virtual decimal BaseEvokeVal2 => 0; // 基础刻印值2
     protected virtual decimal BaseFusionVal => 0; // 基础叠色值
+    protected virtual decimal BaseFusionVal2 => 0; // 基础叠色值2
 
     public decimal PassiveVal => this.GetDynamicVar("Passive").BaseValue;
     public decimal EvokeVal => this.GetDynamicVar("Evoke").BaseValue;
     public decimal EvokeVal2 => this.GetDynamicVar("Evoke2").BaseValue;
     public decimal FusionVal => this.GetDynamicVar("Fusion").BaseValue;
+    public decimal FusionVal2 => this.GetDynamicVar("Fusion2").BaseValue;
 
     protected virtual string PassiveSfx => "";
     protected virtual string EvokeSfx => "";
@@ -41,7 +43,10 @@ public class BrandPower : HatMagician2Power
     protected bool IsOnApplied;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new("Passive", this.BasePassiveVal), new("Evoke", this.BaseEvokeVal), new("Evoke2", this.BaseEvokeVal2), new("Fusion", this.BaseFusionVal)];
+    [
+        new("Passive", this.BasePassiveVal), new("Evoke", this.BaseEvokeVal), new("Evoke2", this.BaseEvokeVal2),
+        new("Fusion", this.BaseFusionVal), new("Fusion2", this.BaseFusionVal2)
+    ];
 
     private bool _thisTurnIsTriggeredPassive; // 用于辅助判断死亡时是否需要触发一次被动（触发连锁伤害）
 
@@ -315,6 +320,7 @@ public class BrandPower : HatMagician2Power
         this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
         this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
         this.GetDynamicVar("Fusion").BaseValue = this.GetFusionValWithModifiers();
+        this.GetDynamicVar("Fusion2").BaseValue = this.GetFusionVal2WithModifiers();
         return base.AfterApplied(applier, cardSource);
     }
 
@@ -328,6 +334,7 @@ public class BrandPower : HatMagician2Power
             this.GetDynamicVar("Evoke").BaseValue = this.GetEvokeValWithModifiers();
             this.GetDynamicVar("Evoke2").BaseValue = this.GetEvokeVal2WithModifiers();
             this.GetDynamicVar("Fusion").BaseValue = this.GetFusionValWithModifiers();
+            this.GetDynamicVar("Fusion2").BaseValue = this.GetFusionVal2WithModifiers();
             BrandPowerShow.OnUpdate(this.Owner);
         }
 
@@ -369,6 +376,13 @@ public class BrandPower : HatMagician2Power
     public decimal GetFusionValWithModifiers()
     {
         var change = HatMagician2Mgr.ModifyFusionVal(this.CombatState, this, this.BaseFusionVal);
+        return change;
+    }
+
+    public decimal GetFusionVal2WithModifiers()
+    {
+        // 叠色效果暂时没区分加成
+        var change = HatMagician2Mgr.ModifyFusionVal(this.CombatState, this, this.BaseFusionVal2);
         return change;
     }
 }

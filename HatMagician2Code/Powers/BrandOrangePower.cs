@@ -17,6 +17,7 @@ public class BrandOrangePower : BrandPower
     protected override decimal BaseEvokeVal => 1;
     protected override decimal BaseEvokeVal2 => 1;
     protected override decimal BaseFusionVal => 8;
+    protected override decimal BaseFusionVal2 => 1;
 
     protected override string PassiveSfx => "event:/sfx/characters/defect/defect_lightning_passive";
 
@@ -37,7 +38,7 @@ public class BrandOrangePower : BrandPower
         if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
         await base.OnFusion(cardSource);
-        await HatMagician2Mgr.AddEnergy(this.Applier.Player, 1, this.BaseBrandColor);
+        await HatMagician2Mgr.AddEnergy(this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
         await BrandPower.ChainDamageCmd(this, this.FusionVal);
     }
 

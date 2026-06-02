@@ -15,7 +15,6 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
     public override BrandColor BaseBrandColor => BrandColor.Red;
     protected override decimal BasePassiveVal => 6;
     protected override decimal BaseEvokeVal => 2;
-    protected override decimal BaseFusionVal => 0;
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_dark_channel";
 
