@@ -183,7 +183,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public void SetNextPlayMultiAdd(decimal value) => this.NextPlayMultiAdd = value;
     public bool IsBrandAppliedBeforeAttack; // 火焰印记只在预览时生效倍率加成 打出后设置为true 避免火焰印记攻击卡单卡打出后续直接给自己加倍伤害
     public virtual bool IsAoeAttack => false; // 是否Aoe攻击卡 （Aoe卡不要直接设置N倍伤害 改成由灼痕能力处理）
-    
+
     // 战斗状态相关（其他）
     public bool NextCannotCost; // 是否无法消耗绘色（消耗绘色可打出额外效果 无法消耗则不能打出）
     public bool IsSleepApplied; // 是否已触发睡衣
@@ -192,7 +192,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 火焰印记和灼痕的倍率是加法叠加 在这里统一处理
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (cardSource != this) 
+        if (cardSource != this)
             return base.ModifyDamageMultiplicative(target, amount, props, dealer, null);
         return 1 + HatMagician2Mgr.GetMultiDamageTotalAmount(target, amount, props, dealer, cardSource);
     }
@@ -377,6 +377,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     private int _addBrandColorCostThisTurn;
     private int _addBrandColorCostThisCombat;
 
+    // 艳丽围巾和虚空形态专用免费
+    private readonly Dictionary<int, bool> _dynamicFreeBrandColorCosts = new();
+    private bool DynamicFreeBrandColorCost => this._dynamicFreeBrandColorCosts.Any(pair => pair.Value);
+    public void SetDynamicFreeBrandColorCost(int key, bool value) => this._dynamicFreeBrandColorCosts[key] = value;
+
     private int AddBrandColorCostThisTurn
     {
         get => this._addBrandColorCostThisTurn;
@@ -401,6 +406,12 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
                 // 现在这个只有免费打出用到 所以不用比较哪个消耗更低 直接返回
                 modifiedCost = Math.Min(cost.Cost, originalCost);
                 return originalCost != modifiedCost;
+            }
+
+            if (this.DynamicFreeBrandColorCost)
+            {
+                modifiedCost = 0;
+                return true;
             }
 
             // 其他减费
@@ -533,7 +544,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     // 附魔前置
     public Func<PlayerChoiceContext, CardPlay, Task>? PreEnchantmentFunc;
-    
+
     // 附魔是否有印记/刻印
     private bool IsEnchantmentEvoke()
     {

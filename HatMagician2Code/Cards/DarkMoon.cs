@@ -32,5 +32,5 @@ public class DarkMoon() : HatMagician2Card(0, CardType.Skill, CardRarity.Uncommo
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Cards.UpgradeValueBy(1);
+    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(1);
 }

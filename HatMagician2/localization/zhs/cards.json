@@ -194,7 +194,7 @@
   "HATMAGICIAN2-FEEBLE_MIND.description": "每当敌人获得[gold]阴郁[/gold]，给予相同层数的[gold]冰霜[/gold]。",
   "HATMAGICIAN2-FEEBLE_MIND.title": "霜降",
   "HATMAGICIAN2-BRANDED_OPENING.description": "绘色:给予所有敌人[red]火焰[/red]印记，并造成{Damage:diff()}点伤害。\n本场战斗中每给予1个印记，此牌的耗能就减少{Energy:energyIcons()}，绘色消耗减少{Energy:diff()}。",
-  "HATMAGICIAN2-BRANDED_OPENING.title": "烙印开幕",
+  "HATMAGICIAN2-BRANDED_OPENING.title": "烙印的终幕",
   "HATMAGICIAN2-SLUMBER.description": "绘色:添加{Cards:diff()}张[color=#e7ea31]闪电[/color][gold]{IfUpgraded:show:瞌睡+|瞌睡}[/gold]到你的[gold]手牌[/gold]。",
   "HATMAGICIAN2-SLUMBER.title": "微睡电流",
   "HATMAGICIAN2-OVERLOAD_FORM.description": "你的印记刻印时额外附加1层[gold]灼痕[/gold]。",
