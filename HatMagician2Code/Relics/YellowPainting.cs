@@ -15,7 +15,7 @@ namespace HatMagician2.HatMagician2Code.Relics;
 [Pool(typeof(HatMagician2RelicPool))]
 public class YellowPainting : HatMagician2Relic
 {
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
 

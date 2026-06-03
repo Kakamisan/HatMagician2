@@ -17,6 +17,7 @@ public partial class BrandPowerShow : NCreatureVisuals
     private TextureRect? _purple;
     private TextureRect? _orange;
     private TextureRect? _white;
+    private TextureRect? _rainbow;
 
     private BattleLabel? _passiveAmount;
     private BattleLabel? _evokeAmount;
@@ -38,6 +39,7 @@ public partial class BrandPowerShow : NCreatureVisuals
         this._purple = GetNode<TextureRect>((NodePath)"%Purple");
         this._orange = GetNode<TextureRect>((NodePath)"%Orange");
         this._white = GetNode<TextureRect>((NodePath)"%White");
+        this._rainbow = GetNode<TextureRect>((NodePath)"%Rainbow");
         this._passiveAmount = GetNode<BattleLabel>((NodePath)"%PassiveAmount");
         this._evokeAmount = GetNode<BattleLabel>((NodePath)"%EvokeAmount");
     }
@@ -92,6 +94,7 @@ public partial class BrandPowerShow : NCreatureVisuals
         this._purple!.Visible = color == BrandColor.Purple;
         this._orange!.Visible = color == BrandColor.Orange;
         this._white!.Visible = color == BrandColor.White;
+        this._rainbow!.Visible = color == BrandColor.Rainbow;
         this.UpdateAmountShow();
     }
 
@@ -105,7 +108,7 @@ public partial class BrandPowerShow : NCreatureVisuals
             _ => ((int)this.EvokeVal).ToString()
         };
     }
-    
+
     private int GetRedMulti()
     {
         var multi = MultiDamagePower.GetAmount(this._brandPower?.Owner);

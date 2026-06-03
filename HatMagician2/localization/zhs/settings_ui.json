@@ -1,6 +1,9 @@
 ﻿{
   "HATMAGICIAN2.mod_title": "绘印魔女",
-  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.title": "显示印记机制提示",
-  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.hover.title": "印记机制",
-  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.hover.desc": "是否在卡牌侧边显示印记基础机制的说明，因为提示占用空间较大若已熟悉则建议关闭。"
+  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.title": "在所有印记牌上显示基础印记提示",
+  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.hover.title": "基础印记机制",
+  "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.hover.desc": "是否在卡牌侧边显示印记基础机制的说明，因为提示占用空间较大若已熟悉则建议关闭。",
+  "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.title": "在初始遗物上显示叠色印记提示",
+  "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.title": "叠色印记",
+  "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.desc": "是否在初始遗物显示叠色印记的提示，因为提示占用空间较大若已熟悉则建议关闭。"
 }

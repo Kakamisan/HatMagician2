@@ -1,6 +1,8 @@
 ﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
+using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Relics;
@@ -9,6 +11,21 @@ namespace HatMagician2.HatMagician2Code.Relics;
 public class PaletteBottle : HatMagician2Relic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            IEnumerable<IHoverTip> baseTips = [];
+            if (Hat2ModConfig.ShowFusionBrandColorTips)
+                baseTips =
+                [
+                    ..baseTips, HoverTipFactory.FromPower<BrandPurplePower>(), HoverTipFactory.FromPower<BrandOrangePower>(),
+                    HoverTipFactory.FromPower<BrandWhitePower>(), HoverTipFactory.FromPower<BrandRainbowPower>()
+                ];
+            return baseTips;
+        }
+    }
 
     public override async Task BeforeCombatStartLate()
     {

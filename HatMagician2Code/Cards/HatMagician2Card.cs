@@ -100,17 +100,37 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             if (this.IsAddBrandTips)
             {
                 if (Hat2ModConfig.ShowBaseBrandColorTips)
-                    baseTips = baseTips.AddItem(HoverTipFactory.FromPower<BrandPower>());
+                    baseTips = [..baseTips, HoverTipFactory.FromPower<BrandPower>()];
                 baseTips = this.BaseBrandColor switch
                 {
-                    BrandColor.Red => baseTips.AddItem(HoverTipFactory.FromPower<BrandRedPower>()),
-                    BrandColor.Blue => baseTips.AddItem(HoverTipFactory.FromPower<BrandBluePower>()),
-                    BrandColor.Yellow => baseTips.AddItem(HoverTipFactory.FromPower<BrandYellowPower>()),
-                    BrandColor.Orange => baseTips.AddItem(HoverTipFactory.FromPower<BrandOrangePower>()),
-                    BrandColor.Purple => baseTips.AddItem(HoverTipFactory.FromPower<BrandPurplePower>()),
-                    BrandColor.White => baseTips.AddItem(HoverTipFactory.FromPower<BrandWhitePower>()),
+                    BrandColor.Red => [..baseTips, HoverTipFactory.FromPower<BrandRedPower>()],
+                    BrandColor.Blue => [..baseTips, HoverTipFactory.FromPower<BrandBluePower>()],
+                    BrandColor.Yellow => [..baseTips, HoverTipFactory.FromPower<BrandYellowPower>()],
+                    BrandColor.Orange => [..baseTips, HoverTipFactory.FromPower<BrandOrangePower>()],
+                    BrandColor.Purple => [..baseTips, HoverTipFactory.FromPower<BrandPurplePower>()],
+                    BrandColor.White => [..baseTips, HoverTipFactory.FromPower<BrandWhitePower>()],
                     _ => baseTips
                 };
+                // if (Hat2ModConfig.ShowFusionBrandColorTips)
+                //     baseTips = this.BaseBrandColor switch
+                //     {
+                //         BrandColor.Red =>
+                //         [
+                //             ..baseTips, HoverTipFactory.FromPower<BrandPurplePower>(),
+                //             HoverTipFactory.FromPower<BrandOrangePower>(), HoverTipFactory.FromPower<BrandRainbowPower>()
+                //         ],
+                //         BrandColor.Blue =>
+                //         [
+                //             ..baseTips, HoverTipFactory.FromPower<BrandWhitePower>(),
+                //             HoverTipFactory.FromPower<BrandPurplePower>(), HoverTipFactory.FromPower<BrandRainbowPower>()
+                //         ],
+                //         BrandColor.Yellow =>
+                //         [
+                //             ..baseTips, HoverTipFactory.FromPower<BrandOrangePower>(),
+                //             HoverTipFactory.FromPower<BrandWhitePower>(), HoverTipFactory.FromPower<BrandRainbowPower>()
+                //         ],
+                //         _ => baseTips
+                //     };
             }
 
             return baseTips.Concat(this.Hat2ExtraHoverTips);

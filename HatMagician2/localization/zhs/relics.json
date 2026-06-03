@@ -13,5 +13,17 @@
   "HATMAGICIAN2-YELLOW_PAINTING.title": "带电的笔",
   "HATMAGICIAN2-RED_PAINTING.description": "战斗开始时，随机给予敌人[red]火焰[/red]印记。",
   "HATMAGICIAN2-RED_PAINTING.flavor": "居住着火精灵的墨水瓶，沾上一滴就会燃烧一整天。",
-  "HATMAGICIAN2-RED_PAINTING.title": "燃烧的墨"
+  "HATMAGICIAN2-RED_PAINTING.title": "燃烧墨瓶",
+  "HATMAGICIAN2-PURPLE_PAINTING.description": "战斗开始时，给予所有敌人[blue]{Hat2Var}[/blue]层[gold]阴郁[/gold]。",
+  "HATMAGICIAN2-PURPLE_PAINTING.flavor": "生于异界的花，汲取生物的精神力作为养分。",
+  "HATMAGICIAN2-PURPLE_PAINTING.title": "紫色花朵",
+  "HATMAGICIAN2-ORANGE_PAINTING.description": "回合结束时，产生[blue]{Hat2Var}[/blue]点[gold]连锁[/gold]伤害，连锁伤害增加[blue]1[/blue]。",
+  "HATMAGICIAN2-ORANGE_PAINTING.flavor": "将近夜晚的风景照，时间转瞬即逝。",
+  "HATMAGICIAN2-ORANGE_PAINTING.title": "黄昏风景照",
+  "HATMAGICIAN2-WHITE_PAINTING.description": "战斗开始时，将[blue]{Cards}[/blue]张[gold]瞌睡+[/gold]加入你的[gold]抽牌堆[/gold]。",
+  "HATMAGICIAN2-WHITE_PAINTING.flavor": "鳞粉会吸收光芒，在夜晚时发光飞舞。",
+  "HATMAGICIAN2-WHITE_PAINTING.title": "发光蝴蝶",
+  "HATMAGICIAN2-RAINBOW_PAINTING.description": "你每打出[blue]{Cards}[/blue]张印记牌，收集{Energy}点所有绘色。",
+  "HATMAGICIAN2-RAINBOW_PAINTING.flavor": "调制魔法颜料的调色板，混合颜色不会变暗而是变亮。",
+  "HATMAGICIAN2-RAINBOW_PAINTING.title": "七彩调色板"
 }

@@ -55,6 +55,15 @@ public static class StringExtensions
         return Path.Join(MainFile.ResPath, "images", "relics", "relic.png");
     }
 
+    public static string RelicImageOutlinePath(this string path)
+    {
+        path = Path.Join(MainFile.ResPath, "images", "relics", path, "_outline.png");
+        if (ResourceLoader.Exists(path)) return path;
+
+        //MainFile.Logger.Info("Could not find relic image path: " + path);
+        return Path.Join(MainFile.ResPath, "images", "relics", "relic_outline.png");
+    }
+
     public static string BigRelicImagePath(this string path)
     {
         path = Path.Join(MainFile.ResPath, "images", "relics", "big", path);

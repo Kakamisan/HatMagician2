@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cotp08vetox4j"]
+
+[ext_resource type="Texture2D" uid="uid://4l2gbgktyery" path="res://HatMagician2/scenes/hat2_merchant.png" id="1_ck42b"]
+[ext_resource type="Texture2D" uid="uid://l8lqoh148kul" path="res://HatMagician2/scenes/hat2_merchant_shadow.png" id="1_g5ixt"]
+[ext_resource type="Script" uid="uid://swesx1187ue8" path="res://HatMagician2Code/SceneControl/NMerchantCharacterSub.cs" id="1_rkpgl"]
+
+[node name="Hat2Merchant" type="Node2D"]
+script = ExtResource("1_rkpgl")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_g5ixt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6.9999995, -189)
+scale = Vector2(0.48, 0.48)
+texture = ExtResource("1_ck42b")
+metadata/_edit_lock_ = true

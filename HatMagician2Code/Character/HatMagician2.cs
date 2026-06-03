@@ -92,10 +92,16 @@ public class HatMagician2 : PlaceholderCharacterModel
 
     // 地图绘制颜色
     public override Color MapDrawingColor => new("f4ebb2");
-    
+
     // 能量表盘
     public override string CustomEnergyCounterPath => "hat2_energy_counter.tscn".ScenePath();
-    
+
     // 能量图标轮廓颜色
     public override Color EnergyLabelOutlineColor => new("9c9600");
+
+    // 篝火休息场景。
+    public override string CustomRestSiteAnimPath => "hat2_rest_site.tscn".ScenePath();
+
+    // 商店人物场景。
+    public override string CustomMerchantAnimPath => "hat2_merchant.tscn".ScenePath();
 }

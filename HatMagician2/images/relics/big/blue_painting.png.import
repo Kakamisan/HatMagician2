@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5gy3o2dbhcel"
-path="res://.godot/imported/palette_bottle_outline.png-04cba179b1675df644f71c2b2456d41d.ctex"
+uid="uid://b1ow6w73oqtv"
+path="res://.godot/imported/blue_painting.png-e76b06cf7af5c0437ce7183d9fcdb5a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HatMagician2/images/relics/palette_bottle_outline.png"
-dest_files=["res://.godot/imported/palette_bottle_outline.png-04cba179b1675df644f71c2b2456d41d.ctex"]
+source_file="res://HatMagician2/images/relics/big/blue_painting.png"
+dest_files=["res://.godot/imported/blue_painting.png-e76b06cf7af5c0437ce7183d9fcdb5a2.ctex"]
 
 [params]
 

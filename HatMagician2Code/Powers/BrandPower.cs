@@ -244,10 +244,16 @@ public class BrandPower : HatMagician2Power
     {
         if (target.CombatState == null) return;
         var enemies = target.CombatState.GetTeammatesOf(target).Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        await ChainDamageCmd(enemies, damage, applier, card, withDefaultVfx, cnt);
+    }
+
+    public static async Task ChainDamageCmd(IEnumerable<Creature> enemies, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    {
         // var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(target, damage, ValueProp.Unpowered, applier, card, target.CombatState);
+        var enumerable = enemies.ToList();
         for (int i = 0; i < cnt; i++)
         {
-            var enemies2 = enemies.Where(c => c.IsAlive).ToList();
+            var enemies2 = enumerable.Where(c => c.IsAlive).ToList();
             if (enemies2.Count == 0) break;
             if (withDefaultVfx)
             {
