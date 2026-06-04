@@ -237,8 +237,8 @@ public class BrandPower : HatMagician2Power
     }
 
     // 连锁伤害
-    public static async Task ChainDamageCmd(BrandPower power, decimal damage, bool withDefaultVfx = true, int cnt = 1) =>
-        await ChainDamageCmd(power.Owner, damage, power.Applier, null, withDefaultVfx, cnt);
+    public static async Task ChainDamageCmd(BrandPower power, decimal damage, CardModel? card, bool withDefaultVfx = true, int cnt = 1) =>
+        await ChainDamageCmd(power.Owner, damage, power.Applier, card, withDefaultVfx, cnt);
 
     public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
@@ -262,7 +262,7 @@ public class BrandPower : HatMagician2Power
                 SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
             }
 
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies2, damage, ValueProp.Unpowered, applier, card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies2, damage, ValueProp.Unpowered, card?.Owner.Creature ?? applier, card);
         }
 
         await Task.CompletedTask;

@@ -28,36 +28,35 @@ public class BrandPurplePower : BrandPower
         await base.OnEvoke(card);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
         // await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
-        await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
+        await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, card?.Owner.Creature ?? this.Applier, null);
         if (this.Applier == null) return;
-        await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), this.Applier, this.EvokeVal2, this.Applier, null);
+        await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), card?.Owner.Creature ?? this.Applier, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? cardSource)
+    protected override async Task OnFusion(HatMagician2Card? card)
     {
         if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
-        await base.OnFusion(cardSource);
+        await base.OnFusion(card);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
-        await HatMagician2Mgr.AddEnergy(this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
+        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
         // await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, this.Applier, null);
-        await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, this.Applier, null);
+        await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    // public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? card)
     // {
     //     return this.Owner != dealer || !props.IsPoweredAttack() ? 0M : -this.PassiveVal;
     // }
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer,
-        CardModel? cardSource)
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
     {
         if (dealer == this.Owner)
         {
-            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Applier);
+            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, card?.Owner.Creature ?? this.Applier);
         }
 
-        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
+        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, card);
     }
 
     public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
@@ -66,7 +65,7 @@ public class BrandPurplePower : BrandPower
         {
             VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
             // await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card);
-            await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card);
+            await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card);
         }
 
         await Task.CompletedTask;

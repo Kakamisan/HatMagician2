@@ -1,6 +1,7 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 
@@ -8,6 +9,8 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class CollectPower : HatMagician2Power
 {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ColorfulPower>(), HoverTipFactory.FromPower<ColorlessPower>()];
+
     public int LightAmount => this.Owner.GetPower<CollectLightPower>()?.Amount ?? 0;
     public int DarkAmount => this.Owner.GetPower<CollectDarkPower>()?.Amount ?? 0;
 
@@ -20,7 +23,7 @@ public class CollectPower : HatMagician2Power
 
     public override bool TryModifyPowerAmountReceived(PowerModel canonicalPower, Creature target, decimal amount, Creature? applier, out decimal modifiedAmount)
     {
-        if (canonicalPower is CollectPower)
+        if (canonicalPower is CollectPower && target == this.Owner)
         {
             modifiedAmount = Math.Max(0, Math.Min(amount, 7 - this.LightAmount - this.DarkAmount));
             return true;

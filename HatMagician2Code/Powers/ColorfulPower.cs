@@ -15,6 +15,11 @@ public class ColorfulPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public bool TryModifyBrandColorCost(HatMagician2Card card, decimal originalCost, out decimal modifiedCost)
     {
+        if (card.Owner.Creature != this.Owner)
+        {
+            modifiedCost = originalCost;
+            return false;
+        }
         modifiedCost = Math.Max(0, originalCost - this.Amount);
         return true;
     }

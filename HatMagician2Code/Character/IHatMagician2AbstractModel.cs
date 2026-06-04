@@ -15,7 +15,8 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
-    public bool TryModifyEvokeValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    // 加倍 加法叠加
+    public bool TryModifyEvokeValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;
@@ -27,7 +28,8 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
-    public bool TryModifyEvokeVal2Multi(BrandPower power, decimal originVal, out decimal modifiedVal)
+    // 加倍 加法叠加
+    public bool TryModifyEvokeVal2MultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;
@@ -39,7 +41,8 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
-    public bool TryModifyPassiveValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    // 加倍 加法叠加
+    public bool TryModifyPassiveValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;
@@ -51,7 +54,8 @@ public interface IHatMagician2AbstractModel
         return false;
     }
 
-    public bool TryModifyFusionValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    // 加倍 加法叠加
+    public bool TryModifyFusionValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
         modifiedVal = originVal;
         return false;

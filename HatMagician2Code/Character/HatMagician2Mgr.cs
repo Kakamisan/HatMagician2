@@ -53,6 +53,7 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static async Task AddEnergy(Player player, int amount, BrandColor color = BrandColor.Any)
     {
         if (Instance == null) return;
+        if (!player.Creature.IsAlive) return;
         var state = Instance.InitState(player);
 
         var applyColor = color;
@@ -128,13 +129,16 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static decimal ModifyEvokeVal(ICombatState combatState, BrandPower power, decimal originVal)
     {
         decimal modifiedVal = originVal;
+        decimal multi = 1;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyEvokeValMulti(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyEvokeValMultiAdditive(power, multi, out multi);
             }
         }
+
+        modifiedVal *= multi;
 
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
@@ -151,13 +155,16 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static decimal ModifyEvokeVal2(ICombatState combatState, BrandPower power, decimal originVal)
     {
         decimal modifiedVal = originVal;
+        decimal multi = 1;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyEvokeVal2Multi(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyEvokeVal2MultiAdditive(power, multi, out multi);
             }
         }
+
+        modifiedVal *= multi;
 
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
@@ -174,13 +181,16 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static decimal ModifyPassiveVal(ICombatState combatState, BrandPower power, decimal originVal)
     {
         decimal modifiedVal = originVal;
+        decimal multi = 1;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyPassiveValMulti(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyPassiveValMultiAdditive(power, multi, out multi);
             }
         }
+
+        modifiedVal *= multi;
 
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
@@ -197,13 +207,16 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static decimal ModifyFusionVal(ICombatState combatState, BrandPower power, decimal originVal)
     {
         decimal modifiedVal = originVal;
+        decimal multi = 1;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                iterate.TryModifyFusionValMulti(power, modifiedVal, out modifiedVal);
+                iterate.TryModifyFusionValMultiAdditive(power, multi, out multi);
             }
         }
+
+        modifiedVal *= multi;
 
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
@@ -285,7 +298,7 @@ public class HatMagician2Mgr : CustomSingletonModel
     // 攻击倍率 加法叠加
     public static int GetMultiDamageTotalAmount(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        if (cardSource.CombatState == null) 
+        if (cardSource.CombatState == null)
             return 0;
         var multi = 0;
         foreach (AbstractModel iterateHookListener in cardSource.CombatState.IterateHookListeners())

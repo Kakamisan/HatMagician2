@@ -14,7 +14,7 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
 {
     public override BrandColor BaseBrandColor => BrandColor.Red;
     protected override decimal BasePassiveVal => 6;
-    protected override decimal BaseEvokeVal => 2;
+    protected override decimal BaseEvokeVal => 1;
 
     protected override string ChannelSfx => "event:/sfx/characters/defect/defect_dark_channel";
 
@@ -31,7 +31,7 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
         else
         {
             var stack = this.Owner.HasPower<MultiDamagePower>() ? this.EvokeVal - 1 : this.EvokeVal;
-            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, stack, card?.Owner.Creature, null);
+            await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, stack, card?.Owner.Creature ?? this.Applier, null);
         }
     }
 
@@ -54,16 +54,30 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
         for (int i = 0; i < cnt; i++)
         {
             VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card != null ? card.Owner.Creature : power.Applier,
-                card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card?.Owner.Creature ?? power.Applier, card);
         }
 
         await Task.CompletedTask;
     }
 
     // 仅预览时生效倍数
-    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
+    public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel card)
     {
-        return target == this.Owner && cardSource is HatMagician2Card card && card.IsEvokeCard() && !card.IsBrandAppliedBeforeAttack ? (int)this.EvokeVal - 1 : 0;
+        return target == this.Owner && props.IsPoweredAttack() && card is HatMagician2Card card2 && card2.IsEvokeCard() && !card2.IsBrandAppliedBeforeAttack
+            ? (int)this.EvokeVal - 1
+            : 0;
+    }
+
+    // 给自己的激活数值+1 默认2倍伤害 其他能力的加成则是对激活值=1的基础上加成
+    public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        if (power == this)
+        {
+            modifiedVal = originVal + 1;
+            return true;
+        }
+
+        modifiedVal = originVal;
+        return false;
     }
 }

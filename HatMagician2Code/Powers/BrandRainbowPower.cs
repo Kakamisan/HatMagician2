@@ -14,20 +14,20 @@ public class BrandRainbowPower : BrandPower
     protected override decimal BaseFusionVal => 1;
     protected override decimal BaseFusionVal2 => 1;
 
-    protected override async Task OnFusion(HatMagician2Card? cardSource)
+    protected override async Task OnFusion(HatMagician2Card? card)
     {
         if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
-        await base.OnFusion(cardSource);
-        await HatMagician2Mgr.AddEnergy(this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        await PlayerCmd.GainEnergy(this.FusionVal, this.Applier.Player);
+        await base.OnFusion(card);
+        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
+        await PlayerCmd.GainEnergy(this.FusionVal, card?.Owner ?? this.Applier.Player);
     }
 
-    protected override async Task OnEvoke(HatMagician2Card? cardSource)
+    protected override async Task OnEvoke(HatMagician2Card? card)
     {
         if (this.Applier?.Player == null) return;
-        await base.OnEvoke(cardSource);
-        await PlayerCmd.GainEnergy(this.EvokeVal, this.Applier.Player);
-        await PowerCmd.Apply<CollectLightPower>(new ThrowingPlayerChoiceContext(), this.Applier, this.EvokeVal2, this.Applier, null);
+        await base.OnEvoke(card);
+        await PlayerCmd.GainEnergy(this.EvokeVal, card?.Owner ?? this.Applier.Player);
+        await PowerCmd.Apply<CollectLightPower>(new ThrowingPlayerChoiceContext(), card?.Owner.Creature ?? this.Applier, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
     }
 }

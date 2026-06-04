@@ -21,7 +21,7 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
     // 受到攻击后删除能力
     public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (IsTriggerMulti(cardSource) && this.Owner == target && this.Amount > 1)
+        if (IsTriggerMulti(cardSource) && props.IsPoweredAttack() && this.Owner == target && this.Amount > 1)
         {
             // this.Flash();
             this._ready2Remove = true;
@@ -47,7 +47,7 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
 
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        return target == this.Owner ? this.Amount - 1 : 0;
+        return target == this.Owner && props.IsPoweredAttack() ? this.Amount - 1 : 0;
     }
 
     // 获取某只怪的灼痕层数

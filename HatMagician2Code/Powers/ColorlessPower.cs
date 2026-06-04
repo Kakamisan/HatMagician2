@@ -14,6 +14,11 @@ public class ColorlessPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
+        if (card.Owner.Creature != this.Owner)
+        {
+            return base.TryModifyEnergyCostInCombat(card, originalCost, out modifiedCost);
+        }
+
         modifiedCost = Math.Max(0, originalCost - this.Amount);
         return true;
     }

@@ -1,6 +1,9 @@
-﻿using HatMagician2.HatMagician2Code.Character;
+﻿using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
@@ -8,37 +11,38 @@ public class SoulPermeationPower : HatMagician2Power, IHatMagician2AbstractModel
 {
     public override bool HasChangeBrandValEffect => true;
 
-    public bool TryModifyEvokeValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
+    public bool TryModifyEvokeValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandRedPower)
+        modifiedVal = originVal + this.Amount - 1;
+        return true;
+    }
+
+    public bool TryModifyEvokeVal2MultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal + this.Amount - 1;
+        return true;
+    }
+
+    public bool TryModifyPassiveValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal + this.Amount - 1;
+        return true;
+    }
+
+    public bool TryModifyFusionValMultiAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
+    {
+        modifiedVal = originVal + this.Amount - 1;
+        return true;
+    }
+
+    // 战斗中生成印记牌时添加侵蚀
+    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    {
+        if (card is HatMagician2Card { HasBrandApply: true } && !card.Keywords.Contains(HatMagician2Keywords.Erosion) && card.Owner == this.Owner.Player)
         {
-            modifiedVal = originVal + this.Amount - 1;
-        }
-        else
-        {
-            modifiedVal = originVal * this.Amount;
+            card.AddKeyword(HatMagician2Keywords.Erosion);
         }
 
-        return true;
-    }
-
-    public bool TryModifyEvokeVal2Multi(BrandPower power, decimal originVal, out decimal modifiedVal)
-    {
-        modifiedVal = originVal * this.Amount;
-        return true;
-    }
-
-    public bool TryModifyPassiveValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
-    {
-        modifiedVal = originVal * this.Amount;
-
-        return true;
-    }
-
-    public bool TryModifyFusionValMulti(BrandPower power, decimal originVal, out decimal modifiedVal)
-    {
-        modifiedVal = originVal * this.Amount;
-
-        return true;
+        return base.AfterCardGeneratedForCombat(card, creator);
     }
 }

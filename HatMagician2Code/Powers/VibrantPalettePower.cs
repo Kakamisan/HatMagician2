@@ -13,6 +13,7 @@ public class VibrantPalettePower : HatMagician2Power, IHatMagician2AbstractModel
     public async Task AfterSpendEnergy(Player player, int amount, BrandColor color)
     {
         if (this._trigger) return;
+        if (player != this.Owner.Player) return;
         this._trigger = true;
         this.Flash();
         await HatMagician2Mgr.AddEnergy(player, this.Amount, color);

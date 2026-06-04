@@ -26,16 +26,16 @@ public class BrandWhitePower : BrandPower
         if (this.Owner.CombatState == null) return;
         if (this.Applier?.Player == null) return;
         await base.OnEvoke(card);
-        await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, this.Applier.Player);
+        await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, card?.Owner ?? this.Applier.Player);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? cardSource)
+    protected override async Task OnFusion(HatMagician2Card? card)
     {
         if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
-        await base.OnFusion(cardSource);
-        await HatMagician2Mgr.AddEnergy(this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        await CreatureCmd.GainBlock(this.Applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
+        await base.OnFusion(card);
+        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
+        await CreatureCmd.GainBlock(card?.Owner.Creature ?? this.Applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -57,7 +57,7 @@ public class BrandWhitePower : BrandPower
     {
         for (int i = 0; i < cnt; i++)
         {
-            await HatMagician2Mgr.AddEnergy(card != null ? card.Owner : power.Applier!.Player!, (int)power.PassiveVal);
+            await HatMagician2Mgr.AddEnergy(card?.Owner ?? power.Applier!.Player!, (int)power.PassiveVal);
         }
 
         await Task.CompletedTask;

@@ -28,18 +28,18 @@ public class BrandOrangePower : BrandPower
         if (!this.Owner.IsAlive) return;
         if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
-        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, this.Applier, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
         // 下次攻击对其他目标造成等量伤害
-        await PowerCmd.Apply<ChainDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
+        await PowerCmd.Apply<ChainDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? cardSource)
+    protected override async Task OnFusion(HatMagician2Card? card)
     {
         if (this.IsOnFusionEd) return;
         if (this.Applier?.Player == null) return;
-        await base.OnFusion(cardSource);
-        await HatMagician2Mgr.AddEnergy(this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        await BrandPower.ChainDamageCmd(this, this.FusionVal);
+        await base.OnFusion(card);
+        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
+        await BrandPower.ChainDamageCmd(this, this.FusionVal, card);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -58,7 +58,7 @@ public class BrandOrangePower : BrandPower
 
     public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
     {
-        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card, true, cnt);
+        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card, true, cnt);
         await Task.CompletedTask;
     }
 }

@@ -28,7 +28,7 @@ public class OverloadFormPower : HatMagician2Power, IHatMagician2AbstractModel
     public async Task AfterBrandPowerEvoke(BrandPower power)
     {
         if (power is BrandRedPower) return;
-        await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount, power.Applier, null);
+        await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount, this.Owner, null);
     }
 
     // 如果敌人已有灼痕 那么增加倍数=Amount 如果敌人没灼痕 那么增加倍数=Amount-1

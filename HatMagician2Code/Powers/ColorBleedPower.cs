@@ -10,7 +10,7 @@ public class ColorBleedPower : HatMagician2Power
 {
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power is BrandPower && power.Owner.Side != this.Owner.Side)
+        if (power is BrandPower && power.Applier == this.Owner && power.Owner.Side != this.Owner.Side)
         {
             this.Flash();
             await CreatureCmd.Damage(choiceContext, this.CombatState.HittableEnemies, this.Amount, ValueProp.Unpowered, this.Owner);

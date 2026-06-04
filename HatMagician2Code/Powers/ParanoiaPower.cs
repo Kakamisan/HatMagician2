@@ -10,13 +10,10 @@ public class ParanoiaPower : HatMagician2Power, IHatMagician2AbstractModel
 {
     public async Task AfterGloomyDamage(Creature target, decimal damage, Creature? dealer)
     {
-        if (dealer == this.Owner)
+        this.Flash();
+        for (int i = 0; i < this.Amount; i++)
         {
-            this.Flash();
-            for (int i = 0; i < this.Amount; i++)
-            {
-                await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.CombatState.HittableEnemies, damage, ValueProp.Unpowered | ValueProp.Unblockable, dealer, null);
-            }
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.CombatState.HittableEnemies, damage, ValueProp.Unpowered | ValueProp.Unblockable, this.Owner, null);
         }
     }
 }

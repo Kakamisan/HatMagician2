@@ -9,7 +9,7 @@ public class SacredShieldPower : HatMagician2Power, IHatMagician2AbstractModel
 {
     public async Task AfterSpendEnergy(Player player, int amount, BrandColor color)
     {
-        if (color == BrandColor.White && amount > 0)
+        if (color == BrandColor.White && amount > 0 && player == this.Owner.Player)
         {
             this.Flash();
             await CreatureCmd.GainBlock(this.Owner, this.Amount * amount, ValueProp.Unpowered, null);
@@ -18,7 +18,7 @@ public class SacredShieldPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
-        if (color == BrandColor.White && amount > 0)
+        if (color == BrandColor.White && amount > 0 && player == this.Owner.Player)
         {
             this.Flash();
             await CreatureCmd.GainBlock(this.Owner, this.Amount * amount, ValueProp.Unpowered, null);

@@ -19,7 +19,7 @@ public class SweetDreamPower : HatMagician2Power
     {
         if (player != this.Owner.Player)
             return;
-        List<CardModel> list = (await CardSelectCmd.FromHand(choiceContext, player, new CardSelectorPrefs(this.SelectionScreenPrompt, 1), null, this)).ToList();
+        var list = (await CardSelectCmd.FromHand(choiceContext, player, new CardSelectorPrefs(this.SelectionScreenPrompt, 1), null, this)).ToList();
         if (list.Count == 0)
             return;
         await CardPileCmd.Add(list, PileType.Draw, CardPilePosition.Top);

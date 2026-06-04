@@ -20,14 +20,12 @@ public class SoulPermeation() : HatMagician2Card(3, CardType.Power, CardRarity.R
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
-    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext,
-        CardPlay play)
+    protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await this.OnPlayNormal(choiceContext, play);
     }
 
-    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext,
-        CardPlay play)
+    protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await this.CommonApplySelfMultiPower<SoulPermeationPower>(choiceContext, play, this.DynamicHat2Var.BaseValue);
         await base.OnPlayNormal(choiceContext, play);

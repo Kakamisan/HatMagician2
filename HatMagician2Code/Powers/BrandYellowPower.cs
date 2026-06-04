@@ -28,9 +28,9 @@ public class BrandYellowPower : BrandPower
     {
         if (this.Owner.CombatState == null) return;
         await base.OnEvoke(card);
-        await BrandPower.ChainDamageCmd(this, this.EvokeVal);
+        await BrandPower.ChainDamageCmd(this, this.EvokeVal, card);
         if (!this.Owner.IsAlive) return;
-        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, this.Applier, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -49,7 +49,7 @@ public class BrandYellowPower : BrandPower
 
     public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
     {
-        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card, true, cnt);
+        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card, true, cnt);
         await Task.CompletedTask;
     }
 }

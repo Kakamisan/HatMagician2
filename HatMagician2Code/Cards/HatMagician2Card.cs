@@ -219,7 +219,9 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        return (int)this.NextPlayMultiAdd;
+        if (cardSource == this)
+            return (int)this.NextPlayMultiAdd;
+        return 0;
     }
 
     // 打出后倍率复原 以及其他临时状态重置
@@ -348,8 +350,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 打出结束回合的睡衣时间卡并且此卡为梦境卡 则设置成回合结束自动出牌
-        if (this.Keywords.Contains(HatMagician2Keywords.Dream) && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep) &&
-            cardPlay.Card is HatMagician2Card { HasEndTurn: true })
+        if (this.Keywords.Contains(HatMagician2Keywords.Dream)
+            && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep)
+            && cardPlay.Card.Owner == this.Owner
+            && cardPlay.Card is HatMagician2Card { HasEndTurn: true })
         {
             this.NeedDream = true;
             // 现世与梦境的逆转在抽牌堆时 塞到最下面
@@ -360,23 +364,12 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         }
 
         // 打出浸入灵魂时若这张卡是印记卡 则附加侵蚀
-        if (this.HasBrandApply && cardPlay.Card is SoulPermeation && !this.Keywords.Contains(HatMagician2Keywords.Erosion))
+        if (this.HasBrandApply && cardPlay.Card is SoulPermeation && cardPlay.Card.Owner == this.Owner && !this.Keywords.Contains(HatMagician2Keywords.Erosion))
         {
             this.AddKeyword(HatMagician2Keywords.Erosion);
         }
 
         await base.AfterCardPlayedLate(choiceContext, cardPlay);
-    }
-
-    // 处理浸入灵魂 战斗中生成印记牌时添加侵蚀
-    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
-    {
-        if (this.HasBrandApply && !this.Keywords.Contains(HatMagician2Keywords.Erosion) && card.Owner.HasPower<SoulPermeationPower>())
-        {
-            this.AddKeyword(HatMagician2Keywords.Erosion);
-        }
-
-        return base.AfterCardGeneratedForCombat(card, creator);
     }
 
     // 回合结束出牌阶段自动打出梦境卡
@@ -398,7 +391,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     private int _addBrandColorCostThisCombat;
 
     // 艳丽围巾和虚空形态专用免费
-    private readonly Dictionary<int, bool> _dynamicFreeBrandColorCosts = new();
+    private Dictionary<int, bool> _dynamicFreeBrandColorCosts = new();
     private bool DynamicFreeBrandColorCost => this._dynamicFreeBrandColorCosts.Any(pair => pair.Value);
     public void SetDynamicFreeBrandColorCost(int key, bool value) => this._dynamicFreeBrandColorCosts[key] = value;
 
@@ -465,6 +458,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected override void DeepCloneFields()
     {
         this._tmpBrandColorCosts = this._tmpBrandColorCosts.ToList();
+        this._dynamicFreeBrandColorCosts = new Dictionary<int, bool>();
         base.DeepCloneFields();
     }
 
