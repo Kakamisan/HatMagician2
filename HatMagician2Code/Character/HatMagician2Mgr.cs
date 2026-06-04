@@ -11,7 +11,7 @@ namespace HatMagician2.HatMagician2Code.Character;
 
 public class HatMagician2Mgr : CustomSingletonModel
 {
-    public HatMagician2Mgr() : base(true, false)
+    public HatMagician2Mgr() : base(HookType.Combat)
     {
         Instance = this;
         _playerEnergyStates = new Dictionary<Player, BrandColorEnergyState>();

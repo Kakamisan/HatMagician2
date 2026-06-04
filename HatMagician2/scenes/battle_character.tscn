@@ -1,22 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy2bu2wim4206"]
+[gd_scene load_steps=3 format=3 uid="uid://dy2bu2wim4206"]
 
 [ext_resource type="Script" uid="uid://bbx6og3mb7sn1" path="res://HatMagician2Code/SceneControl/BattleCharacter.cs" id="1_6g8gm"]
-[ext_resource type="Texture2D" uid="uid://cfbt8uip1hbb" path="res://HatMagician2/scenes/battle_shadow.png" id="2_pbgqi"]
-[ext_resource type="Texture2D" uid="uid://l3cggrjprwbo" path="res://HatMagician2/scenes/battle2.png" id="3_50c8p"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dlg5non8cdqi1" path="res://HatMagician2/anim/hat2_spine.tres" id="4_50c8p"]
 
 [node name="BattleCharacter" type="Node2D"]
 script = ExtResource("1_6g8gm")
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("4_50c8p")
+preview_skin = "Default"
+preview_animation = "idle_loop"
+preview_frame = false
+preview_time = 0.0
 unique_name_in_owner = true
-position = Vector2(-0.79999924, -165.1)
+position = Vector2(-0.9999999, -29.999847)
 scale = Vector2(0.3, 0.3)
-
-[node name="shadow" type="Sprite2D" parent="Visuals"]
-texture = ExtResource("2_pbgqi")
-
-[node name="body" type="Sprite2D" parent="Visuals"]
-texture = ExtResource("3_50c8p")
+metadata/_edit_lock_ = true
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
@@ -26,11 +25,14 @@ offset_left = -121.0
 offset_top = -280.0
 offset_right = 121.0
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(20, -351)
+metadata/_edit_lock_ = true
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -165)
+metadata/_edit_lock_ = true

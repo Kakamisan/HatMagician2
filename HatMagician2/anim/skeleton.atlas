@@ -1,0 +1,27 @@
+
+skeleton.png
+size: 1875,1449
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+battle2
+  rotate: false
+  xy: 1025, 183
+  size: 848, 1264
+  orig: 848, 1264
+  offset: 0, 0
+  index: -1
+battle_shadow
+  rotate: false
+  xy: 1025, 29
+  size: 742, 152
+  orig: 848, 1264
+  offset: 60, 84
+  index: -1
+dead
+  rotate: true
+  xy: 2, 2
+  size: 1445, 1021
+  orig: 1454, 1054
+  offset: 0, 16
+  index: -1

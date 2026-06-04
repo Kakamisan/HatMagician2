@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://bjm6ymhv0it5e"
+path="res://.godot/imported/skeleton.atlas-2a0d8162c21a1d2563acf348dbe87d63.spatlas"
+
+[deps]
+
+source_file="res://HatMagician2/anim/skeleton.atlas"
+dest_files=["res://.godot/imported/skeleton.atlas-2a0d8162c21a1d2563acf348dbe87d63.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"
