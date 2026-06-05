@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace HatMagician2.HatMagician2Code.SceneControl;
 
+[GlobalClass]
 public partial class BrandPowerShow : NCreatureVisuals
 {
 	private TextureRect? _red;

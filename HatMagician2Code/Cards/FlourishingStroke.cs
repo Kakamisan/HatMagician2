@@ -50,7 +50,11 @@ public class FlourishingStroke() : HatMagician2Card(1, CardType.Attack, CardRari
             }
         }
 
-        await this.CommonAoeAttack(choiceContext, play);
+        for (int i = 0; i < this.DynamicVars.Repeat.IntValue; i++)
+        {
+            await this.CommonAoeAttack(choiceContext, play);
+        }
+
         await base.OnPlayNormal(choiceContext, play);
     }
 

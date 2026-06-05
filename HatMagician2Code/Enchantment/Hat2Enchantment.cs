@@ -4,7 +4,7 @@ using HatMagician2.HatMagician2Code.Extensions;
 
 namespace HatMagician2.HatMagician2Code.Enchantment;
 
-public class Hat2Enchantment : CustomEnchantmentModel
+public abstract class Hat2Enchantment : CustomEnchantmentModel
 {
     protected override string CustomIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".EnchantmentPath();
 

@@ -15,7 +15,7 @@ namespace HatMagician2.HatMagician2Code.Relics;
 [Pool(typeof(HatMagician2RelicPool))]
 public class RainbowPainting : HatMagician2Relic
 {
-    private int _brandCardPlayed;
+    private int _hatMagician2BrandCardPlayed;
     private bool _isActivating;
 
     public override RelicRarity Rarity => RelicRarity.Shop;
@@ -24,16 +24,16 @@ public class RainbowPainting : HatMagician2Relic
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(7), new EnergyVar(1)];
 
-    public override int DisplayAmount => !this.IsActivating ? this.BrandCardPlayed % this.DynamicVars.Cards.IntValue : this.DynamicVars.Cards.IntValue;
+    public override int DisplayAmount => !this.IsActivating ? this.HatMagician2BrandCardPlayed % this.DynamicVars.Cards.IntValue : this.DynamicVars.Cards.IntValue;
 
     [SavedProperty]
-    public int BrandCardPlayed
+    public int HatMagician2BrandCardPlayed
     {
-        get => this._brandCardPlayed;
+        get => this._hatMagician2BrandCardPlayed;
         set
         {
             this.AssertMutable();
-            this._brandCardPlayed = value;
+            this._hatMagician2BrandCardPlayed = value;
             this.UpdateDisplay();
         }
     }
@@ -58,7 +58,7 @@ public class RainbowPainting : HatMagician2Relic
         else
         {
             int intValue = this.DynamicVars.Cards.IntValue;
-            this.Status = this.BrandCardPlayed % intValue == intValue - 1 ? RelicStatus.Active : RelicStatus.Normal;
+            this.Status = this.HatMagician2BrandCardPlayed % intValue == intValue - 1 ? RelicStatus.Active : RelicStatus.Normal;
         }
 
         this.InvokeDisplayAmountChanged();
@@ -70,9 +70,9 @@ public class RainbowPainting : HatMagician2Relic
             return;
         if (cardPlay.Card is not HatMagician2Card { HasBrandApply: true })
             return;
-        this.BrandCardPlayed++;
+        this.HatMagician2BrandCardPlayed++;
         int intValue = this.DynamicVars.Cards.IntValue;
-        if (!CombatManager.Instance.IsInProgress || this.BrandCardPlayed % intValue != 0)
+        if (!CombatManager.Instance.IsInProgress || this.HatMagician2BrandCardPlayed % intValue != 0)
             return;
         _ = TaskHelper.RunSafely(this.DoActivateVisuals());
         await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicVars.Energy.IntValue, BrandColor.Rainbow);

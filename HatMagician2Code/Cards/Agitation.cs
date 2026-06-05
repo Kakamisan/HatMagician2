@@ -37,5 +37,6 @@ public class Agitation() : HatMagician2Card(1, CardType.Power, CardRarity.Uncomm
     {
         this.DynamicHat2Var.UpgradeValueBy(1);
         this.DynamicBrandCost.UpgradeValueBy(-1);
+        this.GetDynamicVar("AgitationExtra").UpgradeValueBy(1);
     }
 }

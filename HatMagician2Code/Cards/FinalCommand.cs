@@ -18,7 +18,7 @@ public class FinalCommand() : HatMagician2Card(2, CardType.Attack, CardRarity.Un
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<Doze>(true)];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(13, ValueProp.Move), new Hat2Var(1)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Sleep];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)

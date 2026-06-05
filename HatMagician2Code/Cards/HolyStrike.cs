@@ -17,13 +17,14 @@ public class HolyStrike() : HatMagician2Card(3, CardType.Attack, CardRarity.Unco
     public override int BaseBrandColorCost => 3;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(30, ValueProp.Move), new EnergyVar(3)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(30, ValueProp.Move), new EnergyVar(3), new Hat2Var(0)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PlayerCmd.GainEnergy(this.DynamicVars.Energy.IntValue, this.Owner);
+        await HatMagician2Mgr.AddEnergy(this.Owner, this.DynamicHat2Var.IntValue, BrandColor.White);
         await this.OnPlayNormal(choiceContext, play);
     }
 
@@ -34,5 +35,10 @@ public class HolyStrike() : HatMagician2Card(3, CardType.Attack, CardRarity.Unco
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(9);
+    protected override void OnUpgrade()
+    {
+        this.DynamicVars.Damage.UpgradeValueBy(9);
+        this.DynamicHat2Var.UpgradeValueBy(1);
+        //this.DynamicBrandCost.UpgradeValueBy(-1);
+    }
 }

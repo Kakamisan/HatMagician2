@@ -1,5 +1,5 @@
 {
-  "HATMAGICIAN2-BRAND_POWER.description": "·每个目标至多拥有一个印记。\n·给予印记会使原有印记[gold]刻印[/gold]。\n·满足条件时，给予的印记会与原有印记[gold]叠色[/gold]成新印记并使用其叠色效果，叠色规则:\n·紫=红+蓝 ·橙=红+黄\n·白=黄+蓝 ·虹=红+黄+蓝\n·给予红黄蓝才可触发叠色。\n·印记可以穿透人工制品。\n·叠色印记的详细效果可查看初始遗物。\n·基础机制提示可在baselib设置关闭，熟悉后建议关闭。",
+  "HATMAGICIAN2-BRAND_POWER.description": "·每个目标至多拥有一个印记。\n·印记拥有被动和刻印效果。\n·给予印记会使原有印记[gold]刻印[/gold]。\n·满足条件时，给予的印记会与原有印记[gold]叠色[/gold]成新印记并使用其叠色效果，叠色规则:\n·紫=红+蓝 ·橙=红+黄\n·白=黄+蓝 ·虹=红+黄+蓝\n·给予红黄蓝才可触发叠色。\n·印记可以穿透人工制品。\n·叠色印记的详细效果可查看初始遗物。\n·基础机制提示可在baselib设置关闭，熟悉后建议关闭。",
   "HATMAGICIAN2-BRAND_POWER.smartDescription": "",
   "HATMAGICIAN2-BRAND_POWER.title": "印记",
   "HATMAGICIAN2-BRAND_RED_POWER.description": "被动:每回合受到[blue]6[/blue]点伤害。\n刻印:下次受击时，伤害变为[blue]2[/blue]倍。",

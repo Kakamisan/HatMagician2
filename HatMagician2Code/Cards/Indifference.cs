@@ -43,8 +43,9 @@ public class Indifference() : HatMagician2Card(1, CardType.Skill, CardRarity.Unc
 
     protected override void OnUpgrade()
     {
-        this.EnergyCost.UpgradeBy(-1);
+        // this.EnergyCost.UpgradeBy(-1);
         this.DynamicHat2Var.UpgradeValueBy(1);
+        this.AddKeyword(CardKeyword.Retain);
     }
 
     private int GetEnemiesGloomyCnt()

@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
-public class CollectPower : HatMagician2Power
+public abstract class CollectPower : HatMagician2Power
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ColorfulPower>(), HoverTipFactory.FromPower<ColorlessPower>()];
 

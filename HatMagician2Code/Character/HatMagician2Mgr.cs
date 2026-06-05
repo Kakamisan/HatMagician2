@@ -52,6 +52,7 @@ public class HatMagician2Mgr : CustomSingletonModel
     // 获得绘色能量
     public static async Task AddEnergy(Player player, int amount, BrandColor color = BrandColor.Any)
     {
+        if (amount <= 0) return;
         if (Instance == null) return;
         if (!player.Creature.IsAlive) return;
         var state = Instance.InitState(player);

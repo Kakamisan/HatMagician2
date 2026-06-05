@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace HatMagician2.HatMagician2Code.SceneControl;
 
+[GlobalClass]
 public partial class BattleBrandColorPet : NCreatureVisuals
 {
 	private MegaLabel? _brandColorEnergyLabel;
