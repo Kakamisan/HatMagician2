@@ -501,6 +501,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 通用应用倍数类能力 叠加时基础-1
     protected async Task CommonApplySelfMultiPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
+        await CreatureCmd.TriggerAnim(this.Owner.Creature, "PowerUp", this.Owner.Character.PowerUpAnimDelay);
         if (this.Owner.Creature.HasPower<T>())
         {
             await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount - 1, this.Owner.Creature, this);
@@ -514,6 +515,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 通用应用常规能力
     protected async Task CommonApplySelfPower<T>(PlayerChoiceContext choiceContext, CardPlay play, decimal applyAmount) where T : PowerModel
     {
+        await CreatureCmd.TriggerAnim(this.Owner.Creature, "PowerUp", this.Owner.Character.PowerUpAnimDelay);
         await PowerCmd.Apply<T>(choiceContext, this.Owner.Creature, applyAmount, this.Owner.Creature, this);
     }
 
