@@ -219,7 +219,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
 
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        if (cardSource == this)
+        if (cardSource == this && props.IsPoweredAttack())
             return (int)this.NextPlayMultiAdd;
         return 0;
     }

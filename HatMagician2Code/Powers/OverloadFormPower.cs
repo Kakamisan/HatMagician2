@@ -35,7 +35,7 @@ public class OverloadFormPower : HatMagician2Power, IHatMagician2AbstractModel
     // 这里和火焰印记一样 只是预览时增加倍数
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
-        if (cardSource is HatMagician2Card card && card.IsEvokeCard() && !card.IsBrandAppliedBeforeAttack &&
+        if (cardSource is HatMagician2Card card && card.IsEvokeCard() && !card.IsBrandAppliedBeforeAttack && props.IsPoweredAttack() &&
             target?.Powers.FirstOrDefault(p => p is BrandPower and not BrandRedPower) is BrandPower)
         {
             return MultiDamagePower.GetAmount(target) > 0 ? this.Amount : this.Amount - 1;
