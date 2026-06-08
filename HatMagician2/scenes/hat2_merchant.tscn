@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cotp08vetox4j"]
 
 [ext_resource type="Script" uid="uid://swesx1187ue8" path="res://HatMagician2Code/SceneControl/NMerchantCharacterSub.cs" id="1_rkpgl"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://dlg5non8cdqi1" path="res://HatMagician2/anim/hat2_spine.tres" id="2_g5ixt"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dyo4q2dso5r66" path="res://HatMagician2/anim/hat2_shop.tres" id="2_g5ixt"]
 
 [node name="Hat2Merchant" type="Node2D"]
 script = ExtResource("1_rkpgl")

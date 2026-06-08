@@ -104,4 +104,16 @@ public class HatMagician2 : PlaceholderCharacterModel
 
     // 商店人物场景。
     public override string CustomMerchantAnimPath => "hat2_merchant.tscn".ScenePath();
+
+    // 多人模式-手指。
+    public override string CustomArmPointingTexturePath => "multiplayer_hand_hat2_point.png".CharacterUiPath();
+
+    // 多人模式剪刀石头布-石头。
+    public override string CustomArmRockTexturePath => "multiplayer_hand_hat2_rock.png".CharacterUiPath();
+
+    // 多人模式剪刀石头布-布。
+    public override string CustomArmPaperTexturePath => "multiplayer_hand_hat2_paper.png".CharacterUiPath();
+
+    // 多人模式剪刀石头布-剪刀。
+    public override string CustomArmScissorsTexturePath => "multiplayer_hand_hat2_scissors.png".CharacterUiPath();
 }
