@@ -1,27 +1,41 @@
 
 skeleton.png
-size: 1875,1449
+size: 1921,1774
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 battle2
   rotate: false
-  xy: 1025, 183
+  xy: 1025, 508
   size: 848, 1264
   orig: 848, 1264
   offset: 0, 0
   index: -1
 battle_shadow
   rotate: false
-  xy: 1025, 29
+  xy: 2, 173
   size: 742, 152
   orig: 848, 1264
   offset: 60, 84
   index: -1
 dead
   rotate: true
-  xy: 2, 2
+  xy: 2, 327
   size: 1445, 1021
   orig: 1454, 1054
   offset: 0, 16
+  index: -1
+hat2_merchant
+  rotate: true
+  xy: 1025, 2
+  size: 504, 894
+  orig: 504, 894
+  offset: 0, 0
+  index: -1
+hat2_merchant_shadow
+  rotate: false
+  xy: 2, 93
+  size: 203, 78
+  orig: 264, 128
+  offset: 25, 21
   index: -1

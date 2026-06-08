@@ -14,15 +14,16 @@ namespace HatMagician2.HatMagician2Code.Cards;
 [Pool(typeof(HatMagician2CardPool))]
 public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    public override BrandColor BaseBrandColor => BrandColor.None;
-    public override int BaseBrandColorCost => -1;
+    public override BrandColor BaseBrandColor => BrandColor.White;
+    public override int BaseBrandColorCost => 1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(HatMagician2Keywords.Color)];
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
         new DamageVar(9, ValueProp.Move), new Hat2Var(3),
-        new CalculationBaseVar(0), new CalculationExtraVar(1), new CalculatedVar("CalculatedCards").WithMultiplier((card, _) => ((Sketch)card).CalcDrawNum())
+        new CalculationBaseVar(0), new CalculationExtraVar(1), new CalculatedVar("CalculatedCards").WithMultiplier((card, _) => ((Sketch)card).CalcDrawNum()),
+        new EnergyVar(1)
     ];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
@@ -30,6 +31,7 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
+        await PlayerCmd.GainEnergy(this.DynamicVars.Energy.IntValue, this.Owner);
         await this.OnPlayNormal(choiceContext, play);
     }
 

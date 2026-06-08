@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://dk2ak67y0vu4"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://b5ortyyk6ekp2" path="res://HatMagician2/anim/rest_site.atlas" id="1_nbhrv"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://kvm5fpdasmht" path="res://HatMagician2/anim/rest_site.skel" id="2_elhu5"]
+
+[resource]
+atlas_res = ExtResource("1_nbhrv")
+skeleton_file_res = ExtResource("2_elhu5")

@@ -1,0 +1,14 @@
+[remap]
+
+importer="spine.skel"
+type="SpineSkeletonFileResource"
+uid="uid://kvm5fpdasmht"
+path="res://.godot/imported/rest_site.skel-3246ba62719dadc46efdb23bd8ea86e6.spskel"
+
+[deps]
+
+source_file="res://HatMagician2/anim/rest_site.skel"
+dest_files=["res://.godot/imported/rest_site.skel-3246ba62719dadc46efdb23bd8ea86e6.spskel"]
+
+[params]
+

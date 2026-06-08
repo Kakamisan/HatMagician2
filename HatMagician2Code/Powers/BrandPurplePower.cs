@@ -33,15 +33,12 @@ public class BrandPurplePower : BrandPower
         await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), card?.Owner.Creature ?? this.Applier, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? card)
+    protected override async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
     {
         if (this.IsOnFusionEd) return;
-        if (this.Applier?.Player == null) return;
-        await base.OnFusion(card);
+        await base.OnFusion(cardSource, oldApplier);
         VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
-        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        // await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, this.Applier, null);
-        await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, card?.Owner.Creature ?? this.Applier, null);
+        await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, cardSource?.Owner.Creature ?? this.Applier, null);
     }
 
     // public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? card)

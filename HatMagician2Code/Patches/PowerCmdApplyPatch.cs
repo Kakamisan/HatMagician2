@@ -16,7 +16,7 @@ public class PowerCmdApplyPatch
 {
     [HarmonyPrefix]
     public static bool Prefix(ref Task __result, PlayerChoiceContext choiceContext, PowerModel power, Creature target, decimal amount, Creature? applier, CardModel? cardSource
-        , out (BrandColor c1, BrandColor c2) __state)
+        , out (BrandColor c1, BrandColor c2, Creature? c3) __state)
     {
         // 覆盖旧印记 先判断叠色等
         if (power is BrandPower power2 && target.Powers.FirstOrDefault(p => p is BrandPower) is BrandPower oldPower)
@@ -31,15 +31,15 @@ public class PowerCmdApplyPatch
 
             __result = PrefixSub(applyColor, cardSource, oldPower, choiceContext, target, applier);
 
-            __state = (color, applyColor);
+            __state = (color, applyColor, oldPower.Applier);
             return false;
         }
 
         // 应用新印记 直接原逻辑
         if (power is BrandPower power3)
-            __state = (power3.BaseBrandColor, power3.BaseBrandColor);
+            __state = (power3.BaseBrandColor, power3.BaseBrandColor, null);
         else
-            __state = (BrandColor.None, BrandColor.None);
+            __state = (BrandColor.None, BrandColor.None, null);
         return true;
     }
 
@@ -57,24 +57,25 @@ public class PowerCmdApplyPatch
 
     [HarmonyPostfix]
     public static void Postfix(ref Task __result, PlayerChoiceContext choiceContext, PowerModel power, Creature target, decimal amount, Creature? applier, CardModel? cardSource
-        , (BrandColor c1, BrandColor c2) __state)
+        , (BrandColor c1, BrandColor c2, Creature? c3) __state)
     {
         if (power is BrandPower power2 && __state.c1 != BrandColor.None)
         {
             var color = __state.c1;
             var applyColor = __state.c2;
-            __result = PostfixSub(__result, cardSource, target, power2, color, applyColor);
+            var oldApplier = __state.c3;
+            __result = PostfixSub(__result, cardSource, target, power2, color, applyColor, oldApplier);
         }
     }
 
-    private static async Task PostfixSub(Task originTask, CardModel? cardSource, Creature target, BrandPower power2, BrandColor color, BrandColor applyColor)
+    private static async Task PostfixSub(Task originTask, CardModel? cardSource, Creature target, BrandPower power2, BrandColor color, BrandColor applyColor, Creature? oldApplier)
     {
         await originTask;
         var card = cardSource as HatMagician2Card;
         var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
         var isFusion = color != applyColor;
 
-        if (newPower != null) await newPower.OnApplyPublic(card, isFusion);
+        if (newPower != null) await newPower.OnApplyPublic(cardSource, isFusion, oldApplier);
 
         // 其他杂项
         if (card != null) card.IsBrandAppliedBeforeAttack = true;

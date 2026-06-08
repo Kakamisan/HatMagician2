@@ -33,13 +33,11 @@ public class BrandOrangePower : BrandPower
         await PowerCmd.Apply<ChainDamagePower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? card)
+    protected override async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
     {
         if (this.IsOnFusionEd) return;
-        if (this.Applier?.Player == null) return;
-        await base.OnFusion(card);
-        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        await BrandPower.ChainDamageCmd(this, this.FusionVal, card);
+        await base.OnFusion(cardSource, oldApplier);
+        await BrandPower.ChainDamageCmd(this, this.FusionVal, cardSource);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

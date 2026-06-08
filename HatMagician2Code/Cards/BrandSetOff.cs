@@ -25,8 +25,8 @@ public class BrandSetOff() : HatMagician2Card(1, CardType.Attack, CardRarity.Bas
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await BrandPower.ApplyBrandEvoke(this, choiceContext, play);
         await this.CommonSingleAttack(choiceContext, play);
+        await base.OnPlayNormal(choiceContext, play);
     }
 
     protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(4);

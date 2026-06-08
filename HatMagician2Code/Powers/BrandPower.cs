@@ -95,20 +95,27 @@ public class BrandPower : HatMagician2Power
     }
 
     // 叠色效果
-    protected virtual async Task OnFusion(HatMagician2Card? cardSource)
+    protected virtual async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
     {
         if (this.IsOnFusionEd) return;
         Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
         this.IsOnFusionEd = true;
+
+        var applier = cardSource?.Owner ?? this.Applier?.Player;
+        if (applier != null)
+            await HatMagician2Mgr.AddEnergy(applier, (int)this.FusionVal2, this.BaseBrandColor);
+        if (oldApplier is { Player: not null } && oldApplier != applier?.Creature)
+            await HatMagician2Mgr.AddEnergy(oldApplier.Player, (int)this.FusionVal2, this.BaseBrandColor);
+
         await Task.CompletedTask;
     }
 
     // 赋予效果 
-    protected virtual async Task OnApply(HatMagician2Card? cardSource, bool isFusion = false)
+    protected virtual async Task OnApply(CardModel? cardSource, bool isFusion, Creature? oldApplier)
     {
         if (isFusion)
         {
-            await this.OnFusion(cardSource);
+            await this.OnFusion(cardSource, oldApplier);
         }
 
         if (this.IsOnApplied) return;
@@ -121,9 +128,9 @@ public class BrandPower : HatMagician2Power
         await Task.CompletedTask;
     }
 
-    public async Task OnApplyPublic(HatMagician2Card? cardSource, bool isFusion = false)
+    public async Task OnApplyPublic(CardModel? cardSource, bool isFusion, Creature? oldApplier)
     {
-        await this.OnApply(cardSource, isFusion);
+        await this.OnApply(cardSource, isFusion, oldApplier);
     }
 
     // 移除之后的处理

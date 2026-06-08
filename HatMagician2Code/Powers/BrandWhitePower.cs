@@ -29,13 +29,18 @@ public class BrandWhitePower : BrandPower
         await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, card?.Owner ?? this.Applier.Player);
     }
 
-    protected override async Task OnFusion(HatMagician2Card? card)
+    protected override async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
     {
         if (this.IsOnFusionEd) return;
-        if (this.Applier?.Player == null) return;
-        await base.OnFusion(card);
-        await HatMagician2Mgr.AddEnergy(card?.Owner ?? this.Applier.Player, (int)this.FusionVal2, this.BaseBrandColor);
-        await CreatureCmd.GainBlock(card?.Owner.Creature ?? this.Applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
+        await base.OnFusion(cardSource, oldApplier);
+        var applier = cardSource?.Owner.Creature ?? this.Applier;
+        if (applier is not null)
+            await CreatureCmd.GainBlock(applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
+
+        // 群体加格挡
+        var allies = this.CombatState.PlayerCreatures.Where(c => c is { IsAlive: true, IsPlayer: true } && c != applier);
+        foreach (var ally in allies)
+            await CreatureCmd.GainBlock(ally, new BlockVar(this.FusionVal / 2, ValueProp.Unpowered), null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

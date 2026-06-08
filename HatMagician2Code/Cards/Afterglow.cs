@@ -19,7 +19,7 @@ public class Afterglow() : HatMagician2Card(2, CardType.Attack, CardRarity.Uncom
     public override bool IsAddBrandTips => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(14, ValueProp.Move), new Hat2Var(2)];
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Evoke];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)

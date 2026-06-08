@@ -138,9 +138,10 @@ public partial class BattleBrandColorPet : NCreatureVisuals
 		if (node is null) return null;
 		node.Name = nodeName;
 		node._brandColor = color;
-		owner.AddChild(node);
+		owner.Visuals.AddChild(node);
 		if (color is BrandColor.Red or BrandColor.White)
-			owner.MoveChild(node, 0);
+			node.ShowBehindParent = true;
+		//owner.MoveChild(node, 0);
 		node._playerCenter = owner.Visuals.VfxSpawnPosition;
 		return node;
 	}

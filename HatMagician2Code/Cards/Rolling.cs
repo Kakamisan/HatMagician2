@@ -36,9 +36,10 @@ public class Rolling() : HatMagician2Card(0, CardType.Skill, CardRarity.Common, 
         {
             await CardCmd.Discard(choiceContext, card1);
         }
-        
+
         CardSelectorPrefs prefs2 = new CardSelectorPrefs(this.SelectionScreenPrompt2, 1);
-        CardModel? card2 = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Discard.GetPile(this.Owner).Cards, this.Owner, prefs2)).FirstOrDefault();
+        CardModel? card2 = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Discard.GetPile(this.Owner).Cards.Where(c => c is not Rolling).ToList(), this.Owner, prefs2))
+            .FirstOrDefault();
         if (card2 == null) return;
         await CardPileCmd.Add(card2, PileType.Hand);
         await base.OnPlayNormal(choiceContext, play);

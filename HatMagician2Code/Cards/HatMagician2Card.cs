@@ -294,6 +294,11 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
             await this.PreEnchantmentFunc(choiceContext, cardPlay);
         }
 
+        if (this.Keywords.Contains(HatMagician2Keywords.Evoke))
+        {
+            await BrandPower.ApplyBrandEvoke(this, choiceContext, cardPlay);
+        }
+
         if (!this.NextCannotCost)
             await this.OnPlayWhenCostBrandColor(choiceContext, cardPlay);
         else

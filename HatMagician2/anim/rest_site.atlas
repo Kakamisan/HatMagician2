@@ -1,0 +1,20 @@
+
+rest_site.png
+size: 649,598
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hat2_rest_site
+  rotate: false
+  xy: 2, 2
+  size: 327, 594
+  orig: 327, 594
+  offset: 0, 0
+  index: -1
+hat2_rest_site_1
+  rotate: false
+  xy: 331, 11
+  size: 316, 585
+  orig: 328, 602
+  offset: 7, 10
+  index: -1

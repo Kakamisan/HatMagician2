@@ -1,27 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://fc5x7hciyofl"]
+[gd_scene load_steps=4 format=3 uid="uid://fc5x7hciyofl"]
 
-[ext_resource type="Texture2D" uid="uid://dmd7p0pbarywf" path="res://HatMagician2/scenes/hat2_rest_site.png" id="1_vroqy"]
 [ext_resource type="Script" uid="uid://de4fhoj5liyfc" path="res://HatMagician2Code/SceneControl/NRestSiteCharacterChild.cs" id="1_xv3rb"]
-[ext_resource type="Texture2D" uid="uid://7gaqcbr2yyr2" path="res://HatMagician2/scenes/hat2_rest_site_1.png" id="2_t1bdh"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dk2ak67y0vu4" path="res://HatMagician2/anim/hat2_rest_site.tres" id="2_t1bdh"]
 [ext_resource type="Script" uid="uid://d4e2wqxfg8dka" path="res://HatMagician2Code/SceneControl/NSelectionReticleChild.cs" id="2_vroqy"]
 
 [node name="Hat2RestSite" type="Node2D"]
 script = ExtResource("1_xv3rb")
 
-[node name="overgrowth" type="Sprite2D" parent="."]
+[node name="SpineSprite" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2_t1bdh")
+preview_skin = "Default"
+preview_animation = "overgrowth_loop"
+preview_frame = false
+preview_time = 0.0
 position = Vector2(-17, -13)
 scale = Vector2(0.9, 0.9)
-texture = ExtResource("1_vroqy")
-
-[node name="hive" type="Sprite2D" parent="."]
-position = Vector2(-17, -13)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("2_t1bdh")
-
-[node name="glory" type="Sprite2D" parent="."]
-position = Vector2(-17, -13)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("1_vroqy")
 
 [node name="ControlRoot" type="Control" parent="."]
 layout_mode = 3
