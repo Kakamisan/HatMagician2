@@ -3,7 +3,7 @@
     "name": "绘印魔女",
     "author": "km131",
     "description": "原创角色mod：\n一位来自绘法师学院的抽象派绘师。\n使用巨大画笔描绘独特的烙印魔法，她的速写抽象画作被同行视为异类。",
-    "version": "v0.9.2",
+    "version": "v0.9.3",
     "min_game_version": "0.107.0",
     "has_pck": true,
     "has_dll": true,

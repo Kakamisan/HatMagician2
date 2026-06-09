@@ -56,4 +56,11 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
         if (owner != null) return owner.Powers.FirstOrDefault(p => p is MultiDamagePower)?.Amount ?? 0;
         return 0;
     }
+
+    // 非职业卡 走通用乘算
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (cardSource is HatMagician2Card) return 1;
+        return IsTriggerMulti(cardSource) && props.IsPoweredAttack() && this.Owner == target ? this.Amount : 1;
+    }
 }
