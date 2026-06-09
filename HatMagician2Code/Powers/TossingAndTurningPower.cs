@@ -1,5 +1,6 @@
 ﻿using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
@@ -7,6 +8,8 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class TossingAndTurningPower : HatMagician2Power
 {
+    public override PowerStackType StackType => this.Amount > 1 ? PowerStackType.Counter : PowerStackType.Single;
+
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     {
         if (card.Owner.Creature != this.Owner)

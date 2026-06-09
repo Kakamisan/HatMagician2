@@ -60,6 +60,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="HatMagician2Code\MonsterPowers\" />
         <Folder Include="HatMagician2\images\card_portraits\big\"/>
         <Folder Include="HatMagician2\images\powers\big\"/>
         <Folder Include="HatMagician2\images\relics\big\"/>

@@ -42,7 +42,7 @@ public class BrandOrangePower : BrandPower
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (side != this.Owner.Side) return;
+        if (side != CombatSide.Enemy) return;
         await this.OnPassive();
         await base.AfterSideTurnStart(side, participants, combatState);
     }

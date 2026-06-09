@@ -1,12 +1,15 @@
 ﻿using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
 public class FrozenWorldPower : HatMagician2Power
 {
+    public override PowerStackType StackType => this.Amount > 1 ? PowerStackType.Counter : PowerStackType.Single;
+
     // 弃牌阶段后触发（抽牌保留到下回合）
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
         // 这个是弃牌阶段前触发（抽牌不保留到下回合）

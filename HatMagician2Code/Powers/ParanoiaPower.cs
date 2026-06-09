@@ -1,6 +1,7 @@
 ﻿using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -8,6 +9,8 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public class ParanoiaPower : HatMagician2Power, IHatMagician2AbstractModel
 {
+    public override PowerStackType StackType => this.Amount > 1 ? PowerStackType.Counter : PowerStackType.Single;
+
     public async Task AfterGloomyDamage(Creature target, decimal damage, Creature? dealer)
     {
         this.Flash();

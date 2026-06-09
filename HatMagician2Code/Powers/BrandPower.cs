@@ -60,7 +60,7 @@ public class BrandPower : HatMagician2Power
 
     public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == this.Owner.Side)
+        if (side == CombatSide.Enemy)
         {
             this._thisTurnIsTriggeredPassive = false;
         }
@@ -250,26 +250,26 @@ public class BrandPower : HatMagician2Power
     public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
         if (target.CombatState == null) return;
-        var enemies = target.CombatState.GetTeammatesOf(target).Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
-        await ChainDamageCmd(enemies, damage, applier, card, withDefaultVfx, cnt);
+        var targets = target.CombatState.Creatures.Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        await ChainDamageCmd(targets, damage, applier, card, withDefaultVfx, cnt);
     }
 
-    public static async Task ChainDamageCmd(IEnumerable<Creature> enemies, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    public static async Task ChainDamageCmd(IEnumerable<Creature> targets, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
         // var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(target, damage, ValueProp.Unpowered, applier, card, target.CombatState);
-        var enumerable = enemies.ToList();
+        var enumerable = targets.ToList();
         for (int i = 0; i < cnt; i++)
         {
-            var enemies2 = enumerable.Where(c => c.IsAlive).ToList();
-            if (enemies2.Count == 0) break;
+            var targets2 = enumerable.Where(c => c.IsAlive).ToList();
+            if (targets2.Count == 0) break;
             if (withDefaultVfx)
             {
-                foreach (var target1 in (IEnumerable<Creature>)enemies2)
+                foreach (var target1 in (IEnumerable<Creature>)targets2)
                     VfxCmd.PlayOnCreature(target1, "vfx/vfx_attack_lightning");
                 SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
             }
 
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemies2, damage, ValueProp.Unpowered, card?.Owner.Creature ?? applier, card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targets2, damage, ValueProp.Unpowered, card?.Owner.Creature ?? applier, card);
         }
 
         await Task.CompletedTask;
