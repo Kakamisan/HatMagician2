@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Character;
@@ -31,6 +32,12 @@ public class HatMagician2Mgr : CustomSingletonModel
         }
 
         await base.BeforeCombatStart();
+    }
+
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        await this.BeforeCombatStart();
+        await base.AfterCombatEnd(room);
     }
 
     // 初始化/获取这个玩家的state

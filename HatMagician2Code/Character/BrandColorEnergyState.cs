@@ -27,6 +27,8 @@ public class BrandColorEnergyState(Player player)
         {
             this.BrandColorEnergyMap[key] = 0;
         }
+        
+        this._petVisuals.Clear();
 
         this._summon = false;
 

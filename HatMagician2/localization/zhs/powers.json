@@ -104,5 +104,9 @@
   "HATMAGICIAN2-OVERLOAD_FORM_POWER.title": "天火形态",
   "HATMAGICIAN2-VIBRANT_PALETTE_POWER.description": "每回合你第一次消耗绘色时，收集对应的绘色。",
   "HATMAGICIAN2-VIBRANT_PALETTE_POWER.smartDescription": "每回合你第一次消耗绘色时，收集[blue]{Amount}[/blue]点对应的绘色。",
-  "HATMAGICIAN2-VIBRANT_PALETTE_POWER.title": "斑斓色彩"
+  "HATMAGICIAN2-VIBRANT_PALETTE_POWER.title": "斑斓色彩",
+  
+  "HATMAGICIAN2-FOCUS_PAINTING_POWER.description": "TODO",
+  "HATMAGICIAN2-FOCUS_PAINTING_POWER.smartDescription": "画布或寻色者失去生命时，或在[blue]{Amount}[/blue]回合后，寻色者察觉入侵者。",
+  "HATMAGICIAN2-FOCUS_PAINTING_POWER.title": "专注"
 }
