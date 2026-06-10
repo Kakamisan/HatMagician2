@@ -1,7 +1,6 @@
 ﻿using BaseLib.Cards.Variables;
 using BaseLib.Extensions;
 using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -50,6 +49,7 @@ public class StarScribe() : HatMagician2Card(2, CardType.Attack, CardRarity.Rare
 
     public async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
+        if (player != this.Owner) return;
         this._accDamage += amount * this.DynamicHat2Var.IntValue;
         await Task.CompletedTask;
     }

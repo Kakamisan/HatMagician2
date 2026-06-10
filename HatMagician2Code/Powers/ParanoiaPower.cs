@@ -13,6 +13,7 @@ public class ParanoiaPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public async Task AfterGloomyDamage(Creature target, decimal damage, Creature? dealer)
     {
+        if (target.Side == this.Owner.Side) return;
         this.Flash();
         for (int i = 0; i < this.Amount; i++)
         {

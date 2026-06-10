@@ -15,9 +15,9 @@ public class GloomyPower : HatMagician2Power
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (dealer == this.Owner)
+        if (dealer == this.Owner && target == this.CombatState.PlayerCreatures.FirstOrDefault(c => c.IsAlive))
         {
-            await DealGloomyDamage(this.Owner, this.Amount);
+            await DealGloomyDamage(this.Owner, this.Amount, this.Owner);
         }
 
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);

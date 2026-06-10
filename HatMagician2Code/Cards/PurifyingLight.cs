@@ -36,10 +36,29 @@ public class PurifyingLight() : HatMagician2Card(0, CardType.Skill, CardRarity.R
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var powers = this.GetPowers();
+
+        // (联机)群体加格挡
+        var allies = this.CombatState?.PlayerCreatures.Where(c => c is { IsAlive: true, IsPlayer: true } && c != this.Owner.Creature) ?? [];
+        var enumerable = allies as Creature[] ?? allies.ToArray();
+
+        decimal allyAmount;
+        if (enumerable.Length != 0)
+        {
+            var tmpBlockVar = new BlockVar(this.DynamicVars.Block.BaseValue, ValueProp.Move);
+            tmpBlockVar.UpdateCardPreview(play.Card, CardPreviewMode.Normal, this.Owner.Creature, true);
+            allyAmount = tmpBlockVar.PreviewValue / 2;
+        }
+        else
+        {
+            allyAmount = 0;
+        }
+
         foreach (var power in powers)
         {
             await PowerCmd.Remove(power);
             await this.CommonBlock(play);
+            foreach (var ally in enumerable)
+                await CreatureCmd.GainBlock(ally, allyAmount, ValueProp.Unpowered, play, true);
         }
 
         await this.OnPlayNormal(choiceContext, play);

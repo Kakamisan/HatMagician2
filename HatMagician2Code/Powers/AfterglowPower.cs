@@ -13,10 +13,13 @@ public class AfterglowPower : HatMagician2Power
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == CombatSide.Player)
+        const BrandColor color = BrandColor.Orange;
+        if (side == CombatSide.Player && this.Applier?.Player != null && HatMagician2Mgr.HasEnoughEnergy(this.Applier.Player, color, 1))
         {
             this.Flash();
-            await BrandPower.ApplyBrandPower(null, this.Applier, choiceContext, this.Owner, BrandColor.Orange);
+            if (HatMagician2Mgr.Instance?.GetState(this.Applier.Player) is { } state)
+                await state.SpendEnergy(color, 1);
+            await BrandPower.ApplyBrandPower(null, this.Applier, choiceContext, this.Owner, color);
             await PowerCmd.Decrement(this);
         }
 

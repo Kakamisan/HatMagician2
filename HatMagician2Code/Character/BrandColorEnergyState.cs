@@ -9,9 +9,8 @@ namespace HatMagician2.HatMagician2Code.Character;
 
 public class BrandColorEnergyState(Player player)
 {
-
     private bool _summon;
-    
+
     // 绘色能量
     public readonly Dictionary<BrandColor, int> BrandColorEnergyMap = new()
     {
@@ -28,9 +27,9 @@ public class BrandColorEnergyState(Player player)
         {
             this.BrandColorEnergyMap[key] = 0;
         }
-        
+
         this._summon = false;
-        
+
         //this.UpdateAllPet();
     }
 
@@ -46,7 +45,17 @@ public class BrandColorEnergyState(Player player)
         this._petVisuals[color] = pet;
         pet.SetEnergy(0, false);
     }
-    
+
+    // 隐藏一个绘色
+    private void HideBrandColor(BrandColor color)
+    {
+        this._petVisuals.TryGetValue(color, out var pet);
+        if (pet != null)
+        {
+            pet.Visible = false;
+        }
+    }
+
     // 召唤全部
     private void SummonAll()
     {
@@ -57,7 +66,17 @@ public class BrandColorEnergyState(Player player)
             this.SummonBrandColor(color);
         }
     }
-    
+
+    // 寄了之后隐藏全部绘色
+    public void HideAll()
+    {
+        if (!this._summon) return;
+        foreach (var color in this.BrandColorEnergyMap.Keys)
+        {
+            this.HideBrandColor(color);
+        }
+    }
+
     // 更新所有绘色显示
     // private void UpdateAllPet()
     // {
@@ -73,7 +92,7 @@ public class BrandColorEnergyState(Player player)
     //
     //     //SfxCmd.Play("event:/sfx/ui/gain_energy");
     // }
-    
+
     // 消耗绘色能量
     public async Task SpendEnergy(BrandColor color, int cost)
     {
@@ -114,7 +133,7 @@ public class BrandColorEnergyState(Player player)
             SfxCmd.Play("event:/sfx/ui/gain_energy");
         }
     }
-    
+
     // 获取当前绘色的值
     public int GetEnergy(BrandColor color)
     {

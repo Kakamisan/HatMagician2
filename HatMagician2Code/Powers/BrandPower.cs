@@ -269,7 +269,7 @@ public class BrandPower : HatMagician2Power
                 SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
             }
 
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targets2, damage, ValueProp.Unpowered, card?.Owner.Creature ?? applier, card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targets2, damage, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, applier), card);
         }
 
         await Task.CompletedTask;
@@ -289,7 +289,7 @@ public class BrandPower : HatMagician2Power
         return cardSource is HatMagician2Card card && card.IsEvokeCard() && target?.HasPower<BrandPower>() == true;
     }
 
-    // 在死亡动画前移除
+    // 在死亡前触发可触发的被动
     public override async Task BeforeDeath(Creature creature)
     {
         if (this.Owner == creature)
@@ -301,6 +301,12 @@ public class BrandPower : HatMagician2Power
         }
 
         await base.BeforeDeath(creature);
+    }
+
+    // 玩家能力移除后 需要更新一下印记的数值
+    public async Task AfterHookPowerRemoved(HatMagician2Power power)
+    {
+        await this.AfterModifyingPowerAmountReceived(power);
     }
 
     // 使用印记被动效果

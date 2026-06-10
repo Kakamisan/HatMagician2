@@ -25,7 +25,7 @@ public class ChainDamagePower : HatMagician2Power
             // this.Flash();
             var others = this.Owner.CombatState.Enemies.Where(e => e.IsAlive && e != this.Owner);
             var modifyDamage = HatMagician2Mgr.ModifyChainDamage(this.Owner, amount, ValueProp.Unpowered, dealer, cardSource, this.Owner.CombatState);
-            await CreatureCmd.Damage(choiceContext, others, new DamageVar(modifyDamage, ValueProp.Unpowered), cardSource?.Owner.Creature ?? this.Applier, null);
+            await CreatureCmd.Damage(choiceContext, others, new DamageVar(modifyDamage, ValueProp.Unpowered), HatMagician2Mgr.GetDamageApplierUtil(cardSource, this.Applier), null);
             this._ready2Decrement = true;
             // await PowerCmd.Decrement(this);
         }

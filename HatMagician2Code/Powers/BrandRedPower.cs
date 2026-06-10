@@ -54,7 +54,7 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
         for (int i = 0; i < cnt; i++)
         {
             VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, card?.Owner.Creature ?? power.Applier, card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier), card);
         }
 
         await Task.CompletedTask;

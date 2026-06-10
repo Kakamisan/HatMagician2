@@ -15,7 +15,7 @@ public class OverloadFormPower : HatMagician2Power, IHatMagician2AbstractModel
 
     public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandRedPower)
+        if (power is BrandRedPower && power.Owner.Side != this.Owner.Side)
         {
             modifiedVal = originVal + this.Amount;
             return true;
@@ -28,6 +28,7 @@ public class OverloadFormPower : HatMagician2Power, IHatMagician2AbstractModel
     public async Task AfterBrandPowerEvoke(BrandPower power)
     {
         if (power is BrandRedPower) return;
+        if (power.Owner.Side == this.Owner.Side) return;
         await PowerCmd.Apply<MultiDamagePower>(new ThrowingPlayerChoiceContext(), power.Owner, this.Amount, this.Owner, null);
     }
 

@@ -34,4 +34,21 @@ public abstract class HatMagician2Power : CustomPowerModel, IHatMagician2Abstrac
 
         await base.BeforeDeath(creature);
     }
+
+    // 被移除后更新所有印记数值
+    public override async Task AfterRemoved(Creature oldOwner)
+    {
+        if (this.HasChangeBrandValEffect && oldOwner.CombatState?.HittableEnemies != null)
+        {
+            foreach (var e in oldOwner.CombatState.HittableEnemies)
+            {
+                if (e.Powers.FirstOrDefault(p => p is BrandPower) is BrandPower p2)
+                {
+                    await p2.AfterHookPowerRemoved(this);
+                }
+            }
+        }
+
+        await base.AfterRemoved(oldOwner);
+    }
 }

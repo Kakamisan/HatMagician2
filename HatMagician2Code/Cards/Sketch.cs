@@ -23,7 +23,7 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
     [
         new DamageVar(9, ValueProp.Move), new Hat2Var(3),
         new CalculationBaseVar(0), new CalculationExtraVar(1), new CalculatedVar("CalculatedCards").WithMultiplier((card, _) => ((Sketch)card).CalcDrawNum()),
-        new EnergyVar(1)
+        new EnergyVar(1), new("SketchCost", 1)
     ];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
@@ -32,6 +32,7 @@ public class Sketch() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PlayerCmd.GainEnergy(this.DynamicVars.Energy.IntValue, this.Owner);
+        this.AddBrandColorCostThisTurn = this.GetDynamicVar("SketchCost").IntValue;
         await this.OnPlayNormal(choiceContext, play);
     }
 

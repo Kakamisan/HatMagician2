@@ -4,6 +4,7 @@ using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -115,6 +116,7 @@ public class HatMagician2Mgr : CustomSingletonModel
         if (color == BrandColor.None) return true;
         if (Instance == null) return true;
         if (cost == 0) return true;
+        if (player.Creature.IsDead) return false;
         var eState = Instance._playerEnergyStates.GetValueOrDefault(player);
         if (eState == null) return false;
         return cost <= eState.BrandColorEnergyMap[color];
@@ -312,5 +314,22 @@ public class HatMagician2Mgr : CustomSingletonModel
         }
 
         return multi;
+    }
+
+    // 玩家死亡后
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    {
+        if (creature is { IsPlayer: true, Player: not null } && Instance?.GetState(creature.Player) is { } state)
+        {
+            state.HideAll();
+        }
+
+        await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
+    }
+
+    // 计算各种能力伤害的应用者
+    public static Creature? GetDamageApplierUtil(CardModel? card, Creature? applier)
+    {
+        return card?.Owner.Creature ?? (applier is { IsDead: true } ? null : applier);
     }
 }

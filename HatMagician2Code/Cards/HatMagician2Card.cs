@@ -400,7 +400,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     private bool DynamicFreeBrandColorCost => this._dynamicFreeBrandColorCosts.Any(pair => pair.Value);
     public void SetDynamicFreeBrandColorCost(int key, bool value) => this._dynamicFreeBrandColorCosts[key] = value;
 
-    private int AddBrandColorCostThisTurn
+    protected int AddBrandColorCostThisTurn
     {
         get => this._addBrandColorCostThisTurn;
         set => this._addBrandColorCostThisTurn += value;

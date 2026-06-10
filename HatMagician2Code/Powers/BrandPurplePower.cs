@@ -48,9 +48,9 @@ public class BrandPurplePower : BrandPower
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
     {
-        if (dealer == this.Owner)
+        if (dealer == this.Owner && target == this.CombatState.PlayerCreatures.FirstOrDefault(c => c.IsAlive))
         {
-            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, card?.Owner.Creature ?? this.Applier);
+            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Owner);
         }
 
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, card);

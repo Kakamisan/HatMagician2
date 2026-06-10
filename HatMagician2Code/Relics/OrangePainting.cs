@@ -48,7 +48,7 @@ public class OrangePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandYellowPower)
+        if (power is BrandYellowPower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + AddChainDamageAmount;
             return true;
@@ -60,7 +60,7 @@ public class OrangePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyPassiveValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandYellowPower or BrandOrangePower)
+        if (power is BrandYellowPower or BrandOrangePower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + AddChainDamageAmount;
             return true;
@@ -72,7 +72,7 @@ public class OrangePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyFusionValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandOrangePower)
+        if (power is BrandOrangePower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + AddChainDamageAmount;
             return true;

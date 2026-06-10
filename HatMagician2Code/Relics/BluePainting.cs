@@ -12,7 +12,7 @@ public class BluePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyEvokeValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandBluePower)
+        if (power is BrandBluePower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + 1;
             return true;
@@ -24,7 +24,7 @@ public class BluePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyPassiveValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandBluePower)
+        if (power is BrandBluePower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + 1;
             return true;
@@ -36,7 +36,7 @@ public class BluePainting : HatMagician2Relic, IHatMagician2AbstractModel
 
     public bool TryModifyFusionValAdditive(BrandPower power, decimal originVal, out decimal modifiedVal)
     {
-        if (power is BrandWhitePower or BrandPurplePower)
+        if (power is BrandWhitePower or BrandPurplePower && power.Owner.Side != this.Owner.Creature.Side)
         {
             modifiedVal = originVal + 1;
             return true;
