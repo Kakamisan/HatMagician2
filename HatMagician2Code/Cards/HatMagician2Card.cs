@@ -175,7 +175,7 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         if (this.HasBrandColorCostX)
         {
             BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner);
-            return state != null ? state.BrandColorEnergyMap[this.BaseBrandColor] : 0;
+            return state?.GetEnergy(this.BaseBrandColor) ?? 0;
         }
 
         CardPile? pile = this.Pile;
@@ -255,23 +255,28 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
         return HatMagician2Mgr.HasEnoughEnergy(this.Owner, this.BaseBrandColor, this.GetBrandColorCostWithModifiers());
     }
 
+    public bool HasEnoughEnergy(out int cost)
+    {
+        cost = 0;
+        if (this.CombatState == null)
+            return true;
+        cost = this.GetBrandColorCostWithModifiers();
+        return HatMagician2Mgr.HasEnoughEnergy(this.Owner, this.BaseBrandColor, cost);
+    }
+
     // 打出时尝试消耗绘色
     public async Task SpendEnergy()
     {
-        if (!this.HasEnoughEnergy())
+        if (!this.HasEnoughEnergy(out var cost))
         {
             // 下次打出不能触发额外效果 反过来写的原因是免费打出时不会走到这一步
             this.NextCannotCost = true;
             return;
         }
 
-        BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner);
-        if (state != null)
-        {
-            var cost = this.GetBrandColorCostWithModifiers();
-            await state.SpendEnergy(this.BaseBrandColor, cost);
-            this.LastBrandColorCost = cost;
-        }
+        await HatMagician2Mgr.SpendEnergy(this.Owner, cost, this.BaseBrandColor);
+        this.LastBrandColorCost = cost;
+        await Task.CompletedTask;
     }
 
     // 绘色充足时的完整效果

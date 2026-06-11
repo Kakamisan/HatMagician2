@@ -48,7 +48,7 @@ public class Submergence() : HatMagician2Card(1, CardType.Skill, CardRarity.Unco
 
     private int GetGloomyCnt(Creature? target)
     {
-        if (target?.Powers.FirstOrDefault(p => p is GloomyPower) is GloomyPower power)
+        if (target?.GetPower<GloomyPower>() is { } power)
         {
             return (int)Math.Floor((double)power.Amount / 3);
         }
@@ -59,7 +59,7 @@ public class Submergence() : HatMagician2Card(1, CardType.Skill, CardRarity.Unco
     private int GetGloomyCntShow(Creature? target)
     {
         var multi = this.HasEnoughEnergy() ? this.DynamicHat2Var.IntValue : 0;
-        if (target?.Powers.FirstOrDefault(p => p is GloomyPower) is GloomyPower power)
+        if (target?.GetPower<GloomyPower>() is { } power)
         {
             return (int)Math.Floor((double)power.Amount / 3 * (1 + multi));
         }

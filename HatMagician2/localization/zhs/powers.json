@@ -108,5 +108,20 @@
   
   "HATMAGICIAN2-FOCUS_PAINTING_POWER.description": "TODO",
   "HATMAGICIAN2-FOCUS_PAINTING_POWER.smartDescription": "画布或寻色者失去生命时，或在[blue]{Amount}[/blue]回合后，寻色者察觉入侵者。",
-  "HATMAGICIAN2-FOCUS_PAINTING_POWER.title": "专注"
+  "HATMAGICIAN2-FOCUS_PAINTING_POWER.title": "专注",
+  "HATMAGICIAN2-COLOR_OVERFLOW_POWER.description": "TODO",
+  "HATMAGICIAN2-COLOR_OVERFLOW_POWER.smartDescription": "被攻击时，释放随机1点绘色。",
+  "HATMAGICIAN2-COLOR_OVERFLOW_POWER.title": "色彩溢出",
+  "HATMAGICIAN2-COLOR_BLEED_ALL_POWER.description": "TODO",
+  "HATMAGICIAN2-COLOR_BLEED_ALL_POWER.smartDescription": "将所有生物染色为当前的印记。",
+  "HATMAGICIAN2-COLOR_BLEED_ALL_POWER.title": "染色",
+  "HATMAGICIAN2-COLOR_LEECH_POWER.description": "TODO",
+  "HATMAGICIAN2-COLOR_LEECH_POWER.smartDescription": "攻击时，随机吸取1点绘色。",
+  "HATMAGICIAN2-COLOR_LEECH_POWER.title": "狂乱攫取",
+  "HATMAGICIAN2-BLOCK_HEART_POWER.description": "TODO",
+  "HATMAGICIAN2-BLOCK_HEART_POWER.smartDescription": "被攻击时，减少攻击者本回合1点力量。",
+  "HATMAGICIAN2-BLOCK_HEART_POWER.title": "封闭内心",
+  "HATMAGICIAN2-POLLUTION_POWER.description": "TODO",
+  "HATMAGICIAN2-POLLUTION_POWER.smartDescription": "你每打出7张非状态牌，将1张随机色彩的污染加入手牌。",
+  "HATMAGICIAN2-POLLUTION_POWER.title": "污染"
 }

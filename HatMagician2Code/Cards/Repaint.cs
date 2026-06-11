@@ -32,7 +32,7 @@ public class Repaint() : HatMagician2Card(2, CardType.Attack, CardRarity.Common,
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        var power = play.Target!.Powers.FirstOrDefault(p => p is BrandPower) as BrandPower;
+        var power = play.Target!.GetPower<BrandPower>();
         var color = power?.BaseBrandColor ?? BrandColor.None;
         await BrandPower.ApplyBrandPower(this, choiceContext, play.Target!, color);
         await this.CommonSingleAttack(choiceContext, play);

@@ -1,7 +1,9 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Powers;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -97,5 +99,16 @@ public interface IHatMagician2AbstractModel
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel cardSource)
     {
         return 0;
+    }
+
+    // 造成伤害后（按单次伤害算 AOE算一次）
+    public Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext,
+        ICombatState combatState,
+        List<Creature> targets,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource)
+    {
+        return Task.CompletedTask;
     }
 }

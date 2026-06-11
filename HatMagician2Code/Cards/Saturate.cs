@@ -31,7 +31,7 @@ public class Saturate() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncomm
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        var power = play.Target!.Powers.FirstOrDefault(p => p is BrandPower) as BrandPower;
+        var power = play.Target!.GetPower<BrandPower>();
         var color = power?.BaseBrandColor ?? BrandColor.None;
         var enemies = this.CombatState.GetTeammatesOf(play.Target).Where(e => e.IsAlive && e != play.Target).ToList();
         await this.CommonSingleAttack(choiceContext, play);

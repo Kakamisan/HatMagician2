@@ -34,11 +34,9 @@ public class BlearyEyed() : HatMagician2Card(0, CardType.Skill, CardRarity.Commo
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // await CreatureCmd.Damage(choiceContext, play.Target!, this.DynamicVars.Damage, this);
         var card = this.Owner.Creature.CombatState?.CreateCard(ModelDb.Card<Doze>(), this.Owner);
         if (card == null) return;
         if (this.IsUpgraded) CardCmd.Upgrade(card);
-        // await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, this.Owner, CardPilePosition.Top);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, this.Owner, CardPilePosition.Top));
         await base.OnPlayNormal(choiceContext, play);
     }

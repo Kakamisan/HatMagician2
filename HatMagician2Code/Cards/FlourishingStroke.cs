@@ -37,7 +37,7 @@ public class FlourishingStroke() : HatMagician2Card(1, CardType.Attack, CardRari
             foreach (var e in this.CombatState.HittableEnemies)
             {
                 BrandColor color;
-                if (e.Powers.FirstOrDefault(p => p is BrandPower) is BrandPower power)
+                if (e.GetPower<BrandPower>() is { } power)
                 {
                     color = power.BaseBrandColor;
                 }

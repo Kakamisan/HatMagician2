@@ -12,7 +12,7 @@ public class BrandColorEnergyState(Player player)
     private bool _summon;
 
     // 绘色能量
-    public readonly Dictionary<BrandColor, int> BrandColorEnergyMap = new()
+    private readonly Dictionary<BrandColor, int> _brandColorEnergyMap = new()
     {
         { BrandColor.Red, 0 }, { BrandColor.Blue, 0 }, { BrandColor.Yellow, 0 },
         { BrandColor.Purple, 0 }, { BrandColor.Orange, 0 }, { BrandColor.White, 0 }
@@ -23,11 +23,11 @@ public class BrandColorEnergyState(Player player)
 
     public void BeforeCombatStart()
     {
-        foreach (var key in this.BrandColorEnergyMap.Keys)
+        foreach (var key in this._brandColorEnergyMap.Keys)
         {
-            this.BrandColorEnergyMap[key] = 0;
+            this._brandColorEnergyMap[key] = 0;
         }
-        
+
         this._petVisuals.Clear();
 
         this._summon = false;
@@ -63,7 +63,7 @@ public class BrandColorEnergyState(Player player)
     {
         if (this._summon) return;
         this._summon = true;
-        foreach (var color in this.BrandColorEnergyMap.Keys)
+        foreach (var color in this._brandColorEnergyMap.Keys)
         {
             this.SummonBrandColor(color);
         }
@@ -73,7 +73,7 @@ public class BrandColorEnergyState(Player player)
     public void HideAll()
     {
         if (!this._summon) return;
-        foreach (var color in this.BrandColorEnergyMap.Keys)
+        foreach (var color in this._brandColorEnergyMap.Keys)
         {
             this.HideBrandColor(color);
         }
@@ -96,20 +96,25 @@ public class BrandColorEnergyState(Player player)
     // }
 
     // 消耗绘色能量
-    public async Task SpendEnergy(BrandColor color, int cost)
+    public async Task SpendEnergy(BrandColor color, int cost, bool hookFlag = true)
     {
         if (color == BrandColor.None || cost <= 0)
             return;
 
-        int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
-        this.BrandColorEnergyMap[color] = Math.Max(0, current - cost);
+        int current = this._brandColorEnergyMap.GetValueOrDefault(color, 0);
+        this._brandColorEnergyMap[color] = Math.Max(0, current - cost);
 
-        await HatMagician2Mgr.AfterSpendEnergy(player, cost, color);
+        var realCost = Math.Min(cost, current);
+
+        if (realCost <= 0) return;
+
+        // 是否触发hook （敌人吸取绘色不触发）
+        if (hookFlag) await HatMagician2Mgr.AfterSpendEnergy(player, cost, color);
 
         // 更新对应颜色的宠物显示
         if (this._petVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+            pet.SetEnergy(this._brandColorEnergyMap[color]);
         }
     }
 
@@ -123,15 +128,15 @@ public class BrandColorEnergyState(Player player)
         //this.SummonBrandColor(color);
         this.SummonAll();
 
-        int current = this.BrandColorEnergyMap.GetValueOrDefault(color, 0);
-        this.BrandColorEnergyMap[color] = current + amount;
+        int current = this._brandColorEnergyMap.GetValueOrDefault(color, 0);
+        this._brandColorEnergyMap[color] = current + amount;
 
         await HatMagician2Mgr.AfterAddEnergy(player, amount, color);
 
         // 更新对应颜色的宠物显示
         if (this._petVisuals.TryGetValue(color, out var pet) && pet != null)
         {
-            pet.SetEnergy(this.BrandColorEnergyMap[color]);
+            pet.SetEnergy(this._brandColorEnergyMap[color]);
             SfxCmd.Play("event:/sfx/ui/gain_energy");
         }
     }
@@ -139,12 +144,12 @@ public class BrandColorEnergyState(Player player)
     // 获取当前绘色的值
     public int GetEnergy(BrandColor color)
     {
-        return color is not (> BrandColor.None and < BrandColor.Rainbow) ? 0 : this.BrandColorEnergyMap[color];
+        return color is not (> BrandColor.None and < BrandColor.Rainbow) ? 0 : this._brandColorEnergyMap[color];
     }
 
     // 获取当前拥有的绘色种类
     public int GetBrandColorTypeCnt()
     {
-        return BrandColorEnergyMap.Values.Count(energy => energy > 0);
+        return _brandColorEnergyMap.Values.Count(energy => energy > 0);
     }
 }

@@ -6,5 +6,15 @@
   "HATMAGICIAN2-COLORFUL.description": "这个敌人将释放所有色彩到你的抽牌堆。",
   "HATMAGICIAN2-COLORFUL.title": "画界显现",
   "HATMAGICIAN2-BLEED.description": "这个敌人正在进行染色。",
-  "HATMAGICIAN2-BLEED.title": "染色"
+  "HATMAGICIAN2-BLEED.title": "染色",
+  "HATMAGICIAN2-BRAND_RED.description": "这个敌人将给予[red]火焰[/red]印记。",
+  "HATMAGICIAN2-BRAND_RED.title": "涂抹",
+  "HATMAGICIAN2-BRAND_BLUE.description": "这个敌人将给予[color=#31b0eb]冰霜[/color]印记。",
+  "HATMAGICIAN2-BRAND_BLUE.title": "涂抹",
+  "HATMAGICIAN2-BRAND_YELLOW.description": "这个敌人将给予[color=#e7ea31]闪电[/color]印记。",
+  "HATMAGICIAN2-BRAND_YELLOW.title": "涂抹",
+  "HATMAGICIAN2-HATE_RAINBOW.description": "这个敌人正畏惧着虹色。",
+  "HATMAGICIAN2-HATE_RAINBOW.title": "畏惧虹色",
+  "HATMAGICIAN2-COLOR_FINDER_PAINT.description": "这个敌人将在画布画上一笔。",
+  "HATMAGICIAN2-COLOR_FINDER_PAINT.title": "作画"
 }

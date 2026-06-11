@@ -17,8 +17,7 @@ public class AfterglowPower : HatMagician2Power
         if (side == CombatSide.Player && this.Applier?.Player != null && HatMagician2Mgr.HasEnoughEnergy(this.Applier.Player, color, 1))
         {
             this.Flash();
-            if (HatMagician2Mgr.Instance?.GetState(this.Applier.Player) is { } state)
-                await state.SpendEnergy(color, 1);
+            await HatMagician2Mgr.SpendEnergy(this.Applier.Player, 1, color);
             await BrandPower.ApplyBrandPower(null, this.Applier, choiceContext, this.Owner, color);
             await PowerCmd.Decrement(this);
         }

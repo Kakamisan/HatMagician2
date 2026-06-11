@@ -53,7 +53,7 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
     // 获取某只怪的灼痕层数
     public static int GetAmount(Creature? owner)
     {
-        if (owner != null) return owner.Powers.FirstOrDefault(p => p is MultiDamagePower)?.Amount ?? 0;
+        if (owner != null) return owner.GetPower<MultiDamagePower>()?.Amount ?? 0;
         return 0;
     }
 

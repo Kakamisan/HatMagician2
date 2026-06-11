@@ -30,7 +30,7 @@ public class Bloom() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, T
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var cnt = 1;
-        if (play.Target!.Powers.FirstOrDefault(p => p is BrandPower) != null)
+        if (play.Target!.GetPower<BrandPower>() is not null)
             cnt += this.DynamicVars.Repeat.IntValue;
         await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(cnt).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);

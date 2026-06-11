@@ -42,7 +42,7 @@ public abstract class HatMagician2Power : CustomPowerModel, IHatMagician2Abstrac
         {
             foreach (var e in oldOwner.CombatState.HittableEnemies)
             {
-                if (e.Powers.FirstOrDefault(p => p is BrandPower) is BrandPower p2)
+                if (e.GetPower<BrandPower>() is { } p2)
                 {
                     await p2.AfterHookPowerRemoved(this);
                 }

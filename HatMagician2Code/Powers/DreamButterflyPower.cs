@@ -8,7 +8,7 @@ public class DreamButterflyPower : HatMagician2Power
 {
     public static int AddCostThisTurn(Player player)
     {
-        DreamButterflyPower? power = (DreamButterflyPower?)player.Creature.Powers.FirstOrDefault(p => p is DreamButterflyPower);
+        DreamButterflyPower? power = player.Creature.GetPower<DreamButterflyPower>();
         if (power != null)
             return -power.Amount;
         return 0;

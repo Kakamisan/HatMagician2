@@ -19,7 +19,7 @@ public class PowerCmdApplyPatch
         , out (BrandColor c1, BrandColor c2, Creature? c3) __state)
     {
         // 覆盖旧印记 先判断叠色等
-        if (power is BrandPower power2 && target.Powers.FirstOrDefault(p => p is BrandPower) is BrandPower oldPower)
+        if (power is BrandPower power2 && target.GetPower<BrandPower>() is { } oldPower)
         {
             // 实际应用的印记颜色
             var color = power2.BaseBrandColor;
@@ -72,9 +72,10 @@ public class PowerCmdApplyPatch
     {
         await originTask;
         var card = cardSource as HatMagician2Card;
-        var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
+        var newPower = target.GetPower<BrandPower>();
         var isFusion = color != applyColor;
 
+        // 如果是叠色这里会执行两次 第一次是递归到内部应用叠色印记 第二次是回到叠色前的调用此时isFusion为true
         if (newPower != null) await newPower.OnApplyPublic(cardSource, isFusion, oldApplier);
 
         // 其他杂项

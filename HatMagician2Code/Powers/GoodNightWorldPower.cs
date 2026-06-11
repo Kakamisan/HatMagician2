@@ -13,15 +13,11 @@ public class GoodNightWorldPower : HatMagician2Power
 
     public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == this.Owner.Side && this.Owner.Player != null)
+        if (side == this.Owner.Side && this.Owner.Player != null && HatMagician2Mgr.HasEnoughEnergy(this.Owner.Player, CostColor, 1))
         {
-            BrandColorEnergyState? state = HatMagician2Mgr.Instance?.GetState(this.Owner.Player);
-            if (state != null && state.GetEnergy(CostColor) > 0)
-            {
-                this.Flash();
-                await state.SpendEnergy(CostColor, 1);
-                await CreatureCmd.GainBlock(this.Owner, this.Amount, ValueProp.Unpowered, null);
-            }
+            this.Flash();
+            await HatMagician2Mgr.SpendEnergy(this.Owner.Player, 1, CostColor);
+            await CreatureCmd.GainBlock(this.Owner, this.Amount, ValueProp.Unpowered, null);
         }
 
         await base.BeforeSideTurnEndEarly(choiceContext, side, participants);

@@ -1,6 +1,7 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Intents;
+using HatMagician2.HatMagician2Code.MonsterPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,16 +9,17 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class ColorFinderPainting : HatMagician2Monster
 {
     public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 9999999, 9999999);
-    protected override string VanillaScene => "parafright";
+    protected override string VanillaScene => "eye_with_teeth";
+
+    private decimal FirstBlock => 30;
 
     public bool IsAwake
     {
@@ -30,8 +32,10 @@ public class ColorFinderPainting : HatMagician2Monster
 
     public override async Task AfterAddedToRoom()
     {
+        await PowerCmd.Apply<IllusionPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, this.Creature, null, true);
         await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), this.Creature, 999, this.Creature, null, true);
-        await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, this.Creature, null, true);
+        await PowerCmd.Apply<ColorOverflowPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, this.Creature, null, true);
+        await CreatureCmd.GainBlock(this.Creature, this.FirstBlock, ValueProp.Unpowered, null, true);
         await base.AfterAddedToRoom();
     }
 
@@ -68,7 +72,8 @@ public class ColorFinderPainting : HatMagician2Monster
 
     private async Task ColorMove(IReadOnlyList<Creature> targets)
     {
-        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER_PAINTING.moves.COLOR.banter"), Creature, VfxColor.White);
+        //TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER_PAINTING.moves.COLOR.banter"), Creature, VfxColor.White);
+        await CreatureCmd.TriggerAnim(this.Creature, "Attack", 0.7f);
         foreach (var target in targets)
         {
             if (target is { Player: not null, IsAlive: true })
@@ -78,26 +83,42 @@ public class ColorFinderPainting : HatMagician2Monster
 
     private async Task ColorfulMove(IReadOnlyList<Creature> targets)
     {
+        await CreatureCmd.TriggerAnim(this.Creature, "Attack", 0.7f);
         foreach (var target in targets)
         {
             if (target is { Player: not null, IsAlive: true })
             {
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
-                CardCmd.PreviewCardPileAdd(
-                    await CardPileCmd.AddGeneratedCardToCombat(this.CombatState.CreateCard<Insomnia>(target.Player), PileType.Draw, null, CardPilePosition.Random));
+                var card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Red;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Blue;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Yellow;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Red;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Blue;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Yellow;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
+                
+                card = (ColorStatus)this.CombatState.CreateCard<ColorStatus>(target.Player);
+                card.DynamicColor = BrandColor.Rainbow;
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, null, CardPilePosition.Random));
             }
         }
+
+        await PowerCmd.Apply<ColorBleedAllPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, this.Creature, null, true);
     }
 
     private async Task BleedMove(IReadOnlyList<Creature> targets)

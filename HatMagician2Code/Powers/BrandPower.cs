@@ -168,22 +168,6 @@ public class BrandPower : HatMagician2Power
         // 实际应用的印记颜色
         var applyColor = color;
 
-        // 以下部分放到了patch中
-        // var oldPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
-
-        // 叠色
-        // if (oldPower != null && (oldPower.BaseBrandColor & color) == 0 && (color & (color - 1)) == 0 && (card == null || !card.Keywords.Contains(HatMagician2Keywords.Erosion)))
-        // {
-        //     applyColor = oldPower.BaseBrandColor | color;
-        // }
-
-        // 触发刻印效果
-        // if (oldPower != null)
-        // {
-        //     await oldPower.OnEvoke(card);
-        //     await PowerCmd.Remove(oldPower);
-        // }
-
         // 应用新印记
         switch (applyColor)
         {
@@ -214,26 +198,12 @@ public class BrandPower : HatMagician2Power
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        // 以下部分放到了patch中
-        // 是否触发叠色效果
-        // var newPower = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
-        // var isFusion = newPower != null && color != applyColor;
-        //
-        // if (newPower != null)
-        // {
-        //     await newPower.OnApply(card, isFusion);
-        // }
-
-        // 其他杂项
-        // if (card != null)
-        //     card.IsBrandApplied = true;
     }
 
     // 应用刻印效果
     public static async Task ApplyBrandEvoke(HatMagician2Card card, PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var oldPower = (BrandPower?)play.Target!.Powers.FirstOrDefault(p => p is BrandPower);
+        var oldPower = play.Target!.GetPower<BrandPower>();
 
         // 触发刻印效果
         if (oldPower != null)
@@ -312,7 +282,7 @@ public class BrandPower : HatMagician2Power
     // 使用印记被动效果
     public static async Task UsePassiveCmd(Creature target, CardModel card, int cnt = 1)
     {
-        var power = (BrandPower?)target.Powers.FirstOrDefault(p => p is BrandPower);
+        var power = target.GetPower<BrandPower>();
         if (power == null) return;
         switch (power.BaseBrandColor)
         {

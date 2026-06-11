@@ -66,27 +66,66 @@ public class HatMagician2Mgr : CustomSingletonModel
         var state = Instance.InitState(player);
 
         var applyColor = color;
-        if (applyColor == BrandColor.Any)
+        switch (applyColor)
         {
-            applyColor = (BrandColor)player.RunState.Rng.CombatEnergyCosts.NextInt((int)BrandColor.Red, (int)BrandColor.White);
-            await state.AddEnergy(applyColor, amount);
-            return;
-        }
-
-        if (applyColor is BrandColor.All or BrandColor.Rainbow)
-        {
-            var c = BrandColor.Red;
-            while (c < BrandColor.Rainbow)
+            case BrandColor.Any:
+                applyColor = (BrandColor)player.RunState.Rng.CombatEnergyCosts.NextInt((int)BrandColor.Red, (int)BrandColor.White);
+                await state.AddEnergy(applyColor, amount);
+                return;
+            case BrandColor.All or BrandColor.Rainbow:
             {
-                await state.AddEnergy(c, amount);
-                c++;
+                var c = BrandColor.Red;
+                while (c < BrandColor.Rainbow)
+                {
+                    await state.AddEnergy(c, amount);
+                    c++;
+                }
+
+                return;
             }
-
-            return;
+            default:
+                await state.AddEnergy(applyColor, amount);
+                await Task.CompletedTask;
+                break;
         }
+    }
 
-        await state.AddEnergy(applyColor, amount);
-        await Task.CompletedTask;
+    // 消耗绘色能量
+    public static async Task SpendEnergy(Player player, int amount, BrandColor color = BrandColor.Any, bool hookFlag = true)
+    {
+        if (amount <= 0) return;
+        if (Instance == null) return;
+        if (!player.Creature.IsAlive) return;
+        var state = Instance.InitState(player);
+        var applyColor = color;
+        switch (applyColor)
+        {
+            case BrandColor.Any:
+            {
+                BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple];
+                // 至少需要1点绘色
+                var list2 = list.Where(c => HatMagician2Mgr.HasEnoughEnergy(player, c, 1)).ToList();
+                if (list2.Count == 0) return;
+                applyColor = player.RunState.Rng.CombatEnergyCosts.NextItem(list2);
+                await state.SpendEnergy(applyColor, amount, hookFlag);
+                return;
+            }
+            case BrandColor.All or BrandColor.Rainbow:
+            {
+                var c = BrandColor.Red;
+                while (c < BrandColor.Rainbow)
+                {
+                    await state.SpendEnergy(c, amount, hookFlag);
+                    c++;
+                }
+
+                return;
+            }
+            default:
+                await state.SpendEnergy(applyColor, amount, hookFlag);
+                await Task.CompletedTask;
+                break;
+        }
     }
 
     public static Decimal ModifyBrandColorCost(ICombatState combatState, HatMagician2Card card, Decimal originalCost)
@@ -126,7 +165,7 @@ public class HatMagician2Mgr : CustomSingletonModel
         if (player.Creature.IsDead) return false;
         var eState = Instance._playerEnergyStates.GetValueOrDefault(player);
         if (eState == null) return false;
-        return cost <= eState.BrandColorEnergyMap[color];
+        return cost <= eState.GetEnergy(color);
     }
 
     public static int GetBrandColorTypeCnt(Player player)
@@ -338,5 +377,23 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static Creature? GetDamageApplierUtil(CardModel? card, Creature? applier)
     {
         return card?.Owner.Creature ?? (applier is { IsDead: true } ? null : applier);
+    }
+
+    // 造成伤害后（按单次伤害算 AOE算一次）
+    public static async Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext,
+        ICombatState? combatState,
+        List<Creature> targets,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource)
+    {
+        if (combatState is null) return;
+        foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                await iterate.AfterSingleDamageReceived(choiceContext, combatState, targets, props, dealer, cardSource);
+            }
+        }
     }
 }

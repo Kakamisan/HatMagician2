@@ -54,7 +54,7 @@ public class Indifference() : HatMagician2Card(1, CardType.Skill, CardRarity.Unc
         var block = 0;
         foreach (var e in this.CombatState.HittableEnemies)
         {
-            if (e.Powers.FirstOrDefault(p => p is GloomyPower) is GloomyPower p2)
+            if (e.GetPower<GloomyPower>() is { } p2)
             {
                 block += p2.Amount;
             }

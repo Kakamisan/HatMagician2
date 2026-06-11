@@ -1,5 +1,6 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 
-public class BrandPurplePower : BrandPower
+public class BrandPurplePower : BrandPower, IHatMagician2AbstractModel
 {
     public override BrandColor BaseBrandColor => BrandColor.Purple;
     protected override decimal BasePassiveVal => 4;
@@ -41,19 +42,15 @@ public class BrandPurplePower : BrandPower
         await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.FusionVal, cardSource?.Owner.Creature ?? this.Applier, null);
     }
 
-    // public override Decimal ModifyDamageAdditive(Creature? target, Decimal amount, ValueProp props, Creature? dealer, CardModel? card)
-    // {
-    //     return this.Owner != dealer || !props.IsPoweredAttack() ? 0M : -this.PassiveVal;
-    // }
-
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
+    public async Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext, ICombatState combatState, List<Creature> targets, ValueProp props, Creature? dealer,
+        CardModel? cardSource)
     {
-        if (dealer == this.Owner && target == this.CombatState.PlayerCreatures.FirstOrDefault(c => c.IsAlive))
+        if (dealer == this.Owner && (dealer.Side == CombatSide.Enemy && targets[0].Side == CombatSide.Player || props.IsPoweredAttack() && cardSource != null))
         {
             await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Owner);
         }
 
-        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, card);
+        await Task.CompletedTask;
     }
 
     public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)

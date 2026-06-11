@@ -14,7 +14,16 @@
   "HATMAGICIAN2-COLOR_FINDER.moves.FOCUS.banter": "……",
   "HATMAGICIAN2-COLOR_FINDER.moves.FOCUS_REMOVE.banter": "[jitter]是谁在打扰我？！[/jitter]",
   "HATMAGICIAN2-COLOR_FINDER.moves.FOCUS.title": "……",
-  "HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter": "这样才对！",
+  "HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter": "[jitter]好烦！[/jitter]",
   "HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.title": "攻击",
+  "HATMAGICIAN2-COLOR_FINDER.moves.ATTACK2.banter": "[jitter]好烦！[/jitter]",
+  "HATMAGICIAN2-COLOR_FINDER.moves.ATTACK2.title": "攻击",
+  "HATMAGICIAN2-COLOR_FINDER.moves.POLLUTION.banter": "[jitter]（喘气……）[/jitter]",
+  "HATMAGICIAN2-COLOR_FINDER.moves.POLLUTION.title": "喘气",
+  "HATMAGICIAN2-COLOR_FINDER.moves.BRAND.banter": "[jitter]这样才对！[/jitter]",
+  "HATMAGICIAN2-COLOR_FINDER.moves.BRAND.title": "狂乱挥舞",
+  "HATMAGICIAN2-COLOR_FINDER.moves.CLEAR.banter": "我的画……",
+  "HATMAGICIAN2-COLOR_FINDER.moves.CLEAR.banter2": "[jitter]不！这不对！[/jitter]",
+  "HATMAGICIAN2-COLOR_FINDER.moves.CLEAR.title": "这不对",
   "HATMAGICIAN2-COLOR_FINDER.name": "寻色者"
 }
