@@ -220,7 +220,7 @@ public class BrandPower : HatMagician2Power
     public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
         if (target.CombatState == null) return;
-        var targets = target.CombatState.Creatures.Where(c => c.Powers.Any(p => p is BrandPower) && c.IsAlive).ToList();
+        var targets = target.CombatState.Creatures.Where(c => c.HasPower<BrandPower>() && c.IsAlive && (c.Side != CombatSide.Player || !c.HasPower<BrandRainbowPower>())).ToList();
         await ChainDamageCmd(targets, damage, applier, card, withDefaultVfx, cnt);
     }
 

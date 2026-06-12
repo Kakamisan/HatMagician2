@@ -17,7 +17,7 @@ public class ColorOverflowPower : HatMagician2Power
     {
         if (target == this.Owner && props.IsPoweredAttack() && cardSource != null && dealer is { Player: not null })
         {
-            await HatMagician2Mgr.AddEnergy(dealer.Player, this.Amount);
+            await HatMagician2Mgr.AddEnergy(dealer.Player, this.Amount, dealer.Player.RunState.Rng.CombatEnergyCosts.NextItem([BrandColor.Red, BrandColor.Blue, BrandColor.Yellow]));
         }
 
         await base.AfterDamageReceivedLate(choiceContext, target, result, props, dealer, cardSource);

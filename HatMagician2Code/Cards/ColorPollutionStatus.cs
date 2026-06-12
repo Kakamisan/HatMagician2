@@ -4,16 +4,18 @@ using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
-[Pool(typeof(HatMagician2CardPool))]
-public class ColorPollutionStatus() : HatMagician2Card(1, CardType.Status, CardRarity.Status, TargetType.Self)
+[Pool(typeof(StatusCardPool))]
+public class ColorPollutionStatus() : HatMagician2Card(0, CardType.Status, CardRarity.Status, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => this.DynamicColor;
     public override int BaseBrandColorCost => 1;
@@ -30,6 +32,7 @@ public class ColorPollutionStatus() : HatMagician2Card(1, CardType.Status, CardR
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     public BrandColor DynamicColor = BrandColor.Red;
+    public Creature? TargetOwner;
 
     protected override bool IsPlayableSub => this.HasEnoughEnergy();
     public override bool HasTurnEndInHandEffect => true;
@@ -37,7 +40,7 @@ public class ColorPollutionStatus() : HatMagician2Card(1, CardType.Status, CardR
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await BrandPower.ApplyBrandPower(this, choiceContext, this.Owner.Creature, this.DynamicColor);
+        await BrandPower.ApplyBrandPower(null, this.TargetOwner ?? this.Owner.Creature, choiceContext, this.Owner.Creature, this.DynamicColor);
         await this.OnPlayNormal(choiceContext, play);
     }
 

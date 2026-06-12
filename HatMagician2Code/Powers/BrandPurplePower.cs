@@ -31,7 +31,8 @@ public class BrandPurplePower : BrandPower, IHatMagician2AbstractModel
         // await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, this.Applier, null);
         await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, card?.Owner.Creature ?? this.Applier, null);
         if (this.Applier == null) return;
-        await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), card?.Owner.Creature ?? this.Applier, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
+        if (this.Owner.Side == CombatSide.Enemy)
+            await PowerCmd.Apply<CollectDarkPower>(new ThrowingPlayerChoiceContext(), card?.Owner.Creature ?? this.Applier, this.EvokeVal2, card?.Owner.Creature ?? this.Applier, null);
     }
 
     protected override async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)

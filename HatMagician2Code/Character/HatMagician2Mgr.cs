@@ -16,12 +16,11 @@ public class HatMagician2Mgr : CustomSingletonModel
     public HatMagician2Mgr() : base(HookType.Combat)
     {
         Instance = this;
-        _playerEnergyStates = new Dictionary<Player, BrandColorEnergyState>();
     }
 
     public static HatMagician2Mgr? Instance { get; private set; }
 
-    private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates; // 绘色能量管理
+    private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates = new(); // 绘色能量管理
 
     // 战前清空绘色能量
     public override async Task BeforeCombatStart()

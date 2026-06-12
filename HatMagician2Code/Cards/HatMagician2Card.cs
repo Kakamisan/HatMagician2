@@ -138,22 +138,21 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     }
 
     // 添加通用数值
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        ((IEnumerable<DynamicVar>)[new EvokePreviewVar(), new BrandColorCostVar(this.BaseBrandColorCost)]).Concat(this.Hat2ExtraCanonicalVars);
+    protected override IEnumerable<DynamicVar> CanonicalVars => [..this.Hat2ExtraCanonicalVars, new EvokePreviewVar(), new BrandColorCostVar(this.BaseBrandColorCost)];
 
     // 添加通用关键词
-    public override IEnumerable<CardKeyword> CanonicalKeywords => ((IEnumerable<CardKeyword>)[]).Concat(this.Hat2CanonicalKeywords);
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [..this.Hat2CanonicalKeywords];
 
     // 添加通用Tag
-    protected override HashSet<CardTag> CanonicalTags
-    {
-        get
-        {
-            HashSet<CardTag> set = [];
-            set.UnionWith(this.Hat2CanonicalTags);
-            return set;
-        }
-    }
+    protected override HashSet<CardTag> CanonicalTags => [..this.Hat2CanonicalTags];
+    // {
+    //     get
+    //     {
+    //         HashSet<CardTag> set = [];
+    //         set.UnionWith(this.Hat2CanonicalTags);
+    //         return set;
+    //     }
+    // }
 
     public override TargetType TargetType
     {

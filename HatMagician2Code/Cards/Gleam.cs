@@ -22,8 +22,8 @@ public class Gleam() : HatMagician2Card(1, CardType.Attack, CardRarity.Uncommon,
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await this.CommonAoeAttack(choiceContext, play, this.DynamicVars.Repeat.IntValue);
-        await this.OnPlayNormal(choiceContext, play);
+        await this.CommonAoeAttack(choiceContext, play, this.DynamicVars.Repeat.IntValue + 1);
+        await base.OnPlayWhenCostBrandColor(choiceContext, play);
     }
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)

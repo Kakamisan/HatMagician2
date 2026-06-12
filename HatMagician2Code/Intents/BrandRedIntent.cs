@@ -7,4 +7,5 @@ public class BrandRedIntent : DebuffIntent
 {
     protected override string IntentPrefix => "HATMAGICIAN2-BRAND_RED";
     public override string GetAnimation(IEnumerable<Creature> targets, Creature owner) => this._cachedAnimationName ??= "DEBUFF".ToLowerInvariant();
+    protected override string SpritePath => "intents/brand_red.png";
 }

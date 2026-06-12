@@ -1,6 +1,8 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -21,11 +23,9 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
     // 受到攻击后删除能力
     public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (IsTriggerMulti(cardSource) && props.IsPoweredAttack() && this.Owner == target && this.Amount > 1)
+        if ((IsTriggerMulti(cardSource) || dealer?.Side == CombatSide.Enemy) && props.IsPoweredAttack() && this.Owner == target && this.Amount > 1)
         {
-            // this.Flash();
             this._ready2Remove = true;
-            // PowerCmd.Remove(this);
         }
 
         return base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
@@ -40,6 +40,17 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
         }
 
         return base.AfterCardPlayedLate(choiceContext, cardPlay);
+    }
+
+    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    {
+        if (this._ready2Remove)
+        {
+            this.Flash();
+            PowerCmd.Remove(this);
+        }
+
+        return base.AfterAttack(choiceContext, command);
     }
 
     // 是否触发倍伤 攻击牌即触发 （后续优化 伤害大于0才触发？暂时没思路）
@@ -57,10 +68,10 @@ public class MultiDamagePower : HatMagician2Power, IHatMagician2AbstractModel
         return 0;
     }
 
-    // 非职业卡 走通用乘算
+    // 非职业卡/怪物攻击 走通用乘算
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (cardSource is HatMagician2Card) return 1;
-        return IsTriggerMulti(cardSource) && props.IsPoweredAttack() && this.Owner == target ? this.Amount : 1;
+        return (IsTriggerMulti(cardSource) || dealer?.Side == CombatSide.Enemy) && props.IsPoweredAttack() && this.Owner == target ? this.Amount : 1;
     }
 }

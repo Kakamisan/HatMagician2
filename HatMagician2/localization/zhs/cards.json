@@ -202,8 +202,8 @@
   "HATMAGICIAN2-VIBRANT_PALETTE.description": "每回合你第一次消耗绘色时，收集{Hat2Var:diff()}点对应的绘色。",
   "HATMAGICIAN2-VIBRANT_PALETTE.title": "斑斓色彩",
   
-  "HATMAGICIAN2-COLOR_STATUS.description": "绘色:给予画布{Branch:choose(1|2|4):[red]火焰[/red]|[color=#31b0eb]冰霜[/color]|[color=#e7ea31]闪电[/color]|虹色}印记。",
+  "HATMAGICIAN2-COLOR_STATUS.description": "{Branch:choose(1|2|4):给予画布[red]火焰[/red]印记|给予画布[color=#31b0eb]冰霜[/color]印记|给予画布[color=#e7ea31]闪电[/color]印记|从[red]火焰[/red]、[color=#31b0eb]冰霜[/color]、[color=#e7ea31]闪电[/color]中选择，消耗2点绘色，给予画布对应的印记}。",
   "HATMAGICIAN2-COLOR_STATUS.title": "色彩",
-  "HATMAGICIAN2-COLOR_POLLUTION_STATUS.description": "消耗绘色才能打出。使自己获得{Branch:choose(1|2|4):[red]火焰[/red]|[color=#31b0eb]冰霜[/color]|[color=#e7ea31]闪电[/color]|虹色}印记。在你的回合结束时，如果这张牌在你的[gold]手牌[/gold]中，你受到{Damage:diff()}点伤害。",
+  "HATMAGICIAN2-COLOR_POLLUTION_STATUS.description": "消耗绘色才能打出。使自己获得{Branch:choose(1|2|4):[red]火焰[/red]|[color=#31b0eb]冰霜[/color]|[color=#e7ea31]闪电[/color]|对应}印记。在你的回合结束时，如果这张牌在你的[gold]手牌[/gold]中，你受到{Damage:diff()}点伤害。",
   "HATMAGICIAN2-COLOR_POLLUTION_STATUS.title": "污染"
 }

@@ -1,8 +1,10 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
@@ -23,6 +25,14 @@ public class BrandRainbowPower : BrandPower
         await base.OnFusion(cardSource, oldApplier);
         if ((cardSource?.Owner ?? this.Applier?.Player) is { } player)
             await PlayerCmd.GainEnergy(this.FusionVal, player);
+        if (this.Owner.Side == CombatSide.Player)
+        {
+            var list = this.Owner.Powers.Where(p => p is { TypeForCurrentAmount: PowerType.Debuff, IsVisible: true } and not BrandRainbowPower).ToList();
+            foreach (var debuff in list)
+            {
+                await PowerCmd.Remove(debuff);
+            }
+        }
     }
 
     protected override async Task OnEvoke(HatMagician2Card? card)

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -24,9 +25,18 @@ public class BrandWhitePower : BrandPower
     {
         if (!this.Owner.IsAlive) return;
         if (this.Owner.CombatState == null) return;
-        if (this.Applier?.Player == null) return;
-        await base.OnEvoke(card);
-        await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, card?.Owner ?? this.Applier.Player);
+        if (this.Owner.Side == CombatSide.Enemy)
+        {
+            if (this.Applier?.Player == null) return;
+            await base.OnEvoke(card);
+            await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), this.EvokeVal, card?.Owner ?? this.Applier.Player);
+        }
+
+        if (this.Owner.Side == CombatSide.Player)
+        {
+            await base.OnEvoke(card);
+            await PowerCmd.Apply<DrawCardsNextTurnPatchPower>(new ThrowingPlayerChoiceContext(), this.Owner, -this.EvokeVal, this.Applier, card);
+        }
     }
 
     protected override async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
@@ -38,9 +48,12 @@ public class BrandWhitePower : BrandPower
             await CreatureCmd.GainBlock(applier, new BlockVar(this.FusionVal, ValueProp.Unpowered), null);
 
         // 群体加格挡
-        var allies = this.CombatState.PlayerCreatures.Where(c => c is { IsAlive: true, IsPlayer: true } && c != applier);
-        foreach (var ally in allies)
-            await CreatureCmd.GainBlock(ally, new BlockVar(this.FusionVal / 2, ValueProp.Unpowered), null);
+        if (applier?.Side == CombatSide.Player)
+        {
+            var allies = this.CombatState.PlayerCreatures.Where(c => c is { IsAlive: true, IsPlayer: true } && c != applier);
+            foreach (var ally in allies)
+                await CreatureCmd.GainBlock(ally, new BlockVar(this.FusionVal / 2, ValueProp.Unpowered), null);
+        }
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -53,16 +66,26 @@ public class BrandWhitePower : BrandPower
     protected override async Task OnPassive(bool setFlag = true)
     {
         if (this.Owner.CombatState == null) return;
-        if (this.Applier?.Player == null) return;
+        //if (this.Applier?.Player == null) return;
         await base.OnPassive(setFlag);
         await UsePassive(this);
     }
 
     public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
     {
-        for (int i = 0; i < cnt; i++)
+        if (power.Owner.Side == CombatSide.Enemy)
         {
-            await HatMagician2Mgr.AddEnergy(card?.Owner ?? power.Applier!.Player!, (int)power.PassiveVal);
+            var applier = HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier);
+            if (applier?.Player == null) return;
+            for (int i = 0; i < cnt; i++)
+            {
+                await HatMagician2Mgr.AddEnergy(applier.Player, (int)power.PassiveVal);
+            }
+        }
+
+        if (power.Owner is { Side: CombatSide.Player, Player: not null })
+        {
+            await HatMagician2Mgr.SpendEnergy(power.Owner.Player, (int)power.PassiveVal, BrandColor.Any, false);
         }
 
         await Task.CompletedTask;

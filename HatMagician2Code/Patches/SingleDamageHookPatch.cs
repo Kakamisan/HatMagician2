@@ -37,7 +37,8 @@ public class SingleDamageHookPatch
     {
         var taskResult = await originTask;
         var targets2 = targets.ToList();
-        await HatMagician2Mgr.AfterSingleDamageReceived(choiceContext, targets2[0].CombatState, targets2, props, dealer, cardSource);
+        if (targets2.Count > 0)
+            await HatMagician2Mgr.AfterSingleDamageReceived(choiceContext, targets2[0].CombatState, targets2, props, dealer, cardSource);
         return taskResult;
     }
 }

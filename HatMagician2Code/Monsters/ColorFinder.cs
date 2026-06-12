@@ -2,6 +2,8 @@
 using HatMagician2.HatMagician2Code.Intents;
 using HatMagician2.HatMagician2Code.MonsterPowers;
 using HatMagician2.HatMagician2Code.Powers;
+using MegaCrit.Sts2.Core.Animation;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
@@ -31,13 +33,13 @@ public class ColorFinder : HatMagician2Monster
     private bool PaintingRainbow => this.Painting?.GetPower<BrandPower>() is BrandRainbowPower;
 
     private static decimal FirstBlock => 30;
-    private static int BaseAttack1 => 45;
-    private static int BasePower1 => 6;
-    private static int BaseAttack2 => 15;
+    private static int BaseAttack1 => 30;
+    private static int BasePower1 => 3;
+    private static int BaseAttack2 => 11;
     private static int BaseAttack2Repeat => 3;
-    private static int BaseAttack3 => 6;
-    private static int BaseAttack3Repeat => 6;
-    private static int BasePower2 => 6;
+    private static int BaseAttack3 => 8;
+    private static int BaseAttack3Repeat => 3;
+    private static int BasePower2 => 3;
 
     private int _brandMoveCnt;
 
@@ -46,8 +48,15 @@ public class ColorFinder : HatMagician2Monster
         await PowerCmd.Apply<FocusPaintingPower>(new ThrowingPlayerChoiceContext(), this.Creature, 3, null, null, true);
         await PowerCmd.Apply<ColorLeechPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, null, null, true);
         await PowerCmd.Apply<BlockHeartPower>(new ThrowingPlayerChoiceContext(), this.Creature, 1, null, null, true);
-        await CreatureCmd.GainBlock(this.Creature, FirstBlock, ValueProp.Unpowered, null, true);
+        // await CreatureCmd.GainBlock(this.Creature, FirstBlock, ValueProp.Unpowered, null);
         await base.AfterAddedToRoom();
+    }
+
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (side == CombatSide.Player && combatState.RoundNumber == 1)
+            await CreatureCmd.GainBlock(this.Creature, FirstBlock, ValueProp.Unpowered, null);
+        await base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
     }
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
@@ -57,11 +66,11 @@ public class ColorFinder : HatMagician2Monster
         var attackMove2 = new MoveState("ATTACK2", this.AttackMove2, new MultiAttackIntent(BaseAttack2, BaseAttack2Repeat), new BrandYellowIntent());
         var pollutionMove = new MoveState("POLLUTION", this.PollutionMove, new DebuffIntent());
         var brandMove1 = new MoveState("BRAND1", this.BrandMove, new MultiAttackIntent(BaseAttack3, BaseAttack3Repeat), new BrandRedIntent(),
-            new HateRainbowIntent(), new ColorFinderPaintIntent());
+            new ColorFinderPaintIntent(), new HateRainbowIntent());
         var brandMove2 = new MoveState("BRAND2", this.BrandMove, new MultiAttackIntent(BaseAttack3, BaseAttack3Repeat), new BrandBlueIntent(),
-            new HateRainbowIntent(), new ColorFinderPaintIntent());
+            new ColorFinderPaintIntent(), new HateRainbowIntent());
         var brandMove3 = new MoveState("BRAND3", this.BrandMove, new MultiAttackIntent(BaseAttack3, BaseAttack3Repeat), new BrandYellowIntent(),
-            new HateRainbowIntent(), new ColorFinderPaintIntent());
+            new ColorFinderPaintIntent(), new HateRainbowIntent());
         var clearMove = new MoveState("CLEAR", this.ClearMove, new UnknownIntent());
 
         var conditionalBranchState = new ConditionalBranchState("FOCUS_BRANCH");
@@ -119,9 +128,9 @@ public class ColorFinder : HatMagician2Monster
 
     private async Task AttackMove2(IReadOnlyList<Creature> targets)
     {
-        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter"), Creature, VfxColor.White);
-        await DamageCmd.Attack(BaseAttack2).FromMonster(this).WithHitCount(BaseAttack2Repeat).WithAttackerAnim("RamAttack", 1.2f).WithAttackerFx(null, AttackSfx)
-            .WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK2.banter"), Creature, VfxColor.White);
+        await CreatureCmd.TriggerAnim(this.Creature, "RamAttack", 1.2f);
+        await DamageCmd.Attack(BaseAttack2).FromMonster(this).WithHitCount(BaseAttack2Repeat).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         foreach (var target in targets)
         {
             await BrandPower.ApplyBrandPower(null, this.Creature, new ThrowingPlayerChoiceContext(), target, BrandColor.Yellow);
@@ -144,8 +153,8 @@ public class ColorFinder : HatMagician2Monster
     private async Task BrandMove(IReadOnlyList<Creature> targets)
     {
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.BRAND.banter"), Creature, VfxColor.White);
-        await DamageCmd.Attack(BaseAttack3).FromMonster(this).WithHitCount(BaseAttack3Repeat).WithAttackerAnim("RamAttack", 1.2f).WithAttackerFx(null, AttackSfx)
-            .WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await CreatureCmd.TriggerAnim(this.Creature, "RamAttack", 1.2f);
+        await DamageCmd.Attack(BaseAttack3).FromMonster(this).WithHitCount(BaseAttack3Repeat).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), this.Creature, BasePower2, this.Creature, null);
         var color = this._brandMoveCnt switch
         {
@@ -178,5 +187,27 @@ public class ColorFinder : HatMagician2Monster
         {
             await PowerCmd.Remove(target.GetPower<BrandPower>());
         }
+    }
+
+    public override CreatureAnimator GenerateAnimator(MegaSprite controller)
+    {
+        AnimState initialState = new AnimState("idle_loop", true);
+        AnimState state1 = new AnimState("attack_bomb");
+        AnimState state2 = new AnimState("attack_ram");
+        AnimState state3 = new AnimState("cast_shield");
+        AnimState state4 = new AnimState("hurt");
+        AnimState state5 = new AnimState("die");
+        state1.NextState = initialState;
+        state3.NextState = initialState;
+        state2.NextState = initialState;
+        state4.NextState = initialState;
+        CreatureAnimator animator = new CreatureAnimator(initialState, controller);
+        animator.AddAnyState("Dead", state5);
+        animator.AddAnyState("Hit", state4);
+        animator.AddAnyState("Cast", state1);
+        animator.AddAnyState("BombCast", state1);
+        animator.AddAnyState("RamAttack", state2);
+        animator.AddAnyState("ShieldAttack", state3);
+        return animator;
     }
 }
