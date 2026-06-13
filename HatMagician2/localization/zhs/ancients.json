@@ -1,6 +1,10 @@
 {
-  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-0r.char": "I am angry at the architect",
-  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-0r.next": "Continue",
-  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-1r.ancient": "You die",
-  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-attack": "Both"
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-0r.char": "不……不行了，一放松下来变得好困QAQ",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-0r.next": "寻找舒适位置",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-1r.ancient": "哪来的小家伙敢闯进我的工房",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-1r.next": "Zzz",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-2r.char": "Zzz……",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-2r.next": "继续",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-3r.ancient": "（不是这已经睡着了）（默默开启塔底传送门）",
+  "THE_ARCHITECT.talk.HATMAGICIAN2-HAT_MAGICIAN2.0-attack": "None"
 }

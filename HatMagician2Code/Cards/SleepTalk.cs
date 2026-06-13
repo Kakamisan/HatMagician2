@@ -25,7 +25,7 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
-    public decimal IncreaseDamage;
+    private decimal IncreaseDamage => CardStateSingleton.GetSleepCardCnt(this.Owner) * this.DynamicHat2Var.IntValue;
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -50,20 +50,20 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
     }
 
     // 每打出一张睡衣卡 伤害增加N
-    public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner == this.Owner && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep))
-        {
-            this.IncreaseDamage += this.DynamicHat2Var.IntValue;
-        }
-
-        return base.AfterCardPlayedLate(choiceContext, cardPlay);
-    }
+    // public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    // {
+    //     if (cardPlay.Card.Owner == this.Owner && cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep))
+    //     {
+    //         this.IncreaseDamage += this.DynamicHat2Var.IntValue;
+    //     }
+    //
+    //     return base.AfterCardPlayedLate(choiceContext, cardPlay);
+    // }
 
     // 回合结束重置伤害加成
-    public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        this.IncreaseDamage = 0;
-        return base.AfterSideTurnEndLate(choiceContext, side, participants);
-    }
+    // public override Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    // {
+    //     this.IncreaseDamage = 0;
+    //     return base.AfterSideTurnEndLate(choiceContext, side, participants);
+    // }
 }

@@ -1,5 +1,9 @@
 ﻿using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Rooms;
 
 namespace HatMagician2.HatMagician2Code.Character;
@@ -14,7 +18,9 @@ public class CardStateSingleton : CustomSingletonModel, IHatMagician2AbstractMod
     private static CardStateSingleton? _instance;
 
     private readonly Dictionary<Player, int> _brandColorCostCnt = new();
-
+    private readonly Dictionary<Player, int> _sleepCardCnt = new();
+    
+    // 记录本场战斗绘色消耗数量
     public async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
         this._brandColorCostCnt.TryAdd(player, 0);
@@ -27,10 +33,36 @@ public class CardStateSingleton : CustomSingletonModel, IHatMagician2AbstractMod
         return _instance != null ? _instance._brandColorCostCnt.GetValueOrDefault(player, 0) : 0;
     }
 
+    // 记录本回合打出睡衣时间卡数
+    public override Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Keywords.Contains(HatMagician2Keywords.Sleep))
+        {
+            var player = cardPlay.Card.Owner;
+            this._sleepCardCnt.TryAdd(player, 0);
+            this._sleepCardCnt[player] += 1;
+        }
+
+        return base.AfterCardPlayedLate(choiceContext, cardPlay);
+    }
+
+    public static int GetSleepCardCnt(Player player)
+    {
+        return _instance != null ? _instance._sleepCardCnt.GetValueOrDefault(player, 0) : 0;
+    }
+    
+    // 回合结束时重置数据
+    public override async Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        this._sleepCardCnt.Clear();
+        await base.AfterSideTurnEndLate(choiceContext, side, participants);
+    }
+
     // 战前战后重置数据
     public override async Task BeforeCombatStart()
     {
         this._brandColorCostCnt.Clear();
+        this._sleepCardCnt.Clear();
         await base.BeforeCombatStart();
     }
 

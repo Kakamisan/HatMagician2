@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://nkey6gtx4dnd"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://hrq2n4nl3yh8" path="res://HatMagician2/anim/map/boss_node_color_finder.atlas" id="1_kd3mr"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://dj4pss8deh1d0" path="res://HatMagician2/anim/map/boss_node_color_finder.skel" id="2_02vbr"]
+
+[resource]
+atlas_res = ExtResource("1_kd3mr")
+skeleton_file_res = ExtResource("2_02vbr")

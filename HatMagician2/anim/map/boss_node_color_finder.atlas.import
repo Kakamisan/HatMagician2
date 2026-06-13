@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://hrq2n4nl3yh8"
+path="res://.godot/imported/boss_node_color_finder.atlas-ca4d503932ed4e4191549400f26eb765.spatlas"
+
+[deps]
+
+source_file="res://HatMagician2/anim/map/boss_node_color_finder.atlas"
+dest_files=["res://.godot/imported/boss_node_color_finder.atlas-ca4d503932ed4e4191549400f26eb765.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"

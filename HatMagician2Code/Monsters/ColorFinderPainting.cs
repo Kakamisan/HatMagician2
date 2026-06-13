@@ -1,4 +1,5 @@
-﻿using HatMagician2.HatMagician2Code.Cards;
+﻿using BaseLib.Audio;
+using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Intents;
 using HatMagician2.HatMagician2Code.MonsterPowers;
@@ -13,6 +14,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -20,11 +22,15 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class ColorFinderPainting : HatMagician2Monster
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 999999999, 999999999);
+    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 9999999, 9999999);
     protected override string VanillaScene => "eye_with_teeth";
+
+    protected override string AttackSfx => "event:/sfx/enemy/enemy_attacks/eye_with_teeth/eye_with_teeth_attack";
 
     private static decimal FirstBlock => 30;
     private static int CardNum => 6;
+
+    // public static ModSound Bgm => new($"{MainFile.ResPath}/music/first_dance_clip.mp3", ModAudio.SoundType.Music);
 
     private bool IsAwake
     {
@@ -43,6 +49,9 @@ public class ColorFinderPainting : HatMagician2Monster
         await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), this.Creature, 999, this.Creature, null, true);
         await PowerCmd.Apply<ColorOverflowPower>(new ThrowingPlayerChoiceContext(), this.Creature, 2, this.Creature, null, true);
         // await CreatureCmd.GainBlock(this.Creature, this.FirstBlock, ValueProp.Unpowered, null);
+
+        NRunMusicController.Instance?.StopMusic();
+
         await base.AfterAddedToRoom();
     }
 
@@ -56,22 +65,22 @@ public class ColorFinderPainting : HatMagician2Monster
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         var focusMove = new MoveState("FOCUS", this.FocusMove, new FocusIntent());
-        var colorMove = new MoveState("COLOR", this.ColorMove, new ColorIntent());
+        // var colorMove = new MoveState("COLOR", this.ColorMove, new ColorIntent());
         var colorMove2 = new MoveState("COLOR2", this.ColorMove, new ColorIntent());
         var cardMove = new MoveState("COLORFUL", this.ColorfulMove, new ColorfulIntent());
         var bleedMove = new MoveState("BLEED", this.BleedMove, new BleedIntent());
         var conditionalBranchState = new ConditionalBranchState("FOCUS_BRANCH");
         focusMove.FollowUpState = conditionalBranchState;
         conditionalBranchState.AddState(focusMove, () => !this.IsAwake);
-        conditionalBranchState.AddState(colorMove, () => this.IsAwake);
-        colorMove.FollowUpState = colorMove2;
+        conditionalBranchState.AddState(colorMove2, () => this.IsAwake);
+        // colorMove.FollowUpState = colorMove2;
         colorMove2.FollowUpState = cardMove;
         cardMove.FollowUpState = bleedMove;
         bleedMove.FollowUpState = bleedMove;
 
         List<MonsterState> states =
         [
-            conditionalBranchState, focusMove, colorMove,
+            conditionalBranchState, focusMove,
             colorMove2, cardMove, bleedMove,
         ];
 
@@ -87,18 +96,23 @@ public class ColorFinderPainting : HatMagician2Monster
     private async Task ColorMove(IReadOnlyList<Creature> targets)
     {
         //TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER_PAINTING.moves.COLOR.banter"), Creature, VfxColor.White);
+        SfxCmd.Play(this.AttackSfx);
         await CreatureCmd.TriggerAnim(this.Creature, "Attack", 0.7f);
         foreach (var target in targets)
         {
             if (target is { Player: not null, IsAlive: true })
-                await HatMagician2Mgr.AddEnergy(target.Player, 1, BrandColor.Rainbow);
+                await HatMagician2Mgr.AddEnergy(target.Player, 2, BrandColor.Rainbow);
         }
     }
 
     private async Task ColorfulMove(IReadOnlyList<Creature> targets)
     {
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER_PAINTING.moves.COLORFUL.banter"), Creature, VfxColor.White);
+        SfxCmd.Play(this.AttackSfx);
         await CreatureCmd.TriggerAnim(this.Creature, "Attack", 0.7f);
+        // ModAudio.PlaySound(Bgm, -3);
+        Hat2Audio.ColorFinderBgm.Play();
+        await CreatureCmd.TriggerAnim(this.Creature, "Attack", 1.4f);
         foreach (var target in targets)
         {
             if (target is { Player: not null, IsAlive: true })

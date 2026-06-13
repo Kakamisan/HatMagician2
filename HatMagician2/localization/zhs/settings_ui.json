@@ -5,5 +5,8 @@
   "HATMAGICIAN2-SHOW_BASE_BRAND_COLOR_TIPS.hover.desc": "是否在卡牌侧边显示印记基础机制的说明，因为提示占用空间较大若已熟悉则建议关闭。",
   "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.title": "在初始遗物上显示叠色印记提示",
   "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.title": "叠色印记",
-  "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.desc": "是否在初始遗物显示叠色印记的提示，因为提示占用空间较大若已熟悉则建议关闭。"
+  "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.desc": "是否在初始遗物显示叠色印记的提示，因为提示占用空间较大若已熟悉则建议关闭。",
+  "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.title": "是否允许3层出现寻色者BOSS",
+  "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.hover.title": "挑战寻色者",
+  "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.hover.desc": "勾选后，3层将有概率出现寻色者BOSS。"
 }

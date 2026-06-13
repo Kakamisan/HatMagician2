@@ -21,7 +21,7 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class ColorFinder : HatMagician2Monster
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 999, 999);
+    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 879, 762);
     protected override string VanillaScene => "magi_knight";
     public override string HurtSfx => "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_hurt";
     protected override string AttackSfx => "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_attack_ram";
@@ -33,7 +33,7 @@ public class ColorFinder : HatMagician2Monster
     private bool PaintingRainbow => this.Painting?.GetPower<BrandPower>() is BrandRainbowPower;
 
     private static decimal FirstBlock => 30;
-    private static int BaseAttack1 => 30;
+    // private static int BaseAttack1 => 30;
     private static int BasePower1 => 3;
     private static int BaseAttack2 => 11;
     private static int BaseAttack2Repeat => 3;
@@ -62,7 +62,7 @@ public class ColorFinder : HatMagician2Monster
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         var focusMove = new MoveState("FOCUS", this.FocusMove, new FocusIntent());
-        var attackMove1 = new MoveState("ATTACK1", this.AttackMove1, new SingleAttackIntent(BaseAttack1), new BuffIntent());
+        // var attackMove1 = new MoveState("ATTACK1", this.AttackMove1, new SingleAttackIntent(BaseAttack1), new BuffIntent());
         var attackMove2 = new MoveState("ATTACK2", this.AttackMove2, new MultiAttackIntent(BaseAttack2, BaseAttack2Repeat), new BrandYellowIntent());
         var pollutionMove = new MoveState("POLLUTION", this.PollutionMove, new DebuffIntent());
         var brandMove1 = new MoveState("BRAND1", this.BrandMove, new MultiAttackIntent(BaseAttack3, BaseAttack3Repeat), new BrandRedIntent(),
@@ -76,8 +76,8 @@ public class ColorFinder : HatMagician2Monster
         var conditionalBranchState = new ConditionalBranchState("FOCUS_BRANCH");
         focusMove.FollowUpState = conditionalBranchState;
         conditionalBranchState.AddState(focusMove, () => !this.IsAwake);
-        conditionalBranchState.AddState(attackMove1, () => this.IsAwake);
-        attackMove1.FollowUpState = attackMove2;
+        conditionalBranchState.AddState(attackMove2, () => this.IsAwake);
+        // attackMove1.FollowUpState = attackMove2;
         attackMove2.FollowUpState = pollutionMove;
         pollutionMove.FollowUpState = brandMove1;
         var conditionalBranchState2 = new ConditionalBranchState("BRAND_BRANCH");
@@ -97,7 +97,7 @@ public class ColorFinder : HatMagician2Monster
 
         List<MonsterState> states =
         [
-            conditionalBranchState, focusMove, attackMove1,
+            conditionalBranchState, focusMove,
             attackMove2, pollutionMove, brandMove1, brandMove2,
             brandMove3, clearMove, conditionalBranchState2,
             conditionalBranchState3,
@@ -116,19 +116,21 @@ public class ColorFinder : HatMagician2Monster
     public async Task RemoveFocusMove()
     {
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.FOCUS_REMOVE.banter"), Creature, VfxColor.Red);
+        await PowerCmd.Apply<AgitationPower>(new ThrowingPlayerChoiceContext(), this.Creature, BasePower1, this.Creature, null);
         await Task.CompletedTask;
     }
 
-    private async Task AttackMove1(IReadOnlyList<Creature> targets)
-    {
-        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter"), Creature, VfxColor.White);
-        await DamageCmd.Attack(BaseAttack1).FromMonster(this).WithAttackerAnim("RamAttack", 1.2f).WithAttackerFx(null, AttackSfx).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<AgitationPower>(new ThrowingPlayerChoiceContext(), this.Creature, BasePower1, this.Creature, null);
-    }
+    // private async Task AttackMove1(IReadOnlyList<Creature> targets)
+    // {
+    //     TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter"), Creature, VfxColor.White);
+    //     await DamageCmd.Attack(BaseAttack1).FromMonster(this).WithAttackerAnim("RamAttack", 1.2f).WithAttackerFx(null, AttackSfx).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+    //     await PowerCmd.Apply<AgitationPower>(new ThrowingPlayerChoiceContext(), this.Creature, BasePower1, this.Creature, null);
+    // }
 
     private async Task AttackMove2(IReadOnlyList<Creature> targets)
     {
-        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK2.banter"), Creature, VfxColor.White);
+        TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.ATTACK.banter"), Creature, VfxColor.White);
+        SfxCmd.Play(this.AttackSfx);
         await CreatureCmd.TriggerAnim(this.Creature, "RamAttack", 1.2f);
         await DamageCmd.Attack(BaseAttack2).FromMonster(this).WithHitCount(BaseAttack2Repeat).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         foreach (var target in targets)
@@ -153,6 +155,7 @@ public class ColorFinder : HatMagician2Monster
     private async Task BrandMove(IReadOnlyList<Creature> targets)
     {
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.BRAND.banter"), Creature, VfxColor.White);
+        SfxCmd.Play(this.AttackSfx);
         await CreatureCmd.TriggerAnim(this.Creature, "RamAttack", 1.2f);
         await DamageCmd.Attack(BaseAttack3).FromMonster(this).WithHitCount(BaseAttack3Repeat).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), this.Creature, BasePower2, this.Creature, null);

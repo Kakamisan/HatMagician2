@@ -13,7 +13,7 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class TossingAndTurning() : HatMagician2Card(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override BrandColor BaseBrandColor => BrandColor.Yellow;
-    public override int BaseBrandColorCost => 3;
+    public override int BaseBrandColorCost => 2;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [];
@@ -31,5 +31,5 @@ public class TossingAndTurning() : HatMagician2Card(1, CardType.Power, CardRarit
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicBrandCost.UpgradeValueBy(-1);
+    protected override void OnUpgrade() => this.AddKeyword(CardKeyword.Innate);
 }
