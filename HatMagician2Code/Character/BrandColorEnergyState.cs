@@ -1,6 +1,6 @@
-﻿using Godot;
-using HatMagician2.HatMagician2Code.SceneControl;
+﻿using HatMagician2.HatMagician2Code.SceneControl;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -9,7 +9,7 @@ namespace HatMagician2.HatMagician2Code.Character;
 
 public class BrandColorEnergyState(Player player)
 {
-    private bool _summon;
+    public bool Summon { get; private set; }
 
     // 绘色能量
     private readonly Dictionary<BrandColor, int> _brandColorEnergyMap = new()
@@ -30,7 +30,7 @@ public class BrandColorEnergyState(Player player)
 
         this._petVisuals.Clear();
 
-        this._summon = false;
+        this.Summon = false;
 
         //this.UpdateAllPet();
     }
@@ -46,23 +46,23 @@ public class BrandColorEnergyState(Player player)
             return;
         this._petVisuals[color] = pet;
         pet.SetEnergy(0, false);
+        var isLocal = LocalContext.IsMe(player);
+        pet.SetShow(isLocal || Hat2ModConfigUtil.ShouldShowPet());
+        pet.SetAlpha(isLocal ? 1 : (float)Hat2ModConfig.ShowOthersBrandPetAlpha);
     }
 
     // 隐藏一个绘色
     private void HideBrandColor(BrandColor color)
     {
         this._petVisuals.TryGetValue(color, out var pet);
-        if (pet != null)
-        {
-            pet.Visible = false;
-        }
+        pet?.SetShow(false);
     }
 
     // 召唤全部
     private void SummonAll()
     {
-        if (this._summon) return;
-        this._summon = true;
+        if (this.Summon) return;
+        this.Summon = true;
         foreach (var color in this._brandColorEnergyMap.Keys)
         {
             this.SummonBrandColor(color);
@@ -72,7 +72,7 @@ public class BrandColorEnergyState(Player player)
     // 寄了之后隐藏全部绘色
     public void HideAll()
     {
-        if (!this._summon) return;
+        if (!this.Summon) return;
         foreach (var color in this._brandColorEnergyMap.Keys)
         {
             this.HideBrandColor(color);

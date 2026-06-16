@@ -2,6 +2,7 @@
 using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -21,6 +22,8 @@ public class HatMagician2Mgr : CustomSingletonModel
     public static HatMagician2Mgr? Instance { get; private set; }
 
     private readonly Dictionary<Player, BrandColorEnergyState> _playerEnergyStates = new(); // 绘色能量管理
+
+    public int CountOtherSummonPlayers => this._playerEnergyStates.Count(p => p.Value.Summon && !LocalContext.IsMe(p.Key));
 
     // 战前清空绘色能量
     public override async Task BeforeCombatStart()

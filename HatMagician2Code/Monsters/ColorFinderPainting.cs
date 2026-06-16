@@ -15,6 +15,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -50,7 +51,8 @@ public class ColorFinderPainting : HatMagician2Monster
         await PowerCmd.Apply<ColorOverflowPower>(new ThrowingPlayerChoiceContext(), this.Creature, 2, this.Creature, null, true);
         // await CreatureCmd.GainBlock(this.Creature, this.FirstBlock, ValueProp.Unpowered, null);
 
-        NRunMusicController.Instance?.StopMusic();
+        // NRunMusicController.Instance?.StopMusic();
+        NRunMusicController.Instance?.PlayCustomMusic(Hat2Audio.ColorFinderBgmPath);
 
         await base.AfterAddedToRoom();
     }
@@ -110,8 +112,7 @@ public class ColorFinderPainting : HatMagician2Monster
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER_PAINTING.moves.COLORFUL.banter"), Creature, VfxColor.White);
         SfxCmd.Play(this.AttackSfx);
         await CreatureCmd.TriggerAnim(this.Creature, "Attack", 0.7f);
-        // ModAudio.PlaySound(Bgm, -3);
-        Hat2Audio.ColorFinderBgm.Play();
+        ModAudio.PlaySound(Hat2Audio.ColorFinderBgm, -7, targetNode: NCombatRoom.Instance?.GetCreatureNode(this.Creature));
         await CreatureCmd.TriggerAnim(this.Creature, "Attack", 1.4f);
         foreach (var target in targets)
         {

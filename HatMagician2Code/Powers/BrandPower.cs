@@ -71,7 +71,7 @@ public class BrandPower : HatMagician2Power
     // 刻印效果
     protected virtual async Task OnEvoke(HatMagician2Card? cardSource)
     {
-        Log.Info("[   Hat2   ]OnEvoke:" + this.BaseBrandColor);
+        // Log.Info("[   Hat2   ]OnEvoke:" + this.BaseBrandColor);
         this.IsOnEvoked = true;
         await HatMagician2Mgr.AfterBrandPowerEvoke(this);
         await Task.CompletedTask;
@@ -85,7 +85,7 @@ public class BrandPower : HatMagician2Power
     // 被动效果
     protected virtual async Task OnPassive(bool setFlag = true)
     {
-        Log.Info("[   Hat2   ]OnPassive:" + this.BaseBrandColor);
+        // Log.Info("[   Hat2   ]OnPassive:" + this.BaseBrandColor);
         if (setFlag)
         {
             this._thisTurnIsTriggeredPassive = true;
@@ -98,7 +98,7 @@ public class BrandPower : HatMagician2Power
     protected virtual async Task OnFusion(CardModel? cardSource, Creature? oldApplier = null)
     {
         if (this.IsOnFusionEd) return;
-        Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
+        // Log.Info("[   Hat2   ]OnFusion:" + this.BaseBrandColor);
         this.IsOnFusionEd = true;
 
         var applier = cardSource?.Owner ?? this.Applier?.Player;
@@ -121,7 +121,7 @@ public class BrandPower : HatMagician2Power
         if (this.IsOnApplied) return;
         this.IsOnApplied = true;
 
-        Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
+        // Log.Info("[   Hat2   ]OnApply:" + this.BaseBrandColor);
         this.OnSfx(this.ChannelSfx);
 
         BrandPowerShow.OnBrandApply(this.Owner, this);
@@ -136,7 +136,7 @@ public class BrandPower : HatMagician2Power
     // 移除之后的处理
     public override Task AfterRemoved(Creature oldOwner)
     {
-        Log.Info("[   Hat2   ]OnRemoved:" + this.BaseBrandColor);
+        // Log.Info("[   Hat2   ]OnRemoved:" + this.BaseBrandColor);
         BrandPowerShow.OnBrandRemove(oldOwner);
         return base.AfterRemoved(oldOwner);
     }

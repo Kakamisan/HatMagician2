@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 uniform float ghost_spacing : hint_range(0.0, 2.0, 0.1) = 0.6;      // 最大放大范围
 uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;         // 闪烁进度 0~1
+uniform float modulate_alpha : hint_range(0.0, 1.0, 0.1) = 1.0;     // 设置透明度
 
 void fragment() {
     vec4 tex_color = texture(TEXTURE, UV);
@@ -18,5 +19,5 @@ void fragment() {
     vec3 final_color = mix(tex_color.rgb, ghost.rgb, ghost_alpha);
     float final_alpha = max(tex_color.a, ghost_alpha);
     
-    COLOR = vec4(final_color, final_alpha);
+    COLOR = vec4(final_color, final_alpha * modulate_alpha);
 }
