@@ -1,6 +1,8 @@
 ﻿using BaseLib.Abstracts;
-using BaseLib.Extensions;
+using HatMagician2.HatMagician2Code.Acts;
+using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -17,9 +19,12 @@ public class ColorFinderEncounter() : CustomEncounterModel(RoomType.Boss)
 
     public override IEnumerable<MonsterModel> AllPossibleMonsters => [ModelDb.Monster<ColorFinderPainting>(), ModelDb.Monster<ColorFinder>(),];
 
+    public override bool IsValidForAct(ActModel act) => act is ActPaintingWorld;
+
     // 联机默认开启？
-    public override bool IsValidForAct(ActModel act) =>
-        act.ActNumber() == 3 && (Hat2ModConfig.ChallengeColorFinder || !RunManager.Instance.IsSingleplayerOrFakeMultiplayer);
+    public static bool IsValidForAct(RunState runState) =>
+        runState.Players.Any(p => PileType.Deck.GetPile(p).Cards.Any(c => c is BlankPainting))
+        && Hat2ModConfigUtil.ShouldActiveColorFinder(runState);
 
     public override bool HasScene => false;
 

@@ -87,4 +87,13 @@ public static class StringExtensions
     {
         return Path.Join(MainFile.ResPath, "images", "enchantment", path);
     }
+
+    public static string EventImagePath(this string path)
+    {
+        path = Path.Join(MainFile.ResPath, "images", "events", path);
+        if (ResourceLoader.Exists(path)) return path;
+
+        MainFile.Logger.Info("Could not find event image path: " + path);
+        return Path.Join(MainFile.ResPath, "images", "events", "placeholder.png");
+    }
 }

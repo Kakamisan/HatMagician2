@@ -1,0 +1,10 @@
+﻿{
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.title": "空白画作",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.INITIAL.description": "[b][jitter]（寒风呼啸）[/jitter][/b]这是一个破旧的小屋。\n\n从满地的颜料痕迹可以看出，这曾经或许是一间[red]画室[/red]。\n\n一幅[sine]洁白如新[/sine]的画框竖立在小屋的中央，画框中钉着一幅[sine]没有任何内容[/sine]的画布。\n在这满是灰尘的小屋中，你感觉到这幅画不是[red]寻常之物[/red]。",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.INITIAL.options.PICK_PAINTING.title": "取走画布",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.INITIAL.options.PICK_PAINTING.description": "将一张[gold]空白画作[/gold]加入卡组，获得[blue]{Gold}[/blue][gold]金币[/gold]。",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.INITIAL.options.IGNORE_PAINTING.title": "无视画布",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.INITIAL.options.IGNORE_PAINTING.description": "获得一件随机[gold]遗物[/gold]。",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.PICK_PAINTING.description": "你取下了画布。\n\n在那一瞬间，画框完全老化化为灰尘。\n画框之中暗藏的些许[gold]金币[/gold]掉了出来。\n\n谁会嫌弃[gold]金币[/gold]呢？\n你把金币捡了起来，继续上路。",
+  "HATMAGICIAN2-BLANK_PAINTING_EVENT.pages.IGNORE_PAINTING.description": "你对这幅画莫名感觉到一阵恐惧。\n\n你决定无视它，在四周搜寻了一番。\n角落之中竟有一个落灰的[red]宝箱[/red]，你从宝箱中取得了[sine]应有的奖励[/sine]。"
+}

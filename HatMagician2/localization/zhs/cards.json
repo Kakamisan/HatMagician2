@@ -3,7 +3,7 @@
   "HATMAGICIAN2-STRIKE.title": "打击",
   "HATMAGICIAN2-DEFEND.description": "获得{Block:diff()}点格挡。",
   "HATMAGICIAN2-DEFEND.title": "防御",
-  "HATMAGICIAN2-BLANK_PAINTING.description": "使用印记将使画作完成。",
+  "HATMAGICIAN2-BLANK_PAINTING.description": "在下一阶段解锁一个特殊事件。",
   "HATMAGICIAN2-BLANK_PAINTING.title": "空白画作",
   "HATMAGICIAN2-COLORFUL_PEN.description": "从{IfUpgraded:show:烦躁+/忧虑+/孤寂+|烦躁/忧虑/孤寂}中选择1张加入[gold]手牌[/gold]。",
   "HATMAGICIAN2-COLORFUL_PEN.title": "起草",
