@@ -1,16 +1,15 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
-using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace HatMagician2.HatMagician2Code.Events;
 
-public class BlankPaintingEvent : Hat2Event
+public sealed class BlankPaintingEvent : Hat2Event
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(53)];
 
@@ -20,7 +19,7 @@ public class BlankPaintingEvent : Hat2Event
         Option(this.IgnorePainting)
     ];
 
-    public override bool IsAllowed(IRunState runState) => runState.CurrentActIndex == 0 && Hat2ModConfigUtil.ShouldActiveColorFinder(runState);
+    public override bool IsAllowed(IRunState runState) => false;
 
     private async Task PickPainting()
     {
@@ -31,7 +30,7 @@ public class BlankPaintingEvent : Hat2Event
 
     private async Task IgnorePainting()
     {
-        await RelicCmd.Obtain(RelicFactory.PullNextRelicFromFront(this.Owner!).ToMutable(), this.Owner!);
+        await RewardsCmd.OfferCustom(this.Owner!, [new RelicReward(this.Owner!)]);
         SetEventFinished(PageDescription("IGNORE_PAINTING"));
     }
 }

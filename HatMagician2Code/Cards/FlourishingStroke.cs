@@ -1,12 +1,10 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
@@ -31,7 +29,7 @@ public class FlourishingStroke() : HatMagician2Card(1, CardType.Attack, CardRari
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple];
+        // BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.White, BrandColor.Orange, BrandColor.Purple];
         for (int i = 0; i < this.DynamicHat2Var.IntValue; i++)
         {
             foreach (var e in this.CombatState.HittableEnemies)
@@ -43,7 +41,7 @@ public class FlourishingStroke() : HatMagician2Card(1, CardType.Attack, CardRari
                 }
                 else
                 {
-                    color = this.Owner.RunState.Rng.CombatTargets.NextItem(list);
+                    color = this.Owner.RandomBrandColor();
                 }
 
                 await BrandPower.ApplyBrandPower(this, choiceContext, e, color);

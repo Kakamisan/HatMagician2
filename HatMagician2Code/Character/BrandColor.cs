@@ -1,4 +1,6 @@
-﻿namespace HatMagician2.HatMagician2Code.Character;
+﻿using MegaCrit.Sts2.Core.Entities.Players;
+
+namespace HatMagician2.HatMagician2Code.Character;
 
 [Flags]
 public enum BrandColor
@@ -14,4 +16,19 @@ public enum BrandColor
 
     Any = 0b1000, // 任意 用于消耗任意绘色*N的牌
     All = 0b10000 // 所有 用于消耗所有类型绘色*N的牌
+}
+
+public static class BrandColorExtensions
+{
+    public static BrandColor RandomBaseBrandColor(this Player player)
+    {
+        BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow];
+        return player.RunState.Rng.CombatTargets.NextItem(list);
+    }
+    
+    public static BrandColor RandomBrandColor(this Player player)
+    {
+        BrandColor[] list = [BrandColor.Red, BrandColor.Blue, BrandColor.Yellow, BrandColor.Orange, BrandColor.Purple, BrandColor.White];
+        return player.RunState.Rng.CombatTargets.NextItem(list);
+    }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using HarmonyLib;
 using HatMagician2.HatMagician2Code.Acts;
-using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Monsters;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Models;
@@ -16,9 +15,9 @@ public class SetActPatch
     public static bool Prefix(ref RunManager __instance, int actIndex)
     {
         ref RunState? runState = ref RunState(__instance);
-        if (runState != null && actIndex == 2 && ColorFinderEncounter.IsValidForAct(runState) && __instance.AscensionManager.HasLevel(AscensionLevel.DoubleBoss))
+        if (runState != null && actIndex == 2 && ActPaintingWorld.IsValidForEnterWorld(runState) && __instance.AscensionManager.HasLevel(AscensionLevel.DoubleBoss))
         {
-            // 修改第三幕为画界 第二个BOSS固定为寻色者
+            // 修改第三幕为画界 第二个BOSS固定为寻色者/受污染的教授
             ref var acts = ref RunActs(runState);
             var list = acts.ToList();
             var act = ModelDb.Act<ActPaintingWorld>().ToMutable();

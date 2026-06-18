@@ -205,5 +205,9 @@
   "HATMAGICIAN2-COLOR_STATUS.description": "{Branch:choose(1|2|4):给予画布[red]火焰[/red]印记|给予画布[color=#31b0eb]冰霜[/color]印记|给予画布[color=#e7ea31]闪电[/color]印记|从[red]火焰[/red]、[color=#31b0eb]冰霜[/color]、[color=#e7ea31]闪电[/color]中选择，消耗2点绘色，给予画布对应的印记}。",
   "HATMAGICIAN2-COLOR_STATUS.title": "色彩",
   "HATMAGICIAN2-COLOR_POLLUTION_STATUS.description": "消耗绘色才能打出。使自己获得{Branch:choose(1|2|4):[red]火焰[/red]|[color=#31b0eb]冰霜[/color]|[color=#e7ea31]闪电[/color]|对应}印记。在你的回合结束时，如果这张牌在你的[gold]手牌[/gold]中，你受到{Damage:diff()}点伤害。",
-  "HATMAGICIAN2-COLOR_POLLUTION_STATUS.title": "污染"
+  "HATMAGICIAN2-COLOR_POLLUTION_STATUS.title": "污染",
+  "HATMAGICIAN2-COLOR_COVER.description": "选择你[gold]抽牌堆[/gold]中的{Cards:diff()}张牌，将其[gold]变化[/gold]为随机颜色的[gold]染色[/gold]。",
+  "HATMAGICIAN2-COLOR_COVER.title": "涂抹",
+  "HATMAGICIAN2-COLOR_DYE.description": "{Branch:choose(1|2|4):给予敌人[red]火焰[/red]印记|给予敌人[color=#31b0eb]冰霜[/color]印记|给予敌人[color=#e7ea31]闪电[/color]印记|给予敌人印记（这张牌生成时获得随机颜色）}。\n抽{Cards:diff()}张牌。",
+  "HATMAGICIAN2-COLOR_DYE.title": "染色"
 }

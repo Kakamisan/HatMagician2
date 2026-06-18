@@ -17,7 +17,7 @@ public class StarScribe() : HatMagician2Card(2, CardType.Attack, CardRarity.Rare
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    private int AccDamage => CardStateSingleton.GetColorCost(this.Owner) * this.DynamicHat2Var.IntValue;
+    private int AccDamage => Hat2CardStateSingleton.GetColorCost(this.Owner) * this.DynamicHat2Var.IntValue;
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [

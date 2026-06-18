@@ -1,12 +1,13 @@
 ﻿using BaseLib.Utils;
+using HatMagician2.HatMagician2Code.Character;
+using HatMagician2.HatMagician2Code.Events;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
-using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace HatMagician2.HatMagician2Code.Cards;
 
@@ -30,14 +31,20 @@ public class BlankPainting() : HatMagician2Card(-1, CardType.Quest, CardRarity.Q
 
     public override EventModel ModifyNextEvent(EventModel currentEvent)
     {
-        // todo 第二幕和第三幕的事件
-        return this.Act2Event ? ModelDb.Event<WarHistorianRepy>() : this.Act3Event ? ModelDb.Event<WarHistorianRepy>() : currentEvent;
+        return this.Act2Event ? ModelDb.Event<DrawProfessorEvent>() : this.Act3Event ? ModelDb.Event<HomelessPersonEvent>() : currentEvent;
     }
 
-    // 第二幕触发一个事件 第三幕进入画界并触发第二个事件
-    [SavedProperty] public int NextActIndex = 1;
+    private bool Act2Event
+    {
+        get
+        {
+            var runState = RunManager.Instance.DebugOnlyGetState();
+            return runState is
+            {
+                CurrentActIndex: 1, TotalFloor: >= Hat2ModConfigUtil.DrawProfessorEventFloor
+            } && !runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
+        }
+    }
 
-    private bool Act2Event => this.NextActIndex == 1 && this.Owner.RunState.CurrentActIndex == 1;
-
-    private bool Act3Event => this.NextActIndex == 2 && this.Owner.RunState.CurrentActIndex == 2;
+    private bool Act3Event => this.Owner.RunState.CurrentActIndex == 2;
 }

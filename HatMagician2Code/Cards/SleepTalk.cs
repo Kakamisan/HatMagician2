@@ -1,15 +1,11 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
@@ -25,7 +21,7 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
-    private decimal IncreaseDamage => CardStateSingleton.GetSleepCardCnt(this.Owner) * this.DynamicHat2Var.IntValue;
+    private decimal IncreaseDamage => Hat2CardStateSingleton.GetSleepCardCnt(this.Owner) * this.DynamicHat2Var.IntValue;
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {

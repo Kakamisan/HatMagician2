@@ -1,8 +1,5 @@
-﻿using BaseLib.Cards.Variables;
-using BaseLib.Extensions;
+﻿using BaseLib.Extensions;
 using BaseLib.Utils;
-using HarmonyLib;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Monsters;
 using HatMagician2.HatMagician2Code.Powers;
@@ -33,9 +30,6 @@ public class ColorStatus() : HatMagician2Card(0, CardType.Status, CardRarity.Sta
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // var target = this.CombatState?.Enemies.FirstOrDefault(e => e.Monster is ColorFinderPainting);
-        // if (target == null) return;
-        // await BrandPower.ApplyBrandPower(this, choiceContext, target, this.DynamicColor);
         await this.OnPlayNormal(choiceContext, play);
     }
 
@@ -49,11 +43,10 @@ public class ColorStatus() : HatMagician2Card(0, CardType.Status, CardRarity.Sta
         if (list2.Count == 0) return;
         List<ColorStatus> cards = [];
         var card = this.CombatState.CreateCard<ColorStatus>(this.Owner);
-        card.DynamicBrandCost.BaseValue = DynamicCost;
+        card.SetDynamicCost();
         foreach (var color in list2)
         {
-            card.DynamicColor = color;
-            card.GetDynamicVar("Branch").BaseValue = card.GetColor();
+            card.SetColor(color);
             var card2 = (ColorStatus)card.MutableClone();
             cards.Add(card2);
         }
@@ -66,12 +59,23 @@ public class ColorStatus() : HatMagician2Card(0, CardType.Status, CardRarity.Sta
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => base.OnUpgrade();
+    // protected override void OnUpgrade() => base.OnUpgrade();
 
     public override int MaxUpgradeLevel => 0;
 
     private int GetColor()
     {
         return (int)this.DynamicColor;
+    }
+
+    private void SetDynamicCost()
+    {
+        this.DynamicBrandCost.BaseValue = DynamicCost;
+    }
+
+    private void SetColor(BrandColor color)
+    {
+        this.DynamicColor = color;
+        this.GetDynamicVar("Branch").BaseValue = this.GetColor();
     }
 }

@@ -8,14 +8,14 @@ using MegaCrit.Sts2.Core.Rooms;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
-public class CardStateSingleton : CustomSingletonModel, IHatMagician2AbstractModel
+public class Hat2CardStateSingleton : CustomSingletonModel, IHatMagician2AbstractModel
 {
-    public CardStateSingleton() : base(HookType.Combat)
+    public Hat2CardStateSingleton() : base(HookType.Combat)
     {
         _instance = this;
     }
 
-    private static CardStateSingleton? _instance;
+    private static Hat2CardStateSingleton? _instance;
 
     private readonly Dictionary<Player, int> _brandColorCostCnt = new();
     private readonly Dictionary<Player, int> _sleepCardCnt = new();

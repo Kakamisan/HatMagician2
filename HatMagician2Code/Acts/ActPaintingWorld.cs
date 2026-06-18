@@ -1,7 +1,11 @@
 ﻿using BaseLib.Abstracts;
 using Godot;
+using HatMagician2.HatMagician2Code.Cards;
+using HatMagician2.HatMagician2Code.Events;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace HatMagician2.HatMagician2Code.Acts;
 
@@ -15,11 +19,16 @@ public class ActPaintingWorld() : CustomActModel(3, false)
     protected override string CustomMapBotBgPath => ModelDb.Act<Glory>().MapBotBgPath;
     protected override string CustomRestSiteBackgroundPath => ModelDb.Act<Glory>().RestSiteBackgroundPath;
 
-    protected override int BaseNumberOfRooms => 13;
+    protected override int BaseNumberOfRooms => 14;
 
-    public override Color MapTraveledColor => new ("27221C");
+    public override Color MapTraveledColor => new("27221C");
 
-    public override Color MapUntraveledColor => new ("6E7750");
+    public override Color MapUntraveledColor => new("6E7750");
 
-    public override Color MapBgColor => new ("819a98");
+    public override Color MapBgColor => new("819a98");
+
+    // patch判断是否进入画界 卡组中有空白画作/经历过学院教授事件
+    public static bool IsValidForEnterWorld(RunState runState) =>
+        runState.Players.Any(p => PileType.Deck.GetPile(p).Cards.Any(c => c is BlankPainting)) ||
+        runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
 }
