@@ -18,7 +18,7 @@ public class ColorCover() : HatMagician2Card(0, CardType.Skill, CardRarity.Event
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromCard<ColorDye>()];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

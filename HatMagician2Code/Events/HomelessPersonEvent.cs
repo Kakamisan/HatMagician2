@@ -13,7 +13,7 @@ namespace HatMagician2.HatMagician2Code.Events;
 
 public sealed class HomelessPersonEvent : Hat2Event
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(53)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(53), new CardsVar(3)];
 
     public override bool IsAllowed(IRunState runState) => false;
 
@@ -21,7 +21,7 @@ public sealed class HomelessPersonEvent : Hat2Event
     [
         this.Owner!.Deck.Cards.Any(c => c is BlankPainting) ? Option(this.DuplicateCard) : LockedOption("LOCK"),
         this.Owner!.Deck.Cards.Any(c => c is BlankPainting) ? Option(this.RemoveCards) : LockedOption("LOCK"),
-        Option(this.AddCard, tips: [HoverTipFactory.FromCard<ColorCover>()])
+        Option(this.AddCard, tips: [HoverTipFactory.FromCard<ColorCover>(true)])
     ];
 
     private async Task DuplicateCard()
@@ -37,7 +37,7 @@ public sealed class HomelessPersonEvent : Hat2Event
     private async Task RemoveCards()
     {
         await this.RemoveAllBlankPaintings();
-        CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, 2);
+        CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, this.DynamicVars.Cards.IntValue);
         await CardPileCmd.RemoveFromDeck((await CardSelectCmd.FromDeckForRemoval(this.Owner!, prefs)).ToList());
         await PlayerCmd.GainGold(this.DynamicVars.Gold.BaseValue, this.Owner!);
         SetEventFinished(PageDescription("REMOVE_CARDS"));
@@ -46,7 +46,9 @@ public sealed class HomelessPersonEvent : Hat2Event
     private async Task AddCard()
     {
         await this.RemoveAllBlankPaintings();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(this.Owner!.RunState.CreateCard<ColorCover>(this.Owner), PileType.Deck));
+        var card = this.Owner!.RunState.CreateCard<ColorCover>(this.Owner);
+        CardCmd.Upgrade(card);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck));
         SetEventFinished(PageDescription("ADD_CARD"));
     }
 

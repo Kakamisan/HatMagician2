@@ -46,7 +46,7 @@ public class BrandPurplePower : BrandPower, IHatMagician2AbstractModel
     public async Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext, ICombatState combatState, List<Creature> targets, ValueProp props, Creature? dealer,
         CardModel? cardSource)
     {
-        if (dealer == this.Owner && (dealer.Side == CombatSide.Enemy && targets[0].Side == CombatSide.Player || props.IsPoweredAttack() && cardSource != null))
+        if (dealer == this.Owner && props.IsPoweredAttack() && (dealer.Side == CombatSide.Enemy && targets.Count > 0 && targets[0].Side == CombatSide.Player || cardSource != null))
         {
             await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Owner);
         }

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace HatMagician2.HatMagician2Code.Cards;
@@ -34,18 +35,28 @@ public class ColorDye() : HatMagician2Card(0, CardType.Skill, CardRarity.Token, 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await BrandPower.ApplyBrandPower(this, choiceContext, play, this.DynamicColor);
-        await CardPileCmd.Draw(choiceContext, this.DynamicVars.Cards.IntValue, this.Owner);
+        // await CardPileCmd.Draw(choiceContext, this.DynamicVars.Cards.IntValue, this.Owner);
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    public override int MaxUpgradeLevel => 0;
+    // public override int MaxUpgradeLevel => 0;
 
-    // protected override void OnUpgrade() => base.OnUpgrade();
+    protected override void OnUpgrade() => this.DynamicVars.Cards.UpgradeValueBy(1);
 
     public void SetColor(BrandColor color)
     {
         this.DynamicColor = color;
         this.GetDynamicVar("Branch").BaseValue = (int)color;
         this.DynamicBrandCost.BaseValue = DynamicCost;
+    }
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card == this)
+        {
+            await CardPileCmd.Draw(choiceContext, this.DynamicVars.Cards.IntValue, this.Owner);
+        }
+
+        await base.AfterCardDrawn(choiceContext, card, fromHandDraw);
     }
 }

@@ -6,11 +6,16 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Unlocks;
 
 namespace HatMagician2.HatMagician2Code.Acts;
 
 public class ActPaintingWorld() : CustomActModel(3, false)
 {
+    public override bool IsUnlocked(UnlockState unlockState) => true;
+    public override int Index => 2;
+    public override bool IsDefault => true;
+
     public override IEnumerable<EncounterModel> GenerateAllEncounters() => [..ModelDb.Act<Glory>().AllEncounters];
 
     public override IEnumerable<EventModel> AllEvents => ModelDb.Act<Glory>().AllEvents;
@@ -29,6 +34,6 @@ public class ActPaintingWorld() : CustomActModel(3, false)
 
     // patch判断是否进入画界 卡组中有空白画作/经历过学院教授事件
     public static bool IsValidForEnterWorld(RunState runState) =>
-        runState.Players.Any(p => PileType.Deck.GetPile(p).Cards.Any(c => c is BlankPainting)) ||
-        runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
+        runState.Players.Any(p => PileType.Deck.GetPile(p).Cards.Any(c => c is BlankPainting));
+    // || runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
 }
