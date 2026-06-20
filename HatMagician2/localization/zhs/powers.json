@@ -126,5 +126,7 @@
   "HATMAGICIAN2-POLLUTION_POWER.title": "污染",
   "HATMAGICIAN2-DRAW_CARDS_NEXT_TURN_PATCH_POWER.description": "TODO",
   "HATMAGICIAN2-DRAW_CARDS_NEXT_TURN_PATCH_POWER.smartDescription": "{Amount:cond:>0?在你的下回合开始时，额外抽[blue]{Amount}[/blue]张牌|在你的下回合开始时，少抽[blue]{Amount:abs()}[/blue]张牌}。",
-  "HATMAGICIAN2-DRAW_CARDS_NEXT_TURN_PATCH_POWER.title": "下回合抽牌"
+  "HATMAGICIAN2-DRAW_CARDS_NEXT_TURN_PATCH_POWER.title": "下回合抽牌",
+  
+  "HATMAGICIAN2-SURROUNDED_POWER_IS_CLEAN.description": "被从后方攻击时受到的伤害增加[blue]50%[/blue]。使用有目标的卡牌或药水来改变你的朝向。（负面效果已被清除）"
 }

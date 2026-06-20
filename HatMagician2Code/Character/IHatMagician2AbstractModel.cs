@@ -111,4 +111,10 @@ public interface IHatMagician2AbstractModel
     {
         return Task.CompletedTask;
     }
+    
+    // 修改原版能力数值
+    public decimal ModifyVanillaPowerHack(PowerModel power, decimal originValue)
+    {
+        return originValue;
+    }
 }

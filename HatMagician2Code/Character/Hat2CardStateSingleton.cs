@@ -19,7 +19,7 @@ public class Hat2CardStateSingleton : CustomSingletonModel, IHatMagician2Abstrac
 
     private readonly Dictionary<Player, int> _brandColorCostCnt = new();
     private readonly Dictionary<Player, int> _sleepCardCnt = new();
-    
+
     // 记录本场战斗绘色消耗数量
     public async Task AfterAddEnergy(Player player, int amount, BrandColor color)
     {
@@ -50,7 +50,7 @@ public class Hat2CardStateSingleton : CustomSingletonModel, IHatMagician2Abstrac
     {
         return _instance != null ? _instance._sleepCardCnt.GetValueOrDefault(player, 0) : 0;
     }
-    
+
     // 回合结束时重置数据
     public override async Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
@@ -63,6 +63,7 @@ public class Hat2CardStateSingleton : CustomSingletonModel, IHatMagician2Abstrac
     {
         this._brandColorCostCnt.Clear();
         this._sleepCardCnt.Clear();
+        this._isCleanSurroundedPower = false;
         await base.BeforeCombatStart();
     }
 
@@ -70,4 +71,10 @@ public class Hat2CardStateSingleton : CustomSingletonModel, IHatMagician2Abstrac
     {
         await this.BeforeCombatStart();
     }
+
+    // 是否当作清除了帝王蟹的debuff
+    private bool _isCleanSurroundedPower;
+    public static bool GetIsCleanSurroundedPower() => _instance?._isCleanSurroundedPower ?? false;
+    public static void SetIsCleanSurroundedPower() => _instance?.SetIsCleanSurroundedPower2();
+    private void SetIsCleanSurroundedPower2() => this._isCleanSurroundedPower = true;
 }

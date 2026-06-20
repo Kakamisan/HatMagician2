@@ -398,4 +398,19 @@ public class HatMagician2Mgr : CustomSingletonModel
             }
         }
     }
+
+    // 修改原版能力数值
+    public static decimal ModifyVanillaPowerHack(PowerModel power, decimal originValue)
+    {
+        var modify = originValue;
+        foreach (AbstractModel iterateHookListener in power.CombatState.IterateHookListeners())
+        {
+            if (iterateHookListener is IHatMagician2AbstractModel iterate)
+            {
+                modify = iterate.ModifyVanillaPowerHack(power, modify);
+            }
+        }
+
+        return modify;
+    }
 }
