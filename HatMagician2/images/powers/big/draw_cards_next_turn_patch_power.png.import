@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp0q0hoj8akw7"
-path="res://.godot/imported/draw_cards_next_turn_debuff_power.png-608cfeec5618faf05dcbb5809c567d9f.ctex"
+uid="uid://cik8nauy4nsvw"
+path="res://.godot/imported/draw_cards_next_turn_patch_power.png-e5c4a08f074a14826cb7ac7d55074f1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HatMagician2/images/powers/big/draw_cards_next_turn_debuff_power.png"
-dest_files=["res://.godot/imported/draw_cards_next_turn_debuff_power.png-608cfeec5618faf05dcbb5809c567d9f.ctex"]
+source_file="res://HatMagician2/images/powers/big/draw_cards_next_turn_patch_power.png"
+dest_files=["res://.godot/imported/draw_cards_next_turn_patch_power.png-e5c4a08f074a14826cb7ac7d55074f1b.ctex"]
 
 [params]
 

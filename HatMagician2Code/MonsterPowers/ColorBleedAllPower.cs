@@ -19,7 +19,7 @@ public class ColorBleedAllPower : HatMagician2Power
         // 被寻色者以外的生物给予印记时，进行染色
         if (power is BrandPower p && power.Owner == this.Owner && applier?.Monster is not ColorFinder)
         {
-            var others = this.CombatState.Creatures.Where(c => c.Side == CombatSide.Player).ToList();
+            var others = this.CombatState.Creatures.Where(c => c is { Side: CombatSide.Player, IsPlayer: true }).ToList();
             foreach (var c in others)
             {
                 if (c.GetPower<BrandPower>() is { } p3)
