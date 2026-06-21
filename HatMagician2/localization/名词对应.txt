@@ -1,0 +1,74 @@
+一、 核心角色 (Core Entities)
+中文名称	英文翻译	游戏内定位 / 备注
+寻色者	Color Finder	核心怪物/BOSS名称
+画布	Canvas	寻色者召唤的随从或特殊交互实体
+二、 核心游戏机制 (Core Mechanics)
+中文名称	英文翻译	对应爬塔原版对照 / 释义
+牌库 / 抽牌堆	Draw Pile	原版标准“抽牌堆”术语
+消耗	Exhaust	原版卡牌“消耗”机制（如被烧牌）
+人工制品	Artifact	原版防止负面状态的“人工制品”层数
+易伤	Vulnerable	原版增加受击伤害的 debuff
+格挡	Block	护盾防御值
+力量	Strength	攻击力加成属性
+生成牌	Generated Card	非套牌本身、在战斗中通过其他卡牌创造出来的卡
+印记	Brand	本套路的核心印记机制
+被动	Passive	印记在每回合开始/结束或特定情况下的被动效果
+刻印 / 激发	Evoke	给予新印记时，“激发”并解除旧印记以产生强力单次效果
+叠色 / 融合	Blend	红、黄、蓝基础颜料印记合并为新复合印记的动作
+绘色	Color	作为专属卡牌资源消耗的各种“作画颜料”
+三、 基础及叠色印记 (Brands & Blends)
+对应属性/颜色	中文印记名	英文印记名	叠色配方 / 备注
+红 (Fire)	火焰印记	Fire Brand	基础印记
+黄 (Lightning)	闪电印记	Lightning Brand	基础印记
+蓝 (Frost)	冰霜印记	Frost Brand	基础印记
+橙 (Red + Yellow)	黄昏印记	Dusk Brand	叠色印记（对应黄昏绘色 Dusk Color）
+紫 (Red + Blue)	紫幽印记	Violet Brand	叠色印记（对应紫幽绘色 Violet Color）
+白 (Yellow + Blue)	光辉印记	Radiant Brand	叠色印记（对应光辉绘色 Radiant Color）
+虹 (Red+Yellow+Blue)	虹色印记	Rainbow Brand	终极叠色
+四、 状态与能力 Buff/Debuff (Powers & Statuses)
+在这个画作主题中，状态名称的文学美感非常优秀，英文翻译也做了对应的艺术意境化处理：
+
+中文状态名	英文翻译	机制效果 / 含义
+冰霜	Frost	降低本回合伤害的状态
+灼痕	Burn Mark	与火力印记加算受击伤害倍数的 Debuff
+连锁	Chain	造成扩散伤害的连锁机制
+阴郁	Gloom	攻击时自残流血的负面状态
+幽暗	Darkness	一种收集资源（与“孤寂”状态挂钩）
+虹光	Prism	一种收集资源（与“神采”状态挂钩，Prism 意为棱镜/虹光）
+神采	Radiance	收集7层虹光后进入的极光溢彩增益状态
+幽寂	Solitude	收集7层幽暗后进入的寂静无光减费状态
+好梦	Sweet Dream	回合开始时摸牌并回置手牌的 Buff
+梦中之蝶	Dream Butterfly	与特定牌回手联动减能的 Buff（源自庄周梦蝶意境）
+浸入灵魂	Soul Permeation	使印记牌获得侵蚀、效果加倍的终极能力
+侵蚀	Erosion	印记追加效果的特质
+圣洁护盾	Sacred Shield	收集/花费光辉绘色时获得格挡的被动
+晚安，世界	Good Night, World	极具画面感的终结技式防守 Buff
+冰封世界	Frozen World	回合结束冰冻全场的能力
+等离子护盾	Plasma Shield	受击时反击闪电印记的护盾
+心烦意乱	Agitation	增加造成的连锁伤害
+偏执幻境	Paranoia	“阴郁”掉血全场扩散传染的疯狂 Debuff
+晕染	Color Bleed	给予印记时造成全场伤害（Bleed 在水彩画中指颜色化开晕染）
+彻夜难眠	Tossing and Turning	消耗卡牌随机附加闪电印记的 Buff
+余晖	Afterglow	回合结束吸取黄昏并获得印记
+恍惚	Trance	往抽牌堆塞“瞌睡”的状态（配合失眠/好梦主题）
+瞌睡	Doze	塞入牌库的干扰卡/机制触发卡
+睡衣时间	Pajama Time	触发卡牌回手机制的主题名称
+咖啡制品	Coffee Product	抓到生成牌时提供回能的装置
+霜降	Frostfall	敌人获得阴郁时追加冰霜的被动
+天火形态	SkyFire Form	刻印时额外附加灼痕的“形态牌”（Form 对应爬塔终极形态）
+斑斓色彩	Vibrant Palette	第一次消耗绘色时返还收集的调色盘
+五、 招式与台词相关 (Moves & Banter)
+这些主要用于怪物意图（Intents）和战斗喊话：
+
+中文招式名	英文翻译	情感色彩 / 含义
+专注	Focus	怪物准备大招前的蓄力状态标识
+作画	Paint	怪物动作：画下一笔
+涂抹	Daub	印记赋予动作：带有粗糙作画感的涂画
+染色	Staining	怪物动作：将目标染上颜色
+驱逐	Banish	强力攻击/移除玩家手段
+色彩溢出	Color Overflow	狂暴技：颜料倾泻
+画界显现	Canvas Manifestation	召唤或改变领域的宏大招式
+狂乱攫取	Frenzied Leech	夺取玩家的绘色资源（Leech 意为吸血/攫取）
+封闭内心	Closed Mind	具有防御性质减敌攻的招式
+污染	Pollution	塞入玩家法术列表的垃圾牌
+这不对	This is Wrong	寻色者画作被毁/不完美时，破防重画的动作（极其生动）

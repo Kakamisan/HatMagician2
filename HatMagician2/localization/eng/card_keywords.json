@@ -1,0 +1,22 @@
+{
+  "HATMAGICIAN2-CHAIN.description": "Affects all targets with Brand.",
+  "HATMAGICIAN2-CHAIN.title": "Chain",
+  "HATMAGICIAN2-EVOKE.description": "Remove Brand and trigger its Evoke effect.",
+  "HATMAGICIAN2-EVOKE.title": "Evoke",
+  "HATMAGICIAN2-FUSION.description": "Combine two Brands into a new Brand and trigger its Fusion effect. Fusion rules:\n· Purple = Red + Blue · Orange = Red + Yellow \n· White = Yellow + Blue · Rainbow = Red + Yellow + Blue",
+  "HATMAGICIAN2-FUSION.title": "Fusion",
+  "HATMAGICIAN2-COLOR.description": "Requires spending Color to play the Color effects described on cards.",
+  "HATMAGICIAN2-COLOR.title": "Color",
+  "HATMAGICIAN2-BASE_COLOR.description": "Base Colors include [red]Fire[/red] Color, [color=#e7ea31]Lightning[/color] Color, and [color=#31b0eb]Frost[/color] Color.",
+  "HATMAGICIAN2-BASE_COLOR.title": "Base Color",
+  "HATMAGICIAN2-SLEEP.description": "The first time your hand is empty each turn, add this card from your [gold]discard pile[/gold] to your hand.",
+  "HATMAGICIAN2-SLEEP.title": "Pajama Time",
+  "HATMAGICIAN2-DREAM.description": "When you end your turn by playing a [gold]Pajama Time[/gold] card, this card is automatically played from your draw pile.",
+  "HATMAGICIAN2-DREAM.title": "Dream",
+  "HATMAGICIAN2-ONLY_DREAM.description": "This card cannot be played from your hand.",
+  "HATMAGICIAN2-ONLY_DREAM.title": "Unplayable from Hand",
+  "HATMAGICIAN2-EROSION.description": "When this card applies Brand, it does not trigger Fusion.",
+  "HATMAGICIAN2-EROSION.title": "Erosion",
+  "HATMAGICIAN2-TEMP_CARD.description": "Cards created during combat.",
+  "HATMAGICIAN2-TEMP_CARD.title": "Generated Card"
+}

@@ -1,0 +1,20 @@
+﻿{
+  "HATMAGICIAN2-COLOR.description": "This enemy will release all colors.",
+  "HATMAGICIAN2-COLOR.title": "Color Overflow",
+  "HATMAGICIAN2-FOCUS.description": "This enemy is focusing.",
+  "HATMAGICIAN2-FOCUS.title": "Focus",
+  "HATMAGICIAN2-COLORFUL.description": "This enemy will release all colors into your draw pile.",
+  "HATMAGICIAN2-COLORFUL.title": "Canvas Manifestation",
+  "HATMAGICIAN2-BLEED.description": "This enemy is staining.",
+  "HATMAGICIAN2-BLEED.title": "Staining",
+  "HATMAGICIAN2-BRAND_RED.description": "This enemy will apply a [red]Fire[/red] Brand.",
+  "HATMAGICIAN2-BRAND_RED.title": "Daub",
+  "HATMAGICIAN2-BRAND_BLUE.description": "This enemy will apply a [color=#31b0eb]Frost[/color] Brand.",
+  "HATMAGICIAN2-BRAND_BLUE.title": "Daub",
+  "HATMAGICIAN2-BRAND_YELLOW.description": "This enemy will apply a [color=#e7ea31]Lightning[/color] Brand.",
+  "HATMAGICIAN2-BRAND_YELLOW.title": "Daub",
+  "HATMAGICIAN2-HATE_RAINBOW.description": "This enemy fears a rainbow-colored canvas.",
+  "HATMAGICIAN2-HATE_RAINBOW.title": "Obsession",
+  "HATMAGICIAN2-COLOR_FINDER_PAINT.description": "This enemy will paint a stroke on the canvas and strengthen itself.",
+  "HATMAGICIAN2-COLOR_FINDER_PAINT.title": "Paint"
+}
