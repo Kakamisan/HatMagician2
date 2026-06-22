@@ -28,7 +28,7 @@ public class ColorPollutionStatus() : HatMagician2Card(0, CardType.Status, CardR
         new DamageVar(15, ValueProp.Unpowered | ValueProp.Move)
     ];
 
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     public BrandColor DynamicColor = BrandColor.Red;

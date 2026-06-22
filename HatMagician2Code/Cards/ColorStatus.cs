@@ -22,7 +22,7 @@ public class ColorStatus() : HatMagician2Card(0, CardType.Status, CardRarity.Sta
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new("Branch", 0)];
 
-    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
+    protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Exhaust];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
     public BrandColor DynamicColor = BrandColor.None;

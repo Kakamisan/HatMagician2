@@ -28,7 +28,7 @@ public class ColorFinderPainting : HatMagician2Monster
 
     protected override string AttackSfx => "event:/sfx/enemy/enemy_attacks/eye_with_teeth/eye_with_teeth_attack";
 
-    private static decimal FirstBlock => 30;
+    private static decimal FirstBlock => 99;
     private static int CardNum => 6;
 
     // public static ModSound Bgm => new($"{MainFile.ResPath}/music/first_dance_clip.mp3", ModAudio.SoundType.Music);

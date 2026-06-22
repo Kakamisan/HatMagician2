@@ -1,4 +1,6 @@
 ﻿{
   "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.title": "寻色者",
-  "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.loss": "{character}再也没有了[gold]{encounter}[/gold]的踪迹。"
+  "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.loss": "{character}再也没有了[gold]{encounter}[/gold]的踪迹。",
+  "HATMAGICIAN2-POLLUTED_PROFESSOR_ENCOUNTER.title": "被污染的教授",
+  "HATMAGICIAN2-POLLUTED_PROFESSOR_ENCOUNTER.loss": "{character}被[gold]{encounter}[/gold]击溃了。"
 }

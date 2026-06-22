@@ -32,12 +32,13 @@ public class ColorFinder : HatMagician2Monster
 
     private bool PaintingRainbow => this.Painting?.GetPower<BrandPower>() is BrandRainbowPower;
 
-    private static decimal FirstBlock => 30;
+    private static decimal FirstBlock => 99;
+
     // private static int BaseAttack1 => 30;
     private static int BasePower1 => 3;
     private static int BaseAttack2 => 11;
     private static int BaseAttack2Repeat => 3;
-    private static int BaseAttack3 => 8;
+    private static int BaseAttack3 => 9;
     private static int BaseAttack3Repeat => 3;
     private static int BasePower2 => 3;
 
@@ -55,7 +56,11 @@ public class ColorFinder : HatMagician2Monster
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player && combatState.RoundNumber == 1)
+        {
             await CreatureCmd.GainBlock(this.Creature, FirstBlock, ValueProp.Unpowered, null);
+            // await this.ApplyPollution(this.CombatState.Creatures.Where(c => c.IsPlayer).ToList());
+        }
+
         await base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
     }
 
@@ -143,7 +148,12 @@ public class ColorFinder : HatMagician2Monster
     {
         TalkCmd.Play(L10NMonsterLookup("HATMAGICIAN2-COLOR_FINDER.moves.POLLUTION.banter"), Creature, VfxColor.White);
         await PowerCmd.Remove(this.Creature.GetPower<BlockHeartPower>());
-        // 污染能力
+        await this.ApplyPollution(targets);
+    }
+
+    // 污染能力
+    private async Task ApplyPollution(IReadOnlyList<Creature> targets)
+    {
         foreach (Creature creature in targets)
         {
             PollutionPower mutable = (PollutionPower)ModelDb.Power<PollutionPower>().ToMutable();
