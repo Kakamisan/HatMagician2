@@ -17,7 +17,7 @@ public class FrostBrand() : HatMagician2Card(3, CardType.Attack, CardRarity.Rare
     public override int BaseBrandColorCost => 2;
     public override bool HasBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(24, ValueProp.Move), new RepeatVar(3)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(25, ValueProp.Move), new RepeatVar(3)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 
@@ -37,5 +37,5 @@ public class FrostBrand() : HatMagician2Card(3, CardType.Attack, CardRarity.Rare
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(6);
+    protected override void OnUpgrade() => this.DynamicVars.Damage.UpgradeValueBy(8);
 }

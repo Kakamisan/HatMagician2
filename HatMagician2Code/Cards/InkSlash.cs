@@ -1,6 +1,4 @@
-﻿using BaseLib.Cards.Variables;
-using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
+﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -21,7 +19,7 @@ public class InkSlash() : HatMagician2Card(1, CardType.Attack, CardRarity.Common
 
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
-        new CalculationBaseVar(1), new ExtraDamageVar(3), new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => HatMagician2Mgr.GetBrandColorTypeCnt(card.Owner))
+        new CalculationBaseVar(3), new ExtraDamageVar(3), new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => HatMagician2Mgr.GetBrandColorTypeCnt(card.Owner))
         //new CalculationExtraVar()
     ];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
@@ -42,6 +40,6 @@ public class InkSlash() : HatMagician2Card(1, CardType.Attack, CardRarity.Common
     protected override void OnUpgrade()
     {
         this.DynamicVars.ExtraDamage.UpgradeValueBy(1);
-        this.DynamicVars.CalculationBase.UpgradeValueBy(2);
+        this.DynamicVars.CalculationBase.UpgradeValueBy(1);
     }
 }

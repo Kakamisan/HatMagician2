@@ -19,7 +19,7 @@ public class InvertedFrost() : HatMagician2Card(1, CardType.Attack, CardRarity.C
 
     // public override bool HasFreeBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [HoverTipFactory.FromPower<BrandYellowPower>()];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(5, ValueProp.Move), new RepeatVar(2)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(4, ValueProp.Move), new RepeatVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

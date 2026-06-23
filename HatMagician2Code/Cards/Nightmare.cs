@@ -20,7 +20,7 @@ public class Nightmare() : HatMagician2Card(0, CardType.Skill, CardRarity.Rare, 
     public override bool HasBrandApplyTarget => true;
 
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new PowerVar<VulnerablePower>(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new PowerVar<VulnerablePower>(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.OnlyDream, HatMagician2Keywords.Dream, CardKeyword.Exhaust];
     // protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

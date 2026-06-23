@@ -167,7 +167,7 @@
   "HATMAGICIAN2-PHANTASMAL_FLAME.title": "幽魂之焰",
   "HATMAGICIAN2-MOONLIGHT_MIRAGE.description": "造成{Damage:diff()}点伤害。获得{Block:diff()}点格挡。\n[color=#d5fff5]绘色:对所有敌人造成伤害，每命中一个敌人则额外获得1次格挡。[/color]",
   "HATMAGICIAN2-MOONLIGHT_MIRAGE.title": "月光蜃影",
-  "HATMAGICIAN2-RADIANT_SIPHON.description": "造成{Damage:diff()}点伤害。\n收集{Hat2Var:diff()}点[color=#e8fcfb]光辉绘色[/color]、[color=#e7ea31]闪电绘色[/color]、[red]火焰绘色[/red]。",
+  "HATMAGICIAN2-RADIANT_SIPHON.description": "造成{Damage:diff()}点伤害。\n收集{Hat2Var:diff()}点[color=#e8fcfb]光辉绘色[/color]、[orange]黄昏绘色[/orange]、[color=#e7ea31]闪电绘色[/color]、[red]火焰绘色[/red]。",
   "HATMAGICIAN2-RADIANT_SIPHON.title": "亮色攫取",
   "HATMAGICIAN2-SUBCONSCIOUS_PULSE.description": "产生{DamageShow:diff()}点[gold]连锁[/gold]伤害{Repeat:diff()}次。",
   "HATMAGICIAN2-SUBCONSCIOUS_PULSE.title": "无意识电波",

@@ -167,7 +167,7 @@
   "HATMAGICIAN2-PHANTASMAL_FLAME.title": "Phantasmal Flame",
   "HATMAGICIAN2-MOONLIGHT_MIRAGE.description": "Deal {Damage:diff()} damage. Gain {Block:diff()} Block.\n[color=#d5fff5]Color: Deal damage to ALL enemies. Gain Block 1 additional time for each enemy struck.[/color]",
   "HATMAGICIAN2-MOONLIGHT_MIRAGE.title": "Moonlight Mirage",
-  "HATMAGICIAN2-RADIANT_SIPHON.description": "Deal {Damage:diff()} damage.\nCollect {Hat2Var:diff()} [color=#e8fcfb]Radiant Color[/color], [color=#e7ea31]Lightning Color[/color], and [red]Fire Color[/red].",
+  "HATMAGICIAN2-RADIANT_SIPHON.description": "Deal {Damage:diff()} damage.\nCollect {Hat2Var:diff()} [color=#e8fcfb]Radiant Color[/color], [orange]Dusk Color[/orange], [color=#e7ea31]Lightning Color[/color], and [red]Fire Color[/red].",
   "HATMAGICIAN2-RADIANT_SIPHON.title": "Radiant Siphon",
   "HATMAGICIAN2-SUBCONSCIOUS_PULSE.description": "Deal {DamageShow:diff()} [gold]Chain[/gold] damage {Repeat:diff()} {Repeat:plural:time|times}.",
   "HATMAGICIAN2-SUBCONSCIOUS_PULSE.title": "Subconscious Pulse",

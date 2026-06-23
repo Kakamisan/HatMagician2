@@ -17,7 +17,7 @@ public class PhantasmalFlame() : HatMagician2Card(2, CardType.Attack, CardRarity
     public override int BaseBrandColorCost => 2;
     public override bool HasBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(9, ValueProp.Move), new RepeatVar(2)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(10, ValueProp.Move), new RepeatVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [CardKeyword.Ethereal];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

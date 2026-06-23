@@ -10,6 +10,7 @@ namespace HatMagician2.HatMagician2Code.Powers;
 public class AfterglowPower : HatMagician2Power
 {
     public override PowerType Type => PowerType.Debuff;
+    public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier;
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {

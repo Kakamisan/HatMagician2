@@ -31,5 +31,5 @@ public class ColorBleed() : HatMagician2Card(1, CardType.Power, CardRarity.Uncom
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(1);
+    protected override void OnUpgrade() => this.DynamicHat2Var.UpgradeValueBy(2);
 }
