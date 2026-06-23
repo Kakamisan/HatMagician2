@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://bc8bn55no2007"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://uq5hhqk42e40" path="res://HatMagician2/anim/map/boss_node_polluted_professor.atlas" id="1_l1td4"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://dvjiwqb07pfii" path="res://HatMagician2/anim/map/boss_node_polluted_professor.skel" id="2_4q3cc"]
+
+[resource]
+atlas_res = ExtResource("1_l1td4")
+skeleton_file_res = ExtResource("2_4q3cc")

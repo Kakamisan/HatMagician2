@@ -1,4 +1,6 @@
 ﻿{
   "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.title": "Color Finder",
-  "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.loss": "{character} never saw any trace of [gold]{encounter}[/gold] again."
+  "HATMAGICIAN2-COLOR_FINDER_ENCOUNTER.loss": "{character} never saw any trace of [gold]{encounter}[/gold] again.",
+  "HATMAGICIAN2-POLLUTED_PROFESSOR_ENCOUNTER.title": "The Polluted Professor",
+  "HATMAGICIAN2-POLLUTED_PROFESSOR_ENCOUNTER.loss": "{character} was defeated by [gold]{encounter}[/gold]."
 }

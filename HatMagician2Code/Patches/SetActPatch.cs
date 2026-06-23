@@ -25,7 +25,11 @@ public class SetActPatch
             act.GenerateRooms(runState.Rng.UpFront, runState.UnlockState, runState.Players.Count > 1);
             // if (__instance.ShouldApplyTutorialModifications())
             //     act.ApplyDiscoveryOrderModifications(runState.UnlockState);
-            EncounterModel encounter = ModelDb.Encounter<ColorFinderEncounter>();
+            EncounterModel encounter;
+            if (ActPaintingWorld.IsColorFinderBoss(runState))
+                encounter = ModelDb.Encounter<ColorFinderEncounter>();
+            else
+                encounter = ModelDb.Encounter<PollutedProfessorEncounter>();
             act.SetSecondBossEncounter(encounter);
 
             list[actIndex] = act;

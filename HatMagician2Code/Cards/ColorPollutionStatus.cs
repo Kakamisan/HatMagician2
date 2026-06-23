@@ -25,7 +25,7 @@ public class ColorPollutionStatus() : HatMagician2Card(0, CardType.Status, CardR
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars =>
     [
         new("BranchBase", 0), new("BranchExtra", 1), new CustomCalculatedVar("Branch").WithMultiplier((card, _) => ((ColorPollutionStatus)card).GetColor()),
-        new DamageVar(15, ValueProp.Unpowered | ValueProp.Move)
+        new DamageVar(13, ValueProp.Unpowered | ValueProp.Move)
     ];
 
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];

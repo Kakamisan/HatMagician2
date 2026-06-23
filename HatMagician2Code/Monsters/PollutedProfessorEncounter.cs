@@ -29,5 +29,5 @@ public class PollutedProfessorEncounter() : CustomEncounterModel(RoomType.Boss)
 
     public override string CustomScenePath => "encounters/polluted_professor_boss.tscn".ScenePath();
 
-    public override IReadOnlyList<string> Slots => ["professor", "fire", "lightning", "ice"];
+    public override IReadOnlyList<string> Slots => ["fire", "lightning", "professor", "ice"];
 }

@@ -24,6 +24,7 @@ public class PollutedProfessor : HatMagician2Monster
     private static int BaseAttackCnt1 => 1;
     private static int BaseAttack2 => 5;
     private static int BaseAttackCnt2 => 4;
+    private static int BaseSummonCnt => 2; // 2个召唤物去世时 下回合召唤2个召唤物
 
     private string _lastSummon = "ice";
     private int _cycleMoveCnt;
@@ -38,24 +39,24 @@ public class PollutedProfessor : HatMagician2Monster
     {
         var summonAllMove = new MoveState("SUMMON_ALL", this.SummonAll, new SummonIntent());
         var summonOneMove = new MoveState("SUMMON_ONE", this.SummonOne, new SummonIntent());
+        var debuffMove = new MoveState("DEBUFF", this.DebuffMove, new DebuffIntent(), new CardDebuffIntent());
         var atk1Move = new MoveState("ATTACK1", this.AttackMove1, new SingleAttackIntent(BaseAttack1));
         var atk2Move = new MoveState("ATTACK2", this.AttackMove2, new MultiAttackIntent(BaseAttack2, BaseAttackCnt2));
-        var debuffMove = new MoveState("DEBUFF", this.DebuffMove, new DebuffIntent(), new CardDebuffIntent());
 
         var summonBranchState = new ConditionalBranchState("SUMMON_BRANCH");
         var cycleBranchState = new ConditionalBranchState("CYCLE_BRANCH");
         summonAllMove.FollowUpState = summonBranchState;
         summonOneMove.FollowUpState = summonBranchState;
+        debuffMove.FollowUpState = summonBranchState;
         atk1Move.FollowUpState = summonBranchState;
         atk2Move.FollowUpState = summonBranchState;
-        debuffMove.FollowUpState = summonBranchState;
 
-        summonBranchState.AddState(summonOneMove, this.IsAnySummonDead);
-        summonBranchState.AddState(cycleBranchState, () => !this.IsAnySummonDead());
+        summonBranchState.AddState(summonOneMove, this.IsAnyCntSummonDead);
+        summonBranchState.AddState(cycleBranchState, () => !this.IsAnyCntSummonDead());
 
+        cycleBranchState.AddState(debuffMove, () => this._cycleMoveCnt % 3 == 0);
         cycleBranchState.AddState(atk1Move, () => this._cycleMoveCnt % 3 == 1);
         cycleBranchState.AddState(atk2Move, () => this._cycleMoveCnt % 3 == 2);
-        cycleBranchState.AddState(debuffMove, () => this._cycleMoveCnt % 3 == 0);
 
         List<MonsterState> states =
         [
@@ -84,7 +85,7 @@ public class PollutedProfessor : HatMagician2Monster
     {
         this._cycleMoveCnt += 1;
         await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, 3, this.Creature, null);
-        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 3, this.Creature, null);
+        // await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 3, this.Creature, null);
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, 3, this.Creature, null);
         foreach (var target in targets)
         {
@@ -123,11 +124,13 @@ public class PollutedProfessor : HatMagician2Monster
                 "fire" => ["lightning", "ice", "fire"],
                 _ => ["ice", "fire", "lightning"]
             };
+            var summonCnt = 0;
             foreach (var type in list.Where(this.IsSummonDead))
             {
                 await this.SummonByType(type);
                 this._lastSummon = type;
-                break;
+                summonCnt += 1;
+                if (summonCnt >= BaseSummonCnt) break;
             }
         }
     }
@@ -149,11 +152,11 @@ public class PollutedProfessor : HatMagician2Monster
         return flag;
     }
 
-    // 任意召唤物去世 下回合意图变召唤
-    private bool IsAnySummonDead()
+    // 任意2个召唤物去世 下回合意图变召唤
+    private bool IsAnyCntSummonDead()
     {
         List<string> list = ["fire", "lightning", "ice"];
-        return list.Any(this.IsSummonDead);
+        return list.Count(this.IsSummonDead) >= BaseSummonCnt;
     }
 
     private async Task SummonByType(string type)

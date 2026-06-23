@@ -1,0 +1,41 @@
+
+boss_node_polluted_professor.png
+size: 652,205
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+图层 1
+  rotate: true
+  xy: 2, 2
+  size: 201, 368
+  orig: 201, 368
+  offset: 0, 0
+  index: -1
+图层 2
+  rotate: false
+  xy: 544, 71
+  size: 106, 132
+  orig: 106, 132
+  offset: 0, 0
+  index: -1
+图层 3
+  rotate: true
+  xy: 496, 3
+  size: 66, 118
+  orig: 66, 118
+  offset: 0, 0
+  index: -1
+图层 4
+  rotate: true
+  xy: 372, 6
+  size: 94, 122
+  orig: 94, 122
+  offset: 0, 0
+  index: -1
+图层 5
+  rotate: true
+  xy: 372, 102
+  size: 101, 170
+  orig: 101, 170
+  offset: 0, 0
+  index: -1

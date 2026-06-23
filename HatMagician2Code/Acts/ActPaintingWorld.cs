@@ -34,6 +34,10 @@ public class ActPaintingWorld() : CustomActModel(3, false)
 
     // patch判断是否进入画界 卡组中有空白画作/经历过学院教授事件
     public static bool IsValidForEnterWorld(RunState runState) =>
+        IsColorFinderBoss(runState) || runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
+
+    // 进入画界后判断 寻色者boss/被污染的教授
+    // 卡组中有空白画作则是寻色者 否则是被污染的教授
+    public static bool IsColorFinderBoss(RunState runState) =>
         runState.Players.Any(p => PileType.Deck.GetPile(p).Cards.Any(c => c is BlankPainting));
-    // || runState.VisitedEventIds.Contains(ModelDb.Event<DrawProfessorEvent>().Id);
 }

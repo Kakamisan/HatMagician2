@@ -1,5 +1,8 @@
 ﻿using BaseLib.Utils.NodeFactories;
+using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
+using HatMagician2.HatMagician2Code.Intents;
+using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -16,13 +19,14 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class PollutedProfessorFireBall : HatMagician2Monster
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 99, 86);
+    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 86, 74);
 
     public override NCreatureVisuals CreateCustomVisuals() => NodeFactory<NCreatureVisuals>.CreateFromScene("monsters/fire_ball.tscn".ScenePath());
 
     private static int BaseAttack => 15;
-    private static int BaseBuff => 3;
-    private static int BaseBoom => 35;
+    private static int BaseBuff1 => 15;
+    private static int BaseBuff2 => 3;
+    private static int BaseBoom => 20;
 
     public override async Task AfterAddedToRoom()
     {
@@ -31,9 +35,9 @@ public class PollutedProfessorFireBall : HatMagician2Monster
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
-        var atkMove = new MoveState("ATTACK", this.AttackMove, new SingleAttackIntent(BaseAttack));
+        var atkMove = new MoveState("ATTACK", this.AttackMove, new SingleAttackIntent(BaseAttack), new BuffIntent());
         var buffMove = new MoveState("BUFF", this.BuffMove, new BuffIntent());
-        var boomMove = new MoveState("BOOM", this.BoomMove, new DeathBlowIntent(() => BaseBoom));
+        var boomMove = new MoveState("BOOM", this.BoomMove, new DeathBlowIntent(() => BaseBoom), new BrandRedIntent());
 
         atkMove.FollowUpState = buffMove;
         buffMove.FollowUpState = boomMove;
@@ -48,6 +52,7 @@ public class PollutedProfessorFireBall : HatMagician2Monster
         await DamageCmd.Attack(BaseAttack).FromMonster(this)
             // .WithAttackerAnim("Attack", 0.6f).OnlyPlayAnimOnce().WithAttackerFx(null, AttackSfx)
             .WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), this.Creature, BaseBuff1, this.Creature, null);
     }
 
     private async Task BuffMove(IReadOnlyList<Creature> targets)
@@ -55,7 +60,7 @@ public class PollutedProfessorFireBall : HatMagician2Monster
         var allies = this.CombatState.Enemies;
         foreach (var ally in allies)
         {
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), ally, BaseBuff, this.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), ally, BaseBuff2, this.Creature, null);
         }
     }
 
@@ -65,6 +70,11 @@ public class PollutedProfessorFireBall : HatMagician2Monster
             // .WithAttackerAnim("Attack", 0.6f).OnlyPlayAnimOnce().WithAttackerFx(null, AttackSfx)
             .WithAttackerFx(sfx: ModelDb.Monster<WaterfallGiant>().DeathSfx)
             .WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        foreach (var target in targets)
+        {
+            await BrandPower.ApplyBrandPower(null, this.Creature, new ThrowingPlayerChoiceContext(), target, BrandColor.Red);
+        }
+
         await CreatureCmd.Kill(this.Creature);
     }
 }

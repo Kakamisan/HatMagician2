@@ -17,13 +17,13 @@ namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class PollutedProfessorLightningBall : HatMagician2Monster
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 113, 92);
+    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 99, 86);
 
     public override NCreatureVisuals CreateCustomVisuals() => NodeFactory<NCreatureVisuals>.CreateFromScene("monsters/lightning_ball.tscn".ScenePath());
 
-    private static int BaseBuff => 6;
-    private static int BaseAttack => 5;
-    private static int BaseAttackCnt => 3;
+    private static int BaseBuff => 3;
+    private static int BaseAttack => 3;
+    private static int BaseAttackCnt => 6;
 
     public override async Task AfterAddedToRoom()
     {
@@ -33,7 +33,7 @@ public class PollutedProfessorLightningBall : HatMagician2Monster
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         var buffMove = new MoveState("BUFF", this.BuffMove, new BuffIntent());
-        var debuffMove = new MoveState("DEBUFF", this.DebuffMove, new BrandYellowIntent());
+        var debuffMove = new MoveState("BRAND", this.BrandDebuffMove, new BrandYellowIntent());
         var atkMove = new MoveState("ATTACK", this.AttackMove, new MultiAttackIntent(BaseAttack, BaseAttackCnt));
 
         buffMove.FollowUpState = debuffMove;
@@ -50,7 +50,7 @@ public class PollutedProfessorLightningBall : HatMagician2Monster
         await PowerCmd.Apply<AgitationPower>(new ThrowingPlayerChoiceContext(), this.Creature, BaseBuff, this.Creature, null);
     }
 
-    private async Task DebuffMove(IReadOnlyList<Creature> targets)
+    private async Task BrandDebuffMove(IReadOnlyList<Creature> targets)
     {
         foreach (var target in targets)
         {

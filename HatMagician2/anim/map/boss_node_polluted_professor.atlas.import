@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://uq5hhqk42e40"
+path="res://.godot/imported/boss_node_polluted_professor.atlas-a87d8dc9dc421f3a90a88eecbb6c8911.spatlas"
+
+[deps]
+
+source_file="res://HatMagician2/anim/map/boss_node_polluted_professor.atlas"
+dest_files=["res://.godot/imported/boss_node_polluted_professor.atlas-a87d8dc9dc421f3a90a88eecbb6c8911.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"

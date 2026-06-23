@@ -13,17 +13,19 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Monsters;
 
 public class PollutedProfessorIceBall : HatMagician2Monster
 {
-    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 129, 99);
+    public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 113, 99);
 
     public override NCreatureVisuals CreateCustomVisuals() => NodeFactory<NCreatureVisuals>.CreateFromScene("monsters/ice_ball.tscn".ScenePath());
 
     private static int BaseDebuff1 => 3;
     private static int BaseDebuff2 => 3;
+    private static int BaseBlock => 30;
 
     public override async Task AfterAddedToRoom()
     {
@@ -33,14 +35,15 @@ public class PollutedProfessorIceBall : HatMagician2Monster
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         var debuffMove = new MoveState("DEBUFF", this.DebuffMove, new DebuffIntent());
-        var debuffMove2 = new MoveState("DEBUFF2", this.DebuffMove2, new DebuffIntent());
-        var debuffMove3 = new MoveState("DEBUFF3", this.DebuffMove3, new BrandBlueIntent());
+        // var debuffMove2 = new MoveState("DEBUFF2", this.DebuffMove2, new DebuffIntent());
+        var blockMove = new MoveState("BLOCK", this.BlockMove, new DefendIntent());
+        var debuffMove3 = new MoveState("BRAND", this.BrandDebuffMove, new BrandBlueIntent());
 
-        debuffMove.FollowUpState = debuffMove2;
-        debuffMove2.FollowUpState = debuffMove3;
+        debuffMove.FollowUpState = blockMove;
+        blockMove.FollowUpState = debuffMove3;
         debuffMove3.FollowUpState = debuffMove;
 
-        List<MonsterState> states = [debuffMove, debuffMove2, debuffMove3];
+        List<MonsterState> states = [debuffMove, blockMove, debuffMove3];
 
         return new MonsterMoveStateMachine(states, debuffMove);
     }
@@ -61,7 +64,16 @@ public class PollutedProfessorIceBall : HatMagician2Monster
         }
     }
 
-    private async Task DebuffMove3(IReadOnlyList<Creature> targets)
+    private async Task BlockMove(IReadOnlyList<Creature> targets)
+    {
+        var allies = this.CombatState.Enemies;
+        foreach (var ally in allies)
+        {
+            await CreatureCmd.GainBlock(ally, BaseBlock, ValueProp.Move, null);
+        }
+    }
+
+    private async Task BrandDebuffMove(IReadOnlyList<Creature> targets)
     {
         foreach (var target in targets)
         {

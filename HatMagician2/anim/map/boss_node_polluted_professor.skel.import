@@ -1,0 +1,14 @@
+[remap]
+
+importer="spine.skel"
+type="SpineSkeletonFileResource"
+uid="uid://dvjiwqb07pfii"
+path="res://.godot/imported/boss_node_polluted_professor.skel-481702eca3aebd34b1d9c6a54b2d78fc.spskel"
+
+[deps]
+
+source_file="res://HatMagician2/anim/map/boss_node_polluted_professor.skel"
+dest_files=["res://.godot/imported/boss_node_polluted_professor.skel-481702eca3aebd34b1d9c6a54b2d78fc.spskel"]
+
+[params]
+
