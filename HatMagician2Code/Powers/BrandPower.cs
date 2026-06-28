@@ -9,9 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Powers;
@@ -220,7 +218,12 @@ public class BrandPower : HatMagician2Power
     public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
     {
         if (target.CombatState == null) return;
-        var targets = target.CombatState.Creatures.Where(c => c.HasPower<BrandPower>() && c.IsAlive && (c.Side != CombatSide.Player || !c.HasPower<BrandRainbowPower>())).ToList();
+        List<Creature> targets;
+        // 目标为玩家时 产生的连锁伤害不对其他玩家生效
+        if (target.Side == CombatSide.Player)
+            targets = [..target.CombatState.HittableEnemies.Where(c => c.HasPower<BrandPower>() && c.IsAlive), target];
+        else
+            targets = target.CombatState.Creatures.Where(c => c.HasPower<BrandPower>() && c.IsAlive && (c.Side != CombatSide.Player || !c.HasPower<BrandRainbowPower>())).ToList();
         await ChainDamageCmd(targets, damage, applier, card, withDefaultVfx, cnt);
     }
 
@@ -250,7 +253,13 @@ public class BrandPower : HatMagician2Power
         var enemy = combatState.HittableEnemies.Count > 0 ? combatState.HittableEnemies[0] : null;
         if (enemy == null) return;
         var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(null, damage, ValueProp.Unpowered, applier, card, combatState);
-        await ChainDamageCmd(enemy, modifyChainDamage, applier, card, withDefaultVfx, cnt);
+        // 如果自己有印记 那么目标改成自己（用于联机时不打友军）
+        Creature target;
+        if (applier is { IsPlayer: true } && applier.HasPower<BrandPower>())
+            target = applier;
+        else
+            target = enemy;
+        await ChainDamageCmd(target, modifyChainDamage, applier, card, withDefaultVfx, cnt);
     }
 
     // 是否即将触发刻印
@@ -262,7 +271,7 @@ public class BrandPower : HatMagician2Power
     // 在死亡前触发可触发的被动
     public override async Task BeforeDeath(Creature creature)
     {
-        if (this.Owner == creature)
+        if (this.Owner == creature && this.Owner.Side == CombatSide.Enemy)
         {
             // 怪物在他的回合死亡 且未触发过被动 则触发一次被动
             if (!this._thisTurnIsTriggeredPassive && this.CombatState.CurrentSide == this.Owner.Side)

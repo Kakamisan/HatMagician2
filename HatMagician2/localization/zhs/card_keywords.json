@@ -1,5 +1,5 @@
 {
-  "HATMAGICIAN2-CHAIN.description": "对所有拥有印记的目标生效。",
+  "HATMAGICIAN2-CHAIN.description": "对所有拥有印记的目标生效。玩家有印记时与敌人形成连锁，玩家之间不形成连锁。",
   "HATMAGICIAN2-CHAIN.title": "连锁",
   "HATMAGICIAN2-EVOKE.description": "移除并使用印记刻印效果。",
   "HATMAGICIAN2-EVOKE.title": "刻印",
