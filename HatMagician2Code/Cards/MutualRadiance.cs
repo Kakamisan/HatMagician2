@@ -35,7 +35,7 @@ public class MutualRadiance() : HatMagician2Card(1, CardType.Attack, CardRarity.
 
         await this.CommonSingleAttack(choiceContext, play);
         if (enemy != null)
-            await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+            await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(enemy).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
 
         await base.OnPlayWhenCostBrandColor(choiceContext, play);
     }
@@ -49,7 +49,7 @@ public class MutualRadiance() : HatMagician2Card(1, CardType.Attack, CardRarity.
 
         await this.CommonSingleAttack(choiceContext, play);
         if (enemy != null)
-            await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+            await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(enemy).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
 
         await base.OnPlayNormal(choiceContext, play);
     }

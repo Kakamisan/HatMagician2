@@ -30,7 +30,7 @@ public class HolyStrike() : HatMagician2Card(3, CardType.Attack, CardRarity.Unco
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
             .Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }

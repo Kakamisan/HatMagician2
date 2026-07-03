@@ -29,7 +29,7 @@ public class Flourish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, 
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await BrandPower.UsePassiveCmd(play.Target!, play.Card, this.DynamicVars.Repeat.IntValue);
+        await BrandPower.UsePassiveCmd(play.Target!, play.Card, this.DynamicVars.Repeat.IntValue, play);
         if (play.Target!.IsDead) return;
         await this.CommonSingleAttack(choiceContext, play);
         await base.OnPlayNormal(choiceContext, play);

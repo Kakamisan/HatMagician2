@@ -2,6 +2,7 @@
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -44,12 +45,18 @@ public class BrandYellowPower : BrandPower
     {
         if (this.Owner.CombatState == null) return;
         await base.OnPassive(setFlag);
-        await UsePassive(this);
+        await this.UsePassive();
     }
 
-    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    public override async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
     {
-        await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card, true, cnt);
-        await Task.CompletedTask;
+        await BrandPower.ChainDamageCmd(this.Owner, this.PassiveVal, card?.Owner.Creature ?? this.Applier, card, true, cnt, cardPlay);
+        await base.UsePassive(card, cnt, cardPlay);
     }
+
+    // public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    // {
+    //     await BrandPower.ChainDamageCmd(power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card, true, cnt);
+    //     await Task.CompletedTask;
+    // }
 }

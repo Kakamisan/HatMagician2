@@ -1,6 +1,7 @@
 ﻿using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -15,7 +16,7 @@ public class GloomyPower : HatMagician2Power, IHatMagician2AbstractModel
     public override PowerType Type => PowerType.Debuff;
 
     public async Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext, ICombatState combatState, List<Creature> targets, ValueProp props, Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer == this.Owner && props.IsPoweredAttack() && (dealer.Side == CombatSide.Enemy && targets.Count > 0 && targets[0].Side == CombatSide.Player || cardSource != null))
         {
@@ -26,9 +27,9 @@ public class GloomyPower : HatMagician2Power, IHatMagician2AbstractModel
     }
 
     // 造成来源于阴郁的伤害
-    public static async Task DealGloomyDamage(Creature target, decimal damage, Creature? applier = null)
+    public static async Task DealGloomyDamage(Creature target, decimal damage, Creature? applier = null, CardPlay? cardPlay = null)
     {
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target, damage, ValueProp.Unpowered | ValueProp.Unblockable, applier, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), target, damage, ValueProp.Unpowered | ValueProp.Unblockable, applier, null, cardPlay);
         await HatMagician2Mgr.AfterGloomyDamage(target, damage, applier);
     }
 }

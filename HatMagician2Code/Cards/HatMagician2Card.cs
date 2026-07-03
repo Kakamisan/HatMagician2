@@ -209,10 +209,10 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     public bool NeedDream; // 是否触发梦境自动从抽牌堆打出
 
     // 火焰印记和灼痕的倍率是加法叠加 在这里统一处理
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (cardSource != this)
-            return base.ModifyDamageMultiplicative(target, amount, props, dealer, null);
+            return base.ModifyDamageMultiplicative(target, amount, props, dealer, null, cardPlay);
         return 1 + HatMagician2Mgr.GetMultiDamageTotalAmount(target, amount, props, dealer, cardSource);
     }
 
@@ -474,20 +474,20 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     // 通用造成单体伤害调用
     protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await Task.CompletedTask;
     }
 
     protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play, int cnt)
     {
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(cnt).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).WithHitCount(cnt).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
         await Task.CompletedTask;
     }
 
     protected async Task CommonSingleAttack(PlayerChoiceContext choiceContext, CardPlay play, CalculatedDamageVar var)
     {
-        await DamageCmd.Attack(var).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await DamageCmd.Attack(var).FromCard(this, play).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await Task.CompletedTask;
     }
 
@@ -495,14 +495,14 @@ public abstract class HatMagician2Card(int cost, CardType type, CardRarity rarit
     protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await Task.CompletedTask;
     }
 
     protected async Task CommonAoeAttack(PlayerChoiceContext choiceContext, CardPlay play, int cnt)
     {
         if (this.CombatState == null) return;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this).WithHitCount(cnt).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact")
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).FromCard(this, play).WithHitCount(cnt).TargetingAllOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
         await Task.CompletedTask;
     }

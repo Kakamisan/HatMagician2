@@ -60,6 +60,6 @@ public class ColorPollutionStatus() : HatMagician2Card(0, CardType.Status, CardR
 
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        await CreatureCmd.Damage(choiceContext, this.Owner.Creature, this.DynamicVars.Damage, this);
+        await CreatureCmd.Damage(choiceContext, this.Owner.Creature, this.DynamicVars.Damage, this.TargetOwner ?? this.Owner.Creature);
     }
 }

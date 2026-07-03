@@ -1,6 +1,7 @@
 ﻿using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -28,19 +29,30 @@ public class BrandBluePower : BrandPower
         await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.EvokeVal, card?.Owner.Creature ?? this.Applier, null);
     }
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card, CardPlay? cardPlay)
     {
         return this.Owner != dealer || !props.IsPoweredAttack() ? 0M : -this.PassiveVal;
     }
 
-    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    public override async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
     {
         for (int i = 0; i < cnt; i++)
         {
-            VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
-            await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card);
+            VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
+            await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.PassiveVal, card?.Owner.Creature ?? this.Applier, card);
         }
 
-        await Task.CompletedTask;
+        await base.UsePassive(card, cnt, cardPlay);
     }
+
+    // public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    // {
+    //     for (int i = 0; i < cnt; i++)
+    //     {
+    //         VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
+    //         await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card);
+    //     }
+    //
+    //     await Task.CompletedTask;
+    // }
 }

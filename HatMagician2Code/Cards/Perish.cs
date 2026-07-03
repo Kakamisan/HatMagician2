@@ -31,7 +31,7 @@ public class Perish() : HatMagician2Card(0, CardType.Attack, CardRarity.Rare, Ta
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (this.CombatState == null) return;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(this.ResolveEnergyXValue() + this.ResolveBrandColorCostXValue()).FromCard(this)
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(this.ResolveEnergyXValue() + this.ResolveBrandColorCostXValue()).FromCard(this, play)
             .TargetingRandomOpponents(this.CombatState).WithHitFx("vfx/vfx_starry_impact").Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }

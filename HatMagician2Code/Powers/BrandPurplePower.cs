@@ -2,6 +2,7 @@
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -44,25 +45,37 @@ public class BrandPurplePower : BrandPower, IHatMagician2AbstractModel
     }
 
     public async Task AfterSingleDamageReceived(PlayerChoiceContext choiceContext, ICombatState combatState, List<Creature> targets, ValueProp props, Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource, CardPlay? cardPlay)
     {
         if (dealer == this.Owner && props.IsPoweredAttack() && (dealer.Side == CombatSide.Enemy && targets.Count > 0 && targets[0].Side == CombatSide.Player || cardSource != null))
         {
-            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Owner);
+            await GloomyPower.DealGloomyDamage(this.Owner, this.PassiveVal, this.Owner, cardPlay);
         }
 
         await Task.CompletedTask;
     }
 
-    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    public override async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
     {
         for (int i = 0; i < cnt; i++)
         {
-            VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
+            VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_starry_impact");
             // await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card);
-            await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card);
+            await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), this.Owner, this.PassiveVal, card?.Owner.Creature ?? this.Applier, card);
         }
 
-        await Task.CompletedTask;
+        await base.UsePassive(card, cnt, cardPlay);
     }
+
+    // public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    // {
+    //     for (int i = 0; i < cnt; i++)
+    //     {
+    //         VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_starry_impact");
+    //         // await PowerCmd.Apply<FreezeStrengthPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card != null ? card.Owner.Creature : power.Applier, card);
+    //         await PowerCmd.Apply<GloomyPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, card?.Owner.Creature ?? power.Applier, card);
+    //     }
+    //
+    //     await Task.CompletedTask;
+    // }
 }

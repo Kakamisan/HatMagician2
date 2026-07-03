@@ -32,7 +32,7 @@ public class InkSlash() : HatMagician2Card(1, CardType.Attack, CardRarity.Common
 
     protected override async Task OnPlayNormal(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await DamageCmd.Attack(this.DynamicVars.CalculatedDamage).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
+        await DamageCmd.Attack(this.DynamicVars.CalculatedDamage).FromCard(this, play).Targeting(play.Target!).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "blunt_attack.mp3")
             .Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }

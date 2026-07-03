@@ -3,6 +3,7 @@ using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -387,14 +388,16 @@ public class HatMagician2Mgr : CustomSingletonModel
         List<Creature> targets,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay
+        )
     {
         if (combatState is null) return;
         foreach (AbstractModel iterateHookListener in combatState.IterateHookListeners())
         {
             if (iterateHookListener is IHatMagician2AbstractModel iterate)
             {
-                await iterate.AfterSingleDamageReceived(choiceContext, combatState, targets, props, dealer, cardSource);
+                await iterate.AfterSingleDamageReceived(choiceContext, combatState, targets, props, dealer, cardSource, cardPlay);
             }
         }
     }

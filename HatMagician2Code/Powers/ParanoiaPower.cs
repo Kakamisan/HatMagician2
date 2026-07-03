@@ -17,7 +17,7 @@ public class ParanoiaPower : HatMagician2Power, IHatMagician2AbstractModel
         this.Flash();
         for (int i = 0; i < this.Amount; i++)
         {
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.CombatState.HittableEnemies, damage, ValueProp.Unpowered | ValueProp.Unblockable, this.Owner, null);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.CombatState.HittableEnemies, damage, ValueProp.Unpowered | ValueProp.Unblockable, this.Owner, null, null);
         }
     }
 }

@@ -2,6 +2,7 @@
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -68,26 +69,46 @@ public class BrandWhitePower : BrandPower
         if (this.Owner.CombatState == null) return;
         //if (this.Applier?.Player == null) return;
         await base.OnPassive(setFlag);
-        await UsePassive(this);
+        await this.UsePassive();
     }
 
-    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    public override async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
     {
-        if (power.Owner.Side == CombatSide.Enemy)
+        if (this.Owner.Side == CombatSide.Enemy)
         {
-            var applier = HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier);
+            var applier = HatMagician2Mgr.GetDamageApplierUtil(card, this.Applier);
             if (applier?.Player == null) return;
             for (int i = 0; i < cnt; i++)
             {
-                await HatMagician2Mgr.AddEnergy(applier.Player, (int)power.PassiveVal);
+                await HatMagician2Mgr.AddEnergy(applier.Player, (int)this.PassiveVal);
             }
         }
 
-        if (power.Owner is { Side: CombatSide.Player, Player: not null })
+        if (this.Owner is { Side: CombatSide.Player, Player: not null })
         {
-            await HatMagician2Mgr.SpendEnergy(power.Owner.Player, (int)power.PassiveVal, BrandColor.Any, false);
+            await HatMagician2Mgr.SpendEnergy(this.Owner.Player, (int)this.PassiveVal, BrandColor.Any, false);
         }
 
-        await Task.CompletedTask;
+        await base.UsePassive(card, cnt, cardPlay);
     }
+
+    // public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    // {
+    //     if (power.Owner.Side == CombatSide.Enemy)
+    //     {
+    //         var applier = HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier);
+    //         if (applier?.Player == null) return;
+    //         for (int i = 0; i < cnt; i++)
+    //         {
+    //             await HatMagician2Mgr.AddEnergy(applier.Player, (int)power.PassiveVal);
+    //         }
+    //     }
+    //
+    //     if (power.Owner is { Side: CombatSide.Player, Player: not null })
+    //     {
+    //         await HatMagician2Mgr.SpendEnergy(power.Owner.Player, (int)power.PassiveVal, BrandColor.Any, false);
+    //     }
+    //
+    //     await Task.CompletedTask;
+    // }
 }

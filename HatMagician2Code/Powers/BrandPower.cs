@@ -212,10 +212,10 @@ public class BrandPower : HatMagician2Power
     }
 
     // 连锁伤害
-    public static async Task ChainDamageCmd(BrandPower power, decimal damage, CardModel? card, bool withDefaultVfx = true, int cnt = 1) =>
-        await ChainDamageCmd(power.Owner, damage, power.Applier, card, withDefaultVfx, cnt);
+    public static async Task ChainDamageCmd(BrandPower power, decimal damage, CardModel? card, bool withDefaultVfx = true, int cnt = 1, CardPlay? cardPlay = null) =>
+        await ChainDamageCmd(power.Owner, damage, power.Applier, card, withDefaultVfx, cnt, cardPlay);
 
-    public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    public static async Task ChainDamageCmd(Creature target, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1, CardPlay? cardPlay = null)
     {
         if (target.CombatState == null) return;
         List<Creature> targets;
@@ -224,10 +224,10 @@ public class BrandPower : HatMagician2Power
             targets = [..target.CombatState.HittableEnemies.Where(c => c.HasPower<BrandPower>() && c.IsAlive), target];
         else
             targets = target.CombatState.Creatures.Where(c => c.HasPower<BrandPower>() && c.IsAlive && (c.Side != CombatSide.Player || !c.HasPower<BrandRainbowPower>())).ToList();
-        await ChainDamageCmd(targets, damage, applier, card, withDefaultVfx, cnt);
+        await ChainDamageCmd(targets, damage, applier, card, withDefaultVfx, cnt, cardPlay);
     }
 
-    public static async Task ChainDamageCmd(IEnumerable<Creature> targets, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1)
+    public static async Task ChainDamageCmd(IEnumerable<Creature> targets, decimal damage, Creature? applier, CardModel? card, bool withDefaultVfx = true, int cnt = 1, CardPlay? cardPlay = null)
     {
         // var modifyChainDamage = HatMagician2Mgr.ModifyChainDamage(target, damage, ValueProp.Unpowered, applier, card, target.CombatState);
         var enumerable = targets.ToList();
@@ -242,7 +242,7 @@ public class BrandPower : HatMagician2Power
                 SfxCmd.Play("event:/sfx/characters/defect/defect_lightning_passive");
             }
 
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targets2, damage, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, applier), card);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targets2, damage, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, applier), card, cardPlay);
         }
 
         await Task.CompletedTask;
@@ -289,26 +289,32 @@ public class BrandPower : HatMagician2Power
     }
 
     // 使用印记被动效果
-    public static async Task UsePassiveCmd(Creature target, CardModel card, int cnt = 1)
+    public static async Task UsePassiveCmd(Creature target, CardModel card, int cnt = 1, CardPlay? cardPlay = null)
     {
         var power = target.GetPower<BrandPower>();
         if (power == null) return;
-        switch (power.BaseBrandColor)
-        {
-            case BrandColor.Red:
-                await BrandRedPower.UsePassive(power, card, cnt); break;
-            case BrandColor.Yellow:
-                await BrandYellowPower.UsePassive(power, card, cnt); break;
-            case BrandColor.Blue:
-                await BrandBluePower.UsePassive(power, card, cnt); break;
-            case BrandColor.Purple:
-                await BrandPurplePower.UsePassive(power, card, cnt); break;
-            case BrandColor.Orange:
-                await BrandOrangePower.UsePassive(power, card, cnt); break;
-            case BrandColor.White:
-                await BrandWhitePower.UsePassive(power, card, cnt); break;
-        }
+        // switch (power.BaseBrandColor)
+        // {
+        //     case BrandColor.Red:
+        //         await BrandRedPower.UsePassive(power, card, cnt); break;
+        //     case BrandColor.Yellow:
+        //         await BrandYellowPower.UsePassive(power, card, cnt); break;
+        //     case BrandColor.Blue:
+        //         await BrandBluePower.UsePassive(power, card, cnt); break;
+        //     case BrandColor.Purple:
+        //         await BrandPurplePower.UsePassive(power, card, cnt); break;
+        //     case BrandColor.Orange:
+        //         await BrandOrangePower.UsePassive(power, card, cnt); break;
+        //     case BrandColor.White:
+        //         await BrandWhitePower.UsePassive(power, card, cnt); break;
+        // }
+        await power.UsePassive(card, cnt, cardPlay);
 
+        await Task.CompletedTask;
+    }
+
+    public virtual async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
+    {
         await Task.CompletedTask;
     }
 

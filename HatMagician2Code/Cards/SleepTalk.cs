@@ -34,7 +34,7 @@ public class SleepTalk() : HatMagician2Card(1, CardType.Attack, CardRarity.Commo
         await base.OnPlayNormal(choiceContext, play);
     }
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         return cardSource != this ? 0 : this.IncreaseDamage;
     }

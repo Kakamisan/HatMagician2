@@ -46,19 +46,32 @@ public class BrandRedPower : BrandPower, IHatMagician2AbstractModel
     {
         if (!this.Owner.IsAlive) return;
         await base.OnPassive(setFlag);
-        await UsePassive(this);
+        await this.UsePassive();
     }
 
-    public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    public override async Task UsePassive(CardModel? card = null, int cnt = 1, CardPlay? cardPlay = null)
     {
         for (int i = 0; i < cnt; i++)
         {
-            VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier), card);
+            VfxCmd.PlayOnCreature(this.Owner, "vfx/vfx_fire_burning");
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), this.Owner, this.PassiveVal, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, this.Applier), card,
+                cardPlay);
         }
 
-        await Task.CompletedTask;
+        await base.UsePassive(card, cnt, cardPlay);
     }
+
+    // public static async Task UsePassive(BrandPower power, CardModel? card = null, int cnt = 1)
+    // {
+    //     for (int i = 0; i < cnt; i++)
+    //     {
+    //         VfxCmd.PlayOnCreature(power.Owner, "vfx/vfx_fire_burning");
+    //         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), power.Owner, power.PassiveVal, ValueProp.Unpowered, HatMagician2Mgr.GetDamageApplierUtil(card, power.Applier),
+    //             card, null);
+    //     }
+    //
+    //     await Task.CompletedTask;
+    // }
 
     // 仅预览时生效倍数
     public int TryModifyMultiDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel card)

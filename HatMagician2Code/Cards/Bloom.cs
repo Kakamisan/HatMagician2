@@ -32,7 +32,7 @@ public class Bloom() : HatMagician2Card(1, CardType.Attack, CardRarity.Common, T
         var cnt = 1;
         if (play.Target!.GetPower<BrandPower>() is not null)
             cnt += this.DynamicVars.Repeat.IntValue;
-        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(cnt).FromCard(this).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
+        await DamageCmd.Attack(this.DynamicVars.Damage.BaseValue).WithHitCount(cnt).FromCard(this, play).Targeting(play.Target!).WithHitFx("vfx/vfx_starry_impact")
             .Execute(choiceContext);
         await base.OnPlayNormal(choiceContext, play);
     }
