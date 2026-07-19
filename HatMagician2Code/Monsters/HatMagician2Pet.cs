@@ -1,6 +1,4 @@
 ﻿using BaseLib.Abstracts;
-using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Extensions;
 
 namespace HatMagician2.HatMagician2Code.Monsters;
 

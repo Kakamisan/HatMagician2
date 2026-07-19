@@ -1,5 +1,4 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;

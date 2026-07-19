@@ -3,7 +3,6 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Extensions;
-using Godot;
 
 namespace HatMagician2.HatMagician2Code.Relics;
 

@@ -3,7 +3,6 @@ using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 

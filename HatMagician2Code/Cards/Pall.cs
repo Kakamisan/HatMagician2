@@ -1,8 +1,6 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Powers;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;

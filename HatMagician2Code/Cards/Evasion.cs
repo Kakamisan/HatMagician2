@@ -1,11 +1,9 @@
 ﻿using BaseLib.Utils;
-using HatMagician2.HatMagician2Code.Cards;
 using HatMagician2.HatMagician2Code.Character;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace HatMagician2.HatMagician2Code.Cards;
@@ -39,11 +37,22 @@ public class Evasion() : HatMagician2Card(1, CardType.Skill, CardRarity.Rare, Ta
         // this.DynamicVars.Energy.UpgradeValueBy(1);
     }
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType,
-        CardPilePosition position)
+    // public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType,
+    //     CardPilePosition position)
+    // {
+    //     if (card == this)
+    //         return pileType != PileType.Discard ? (pileType, position) : (PileType.Draw, CardPilePosition.Bottom);
+    //     return base.ModifyCardPlayResultPileTypeAndPosition(card, isAutoPlay, resources, pileType, position);
+    // }
+
+    protected override CardLocation GetResultLocationForCardPlay()
     {
-        if (card == this)
-            return pileType != PileType.Discard ? (pileType, position) : (PileType.Draw, CardPilePosition.Bottom);
-        return base.ModifyCardPlayResultPileTypeAndPosition(card, isAutoPlay, resources, pileType, position);
+        CardLocation locationForCardPlay = base.GetResultLocationForCardPlay();
+        if (locationForCardPlay.pileType == PileType.Discard)
+        {
+            locationForCardPlay.pileType = PileType.Draw;
+            locationForCardPlay.position = CardPilePosition.Bottom;
+        }
+        return locationForCardPlay;
     }
 }

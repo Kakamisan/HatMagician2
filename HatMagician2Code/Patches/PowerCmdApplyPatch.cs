@@ -5,7 +5,6 @@ using HatMagician2.HatMagician2Code.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 
 namespace HatMagician2.HatMagician2Code.Patches;

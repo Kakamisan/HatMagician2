@@ -1,7 +1,5 @@
 ﻿using BaseLib.Abstracts;
-using BaseLib.Cards.Variables;
 using BaseLib.Extensions;
-using HarmonyLib;
 using HatMagician2.HatMagician2Code.Character;
 using HatMagician2.HatMagician2Code.Enchantment;
 using HatMagician2.HatMagician2Code.Extensions;

@@ -1,6 +1,4 @@
-﻿using BaseLib.Extensions;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Entities.Powers;
+﻿using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace HatMagician2.HatMagician2Code.Powers;
 

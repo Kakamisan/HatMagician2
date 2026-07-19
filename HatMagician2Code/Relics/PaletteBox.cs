@@ -1,6 +1,5 @@
 ﻿using BaseLib.Utils;
 using HatMagician2.HatMagician2Code.Character;
-using HatMagician2.HatMagician2Code.Relics;
 using MegaCrit.Sts2.Core.Entities.Relics;
 
 namespace HatMagician2.HatMagician2Code.Relics;

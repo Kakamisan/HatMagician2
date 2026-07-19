@@ -1,7 +1,6 @@
 ﻿using BaseLib.Abstracts;
 using HatMagician2.HatMagician2Code.Extensions;
 using Godot;
-using MegaCrit.Sts2.Core.Assets;
 
 namespace HatMagician2.HatMagician2Code.Character;
 
