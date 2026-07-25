@@ -22,8 +22,11 @@ public class BrandRainbowPower : BrandPower
     {
         if (this.IsOnFusionEd) return;
         await base.OnFusion(cardSource, oldApplier);
-        if ((cardSource?.Owner ?? this.Applier?.Player) is { } player)
-            await PlayerCmd.GainEnergy(this.FusionVal, player);
+        var applier = cardSource?.Owner ?? this.Applier?.Player;
+        if (applier != null)
+            await PlayerCmd.GainEnergy(this.FusionVal, applier);
+        if (oldApplier is { Player: not null } && oldApplier != applier?.Creature)
+            await PlayerCmd.GainEnergy(this.FusionVal, oldApplier.Player);
         if (this.Owner.Side == CombatSide.Player)
         {
             var list = this.Owner.Powers.Where(p => p is { TypeForCurrentAmount: PowerType.Debuff, IsVisible: true } and not BrandRainbowPower).ToList();
