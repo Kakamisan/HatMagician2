@@ -20,7 +20,8 @@ public class Hat2RunStateSingleton : CustomSingletonModel
     {
         var runState = RunManager.Instance.DebugOnlyGetState();
         var specEvent = ModelDb.Event<BlankPaintingEvent>();
-        if (runState != null && !runState.VisitedEventIds.Contains(specEvent.Id)
+        if (runState != null && Hat2ModConfigUtil.ShouldOpenEvent(runState)
+                             && !runState.VisitedEventIds.Contains(specEvent.Id)
                              && runState is { CurrentActIndex: 0, TotalFloor: >= Hat2ModConfigUtil.BlankPaintingEventFloor }
                              && RunManager.Instance.AscensionManager.HasLevel(AscensionLevel.DoubleBoss)
                              && runState.Rng.UnknownMapPoint.NextFloat() < 0.5f
