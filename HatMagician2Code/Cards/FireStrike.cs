@@ -17,7 +17,7 @@ public class FireStrike() : HatMagician2Card(2, CardType.Attack, CardRarity.Unco
     // protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(19, ValueProp.Move)];
     // protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [];
-    // protected override HashSet<CardTag> Hat2CanonicalTags => [];
+    protected override HashSet<CardTag> Hat2CanonicalTags => [CardTag.Strike];
 
     protected override async Task OnPlayWhenCostBrandColor(PlayerChoiceContext choiceContext, CardPlay play)
     {
