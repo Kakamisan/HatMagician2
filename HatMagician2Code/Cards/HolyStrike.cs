@@ -13,7 +13,7 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class HolyStrike() : HatMagician2Card(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.White;
-    public override int BaseBrandColorCost => 3;
+    public override int BaseBrandColorCost => 2;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(30, ValueProp.Move), new EnergyVar(3), new Hat2Var(0)];

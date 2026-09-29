@@ -13,7 +13,7 @@ namespace HatMagician2.HatMagician2Code.Cards;
 public class PhantasmalFlame() : HatMagician2Card(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
     public override BrandColor BaseBrandColor => BrandColor.Purple;
-    public override int BaseBrandColorCost => 2;
+    public override int BaseBrandColorCost => 1;
     public override bool HasBrandApplyTarget => true;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
     protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new DamageVar(10, ValueProp.Move), new RepeatVar(2)];

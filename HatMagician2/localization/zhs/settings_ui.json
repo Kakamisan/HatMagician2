@@ -7,7 +7,7 @@
   "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.title": "叠色印记",
   "HATMAGICIAN2-SHOW_FUSION_BRAND_COLOR_TIPS.hover.desc": "是否在初始遗物显示叠色印记的提示，因为提示占用空间较大若已熟悉则建议关闭。",
   "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.title": "是否允许出现寻色者BOSS",
-  "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.hover.title": "挑战寻色者",
+  "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.hover.title": "挑战寻色者(单人)",
   "HATMAGICIAN2-CHALLENGE_COLOR_FINDER.hover.desc": "勾选后，将有概率出现寻色者BOSS。",
   "HATMAGICIAN2-SHOW_OTHERS_BRAND_PET.title": "显示绘色的人数上限",
   "HATMAGICIAN2-SHOW_OTHERS_BRAND_PET.hover.title": "显示绘色",
