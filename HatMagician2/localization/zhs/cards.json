@@ -201,6 +201,8 @@
   "HATMAGICIAN2-OVERLOAD_FORM.title": "天火形态",
   "HATMAGICIAN2-VIBRANT_PALETTE.description": "每回合你第一次消耗绘色时，收集{Hat2Var:diff()}点对应的绘色。",
   "HATMAGICIAN2-VIBRANT_PALETTE.title": "斑斓色彩",
+  "HATMAGICIAN2-REVEAL.description": "每拥有一张[gold]梦境[/gold]卡，给予所有敌人{Hat2Var:diff()}层[gold]噩梦[/gold]。{InCombat:\n（给予{Calc:diff()}层）|}",
+  "HATMAGICIAN2-REVEAL.title": "显现",
   
   "HATMAGICIAN2-COLOR_STATUS.description": "{Branch:choose(1|2|4):给予画布[red]火焰[/red]印记|给予画布[color=#31b0eb]冰霜[/color]印记|给予画布[color=#e7ea31]闪电[/color]印记|从[red]火焰[/red]、[color=#31b0eb]冰霜[/color]、[color=#e7ea31]闪电[/color]中选择，消耗2点绘色，给予画布对应的印记}。",
   "HATMAGICIAN2-COLOR_STATUS.title": "色彩",

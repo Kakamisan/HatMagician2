@@ -16,7 +16,7 @@ public class DreamFall() : HatMagician2Card(1, CardType.Skill, CardRarity.Rare, 
     public override int BaseBrandColorCost => -1;
     public override bool HasBrandApplyTarget => false;
     protected override IEnumerable<IHoverTip> Hat2ExtraHoverTips => [];
-    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> Hat2ExtraCanonicalVars => [new CardsVar(2)];
     protected override IEnumerable<CardKeyword> Hat2CanonicalKeywords => [HatMagician2Keywords.Dream];
     protected override HashSet<CardTag> Hat2CanonicalTags => [];
 

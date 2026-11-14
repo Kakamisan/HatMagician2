@@ -27,7 +27,8 @@ public class PollutedProfessorEncounter() : CustomEncounterModel(RoomType.Boss)
 
     public override string BossNodePath => Path.Join(MainFile.ResPath, "anim", "map", "boss_node_polluted_professor.tres");
 
-    public override string CustomScenePath => "encounters/polluted_professor_boss.tscn".ScenePath();
+    // public override string CustomScenePath => "encounters/polluted_professor_boss.tscn".ScenePath();
+    protected override string ScenePath => "encounters/polluted_professor_boss.tscn".ScenePath();
 
     public override IReadOnlyList<string> Slots => ["fire", "lightning", "professor", "ice"];
 }

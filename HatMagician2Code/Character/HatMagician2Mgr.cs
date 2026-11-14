@@ -366,14 +366,14 @@ public class HatMagician2Mgr : CustomSingletonModel
     }
 
     // 玩家死亡后
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature is { IsPlayer: true, Player: not null } && Instance?.GetState(creature.Player) is { } state)
         {
             state.HideAll();
         }
 
-        await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
+        await base.AfterDeath(choiceContext, creature, source, wasRemovalPrevented, deathAnimLength);
     }
 
     // 计算各种能力伤害的应用者

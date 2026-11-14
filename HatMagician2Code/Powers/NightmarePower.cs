@@ -2,6 +2,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -11,6 +12,8 @@ namespace HatMagician2.HatMagician2Code.Powers;
 
 public sealed class NightmarePower : HatMagician2Power
 {
+    public override PowerType Type => PowerType.Debuff;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [new("CalcAmount", 0)];
 
     private bool _stun;

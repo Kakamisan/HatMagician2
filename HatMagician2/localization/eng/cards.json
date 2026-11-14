@@ -201,6 +201,9 @@
   "HATMAGICIAN2-OVERLOAD_FORM.title": "SkyFire Form",
   "HATMAGICIAN2-VIBRANT_PALETTE.description": "The first time you spend Color each turn, collect {Hat2Var:diff()} of the corresponding Color.",
   "HATMAGICIAN2-VIBRANT_PALETTE.title": "Vibrant Palette",
+  "HATMAGICIAN2-REVEAL.description": "For each Dream card you have, apply {Hat2Var:diff()} stacks of Nightmare to ALL enemies.{InCombat:\n(Apply {Calc:diff()} stacks)|}",
+  "HATMAGICIAN2-REVEAL.title": "Reveal",
+  
   "HATMAGICIAN2-COLOR_STATUS.description": "{Branch:choose(1|2|4):Apply [red]Fire[/red] Brand to the Canvas|Apply [color=#31b0eb]Frost[/color] Brand to the Canvas|Apply [color=#e7ea31]Lightning[/color] Brand to the Canvas|Choose from [red]Fire[/red], [color=#31b0eb]Frost[/color], or [color=#e7ea31]Lightning[/color] — spend 2 Color to apply the corresponding Brand to the Canvas}.",
   "HATMAGICIAN2-COLOR_STATUS.title": "Color",
   "HATMAGICIAN2-COLOR_POLLUTION_STATUS.description": "Can only be played by spending Color. Apply {Branch:choose(1|2|4):[red]Fire[/red]|[color=#31b0eb]Frost[/color]|[color=#e7ea31]Lightning[/color]|the corresponding} Brand to yourself. At the end of your turn, if this card is in your [gold]hand[/gold], take {Damage:diff()} damage.",
